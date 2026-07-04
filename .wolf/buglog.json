@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-07-04T15:01:48.853Z",
+      "error_message": "Type error",
+      "file": "server/src/app.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: app.setErrorHandler((err: FastifyError, req, reply) => {",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:01:48.881Z"
+    }
+  ]
+}

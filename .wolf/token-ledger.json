@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "created_at": "2026-07-04T14:46:25.022Z",
+  "lifetime": {
+    "total_tokens_estimated": 30264,
+    "total_reads": 0,
+    "total_writes": 4,
+    "total_sessions": 2,
+    "anatomy_hits": 0,
+    "anatomy_misses": 0,
+    "repeated_reads_blocked": 0,
+    "estimated_savings_vs_bare_cli": 0
+  },
+  "sessions": [
+    {
+      "id": "session-2026-07-04-2146",
+      "started": "2026-07-04T14:46:36.958Z",
+      "ended": "2026-07-04T14:55:03.762Z",
+      "reads": [],
+      "writes": [
+        {
+          "file": "D:/CODE/WEB_APP/BoardBank/docs/superpowers/plans/2026-07-04-boardbank-architecture-and-roadmap.md",
+          "tokens_estimated": 7566,
+          "action": "create"
+        },
+        {
+          "file": "D:/CODE/WEB_APP/BoardBank/docs/superpowers/plans/2026-07-04-boardbank-architecture-and-roadmap.md",
+          "tokens_estimated": 7566,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 15132,
+        "reads_count": 0,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-07-04-2146",
+      "started": "2026-07-04T14:46:36.958Z",
+      "ended": "2026-07-04T14:55:03.775Z",
+      "reads": [],
+      "writes": [
+        {
+          "file": "D:/CODE/WEB_APP/BoardBank/docs/superpowers/plans/2026-07-04-boardbank-architecture-and-roadmap.md",
+          "tokens_estimated": 7566,
+          "action": "create"
+        },
+        {
+          "file": "D:/CODE/WEB_APP/BoardBank/docs/superpowers/plans/2026-07-04-boardbank-architecture-and-roadmap.md",
+          "tokens_estimated": 7566,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 15132,
+        "reads_count": 0,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    }
+  ],
+  "daemon_usage": [],
+  "waste_flags": [],
+  "optimization_report": {
+    "last_generated": null,
+    "patterns": []
+  }
+}
