@@ -1,8 +1,11 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api, type Bank, type GameSession } from "../api";
+import { useAuth } from "../auth";
 
 export default function BanksPage() {
+  const { me, logout } = useAuth();
+  const navigate = useNavigate();
   const [banks, setBanks] = useState<Bank[]>([]);
   const [sessionsByBank, setSessionsByBank] = useState<Record<number, GameSession[]>>({});
   const [name, setName] = useState("");
@@ -35,9 +38,20 @@ export default function BanksPage() {
 
   return (
     <div className="mx-auto max-w-3xl p-6">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">🏦 BoardBank</h1>
-        <p className="mt-1 text-slate-400">Chọn ngân hàng hoặc tạo mới để bắt đầu</p>
+      <header className="mb-8 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">🏦 BoardBank</h1>
+          <p className="mt-1 text-slate-400">Chọn ngân hàng hoặc tạo mới để bắt đầu</p>
+        </div>
+        <button
+          onClick={async () => {
+            await logout();
+            navigate("/login");
+          }}
+          className="rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800"
+        >
+          {me?.type === "admin" ? me.username : ""} · Thoát
+        </button>
       </header>
 
       <form onSubmit={createBank} className="mb-8 flex gap-2">

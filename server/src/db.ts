@@ -89,6 +89,25 @@ const MIGRATIONS: string[] = [
   );
   CREATE INDEX idx_entries_tx ON transaction_entries(transaction_id);
   CREATE INDEX idx_entries_account ON transaction_entries(account_id);`,
+
+  // 003: xác thực & phân quyền Phase 3
+  `CREATE TABLE admins (
+    id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+  );
+  CREATE TABLE auth_sessions (
+    id INTEGER PRIMARY KEY,
+    principal_type TEXT NOT NULL CHECK (principal_type IN ('admin','player')),
+    principal_id INTEGER NOT NULL,
+    token_hash TEXT NOT NULL UNIQUE,
+    expires_at TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+  );
+  ALTER TABLE banks ADD COLUMN owner_admin_id INTEGER REFERENCES admins(id);
+  ALTER TABLE players ADD COLUMN pin_failed_count INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE players ADD COLUMN pin_locked_until TEXT;`,
 ];
 
 export function openDb(dbPath: string): Database.Database {

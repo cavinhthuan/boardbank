@@ -97,6 +97,134 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-04T15:17:37.964Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-07-04T15:23:40.301Z",
+      "error_message": "Type error",
+      "file": "server/src/db.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: // 003: xác thực & phân quyền Phase 3; `CREATE TABLE admins (",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:23:40.326Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-07-04T15:25:36.134Z",
+      "error_message": "Null/undefined access in ",
+      "file": "server/src/routes/sessions.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: if (req.principal?.type !== \"admin\") return deny(app, req, r | Also: app.get(\"/api/v1/banks/:bankId/sessions\", async (req, reply); if (req.principal?.type !== \"admin\") return deny(app, req, r",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-07-04T15:25:42.755Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-07-04T15:25:58.464Z",
+      "error_message": "Function not marked async",
+      "file": "server/src/routes/sessions.ts",
+      "root_cause": "Function uses await but wasn't declared async",
+      "fix": "Added async modifier",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:25:58.482Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-07-04T15:26:37.784Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "server/src/routes/transactions.ts",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: pin: { type: \"string\", pattern: \"^[0-9]{4,6}$\" },; // Phân quyền: session-admin làm được mọi loại (không cần PI",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:26:37.807Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-07-04T15:26:51.114Z",
+      "error_message": "Significant refactor of ",
+      "file": "server/src/routes/transactions.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→15 lines (2 removed) | Also: const reversal = reverseTransaction(app.db, sessio; logAudit(app.db, { sessionId, actorType: \"admin\", ",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:26:51.140Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-07-04T15:27:14.240Z",
+      "error_message": "Function not marked async",
+      "file": "server/src/app.ts",
+      "root_cause": "Function uses await but wasn't declared async",
+      "fix": "Added async modifier",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:27:14.282Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-07-04T15:31:15.458Z",
+      "error_message": "CSS fix: playerId",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "playerId: number) { → number, locked: boolean) {",
+      "fix": "Changed playerId: number) { → number, locked: boolean) {",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:31:15.482Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-07-04T15:31:47.188Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/pages/BanksPage.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-04T15:31:47.188Z"
     }
   ]
 }

@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { generateJoinCode } from "../lib/ids.js";
 import { ensureAccount } from "../ledger.js";
 import { logAudit } from "../lib/audit.js";
+import { deny, isSessionAdmin, isSessionMember } from "../auth.js";
 
 export interface SessionConfig {
   initialBalance: number;
@@ -46,6 +47,7 @@ export function sessionRoutes(app: FastifyInstance): void {
       },
     },
     async (req, reply) => {
+      if (req.principal?.type !== "admin") return deny(app, req, reply);
       const { bankId } = req.params as { bankId: number };
       const body = req.body as {
         name: string;
@@ -55,7 +57,9 @@ export function sessionRoutes(app: FastifyInstance): void {
         initialBalance: number;
         allowNegative: boolean;
       };
-      const bank = app.db.prepare("SELECT id FROM banks WHERE id=?").get(bankId);
+      const bank = app.db
+        .prepare("SELECT id FROM banks WHERE id=? AND owner_admin_id=?")
+        .get(bankId, req.principal.id);
       if (!bank) {
         return reply.status(404).send({ ok: false, error: { code: "BANK_NOT_FOUND", message: "Ngân hàng không tồn tại" } });
       }
@@ -97,8 +101,15 @@ export function sessionRoutes(app: FastifyInstance): void {
     },
   );
 
-  app.get("/api/v1/banks/:bankId/sessions", async (req) => {
+  app.get("/api/v1/banks/:bankId/sessions", async (req, reply) => {
+    if (req.principal?.type !== "admin") return deny(app, req, reply);
     const { bankId } = req.params as { bankId: string };
+    const owns = app.db
+      .prepare("SELECT id FROM banks WHERE id=? AND owner_admin_id=?")
+      .get(Number(bankId), req.principal.id);
+    if (!owns) {
+      return reply.status(404).send({ ok: false, error: { code: "BANK_NOT_FOUND", message: "Ngân hàng không tồn tại" } });
+    }
     const sessions = app.db
       .prepare(
         `SELECT s.*,
@@ -115,6 +126,7 @@ export function sessionRoutes(app: FastifyInstance): void {
     if (!session) {
       return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
     }
+    if (!req.principal || !isSessionMember(app.db, req.principal, id)) return deny(app, req, reply, id);
     const assets = app.db.prepare("SELECT * FROM asset_types WHERE session_id=?").all(id);
     const players = app.db
       .prepare(
@@ -140,4 +152,29 @@ export function sessionRoutes(app: FastifyInstance): void {
       },
     };
   });
+
+  app.get(
+    "/api/v1/sessions/:id/audit",
+    {
+      schema: {
+        querystring: {
+          type: "object",
+          properties: { limit: { type: "integer", minimum: 1, maximum: 200, default: 50 } },
+          additionalProperties: false,
+        },
+      },
+    },
+    async (req, reply) => {
+      const id = Number((req.params as { id: string }).id);
+      const { limit } = req.query as { limit: number };
+      if (!getSessionOr404(app, id)) {
+        return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+      }
+      if (!req.principal || !isSessionAdmin(app.db, req.principal, id)) return deny(app, req, reply, id);
+      const rows = app.db
+        .prepare("SELECT * FROM audit_log WHERE session_id=? ORDER BY id DESC LIMIT ?")
+        .all(id, limit);
+      return { ok: true, data: rows };
+    },
+  );
 }

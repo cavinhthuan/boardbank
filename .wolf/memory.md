@@ -117,3 +117,82 @@
 | 22:17 | Edited web/src/pages/SessionPage.tsx | 3→4 lines | ~64 |
 | 22:17 | Edited web/src/pages/SessionPage.tsx | expanded (+24 lines) | ~202 |
 | 22:17 | Edited web/src/pages/SessionPage.tsx | expanded (+24 lines) | ~202 |
+| 15:20 | Phase 2 xong: engine giao dich du loai + hoan tac bu + lich su/loc/phan trang + idempotency + UI form/history; 18/18 test xanh; verify e2e curl; commit ben duoi | server/src/routes/transactions.ts, server/src/ledger.ts, web/src/components/* | ok | ~9000 |
+| 22:19 | Session end: 93 writes across 29 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~61968 tok |
+| 22:19 | Session end: 93 writes across 29 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~61968 tok |
+| 22:23 | Edited server/src/db.ts | expanded (+19 lines) | ~264 |
+| 22:23 | Edited server/src/db.ts | expanded (+19 lines) | ~264 |
+| 22:23 | Created server/src/lib/passwords.ts | — | ~265 |
+| 22:23 | Created server/src/lib/passwords.ts | — | ~265 |
+| 22:24 | Created server/src/auth.ts | — | ~1823 |
+| 22:24 | Created server/src/auth.ts | — | ~1823 |
+| 22:24 | Created server/src/services/playerService.ts | — | ~801 |
+| 22:24 | Created server/src/services/playerService.ts | — | ~801 |
+| 22:25 | Created server/src/routes/auth.ts | — | ~2415 |
+| 22:25 | Created server/src/routes/auth.ts | — | ~2415 |
+| 22:25 | Created server/src/routes/banks.ts | — | ~442 |
+| 22:25 | Created server/src/routes/banks.ts | — | ~442 |
+| 22:25 | Edited server/src/routes/sessions.ts | added 1 import(s) | ~73 |
+| 22:25 | Edited server/src/routes/sessions.ts | added 1 import(s) | ~73 |
+| 22:25 | Edited server/src/routes/sessions.ts | added optional chaining | ~47 |
+| 22:25 | Edited server/src/routes/sessions.ts | added optional chaining | ~47 |
+| 22:25 | Edited server/src/routes/sessions.ts | modified if() | ~83 |
+| 22:25 | Edited server/src/routes/sessions.ts | modified if() | ~83 |
+| 22:25 | Edited server/src/routes/sessions.ts | added optional chaining | ~146 |
+| 22:25 | Edited server/src/routes/sessions.ts | added optional chaining | ~146 |
+| 22:25 | Edited server/src/routes/sessions.ts | added 1 condition(s) | ~102 |
+| 22:25 | Edited server/src/routes/sessions.ts | added 1 condition(s) | ~102 |
+| 22:25 | Edited server/src/routes/sessions.ts | added 2 condition(s) | ~312 |
+| 22:25 | Edited server/src/routes/sessions.ts | added 2 condition(s) | ~312 |
+| 22:26 | Created server/src/routes/players.ts | — | ~1570 |
+| 22:26 | Created server/src/routes/players.ts | — | ~1570 |
+| 22:26 | Edited server/src/routes/transactions.ts | added 1 import(s) | ~95 |
+| 22:26 | Edited server/src/routes/transactions.ts | added 1 import(s) | ~95 |
+| 22:26 | Edited server/src/routes/transactions.ts | 11→12 lines | ~67 |
+| 22:26 | Edited server/src/routes/transactions.ts | 11→12 lines | ~67 |
+| 22:26 | Edited server/src/routes/transactions.ts | added error handling | ~553 |
+| 22:26 | Edited server/src/routes/transactions.ts | added error handling | ~553 |
+| 22:26 | Edited server/src/routes/transactions.ts | expanded (+7 lines) | ~140 |
+| 22:26 | Edited server/src/routes/transactions.ts | expanded (+7 lines) | ~140 |
+| 22:26 | Edited server/src/routes/transactions.ts | added 1 condition(s) | ~195 |
+| 22:26 | Edited server/src/routes/transactions.ts | added 1 condition(s) | ~195 |
+| 22:26 | Edited server/src/routes/transactions.ts | added 1 condition(s) | ~133 |
+| 22:26 | Edited server/src/routes/transactions.ts | added 1 condition(s) | ~133 |
+| 22:27 | Edited server/src/config.ts | modified loadConfig() | ~150 |
+| 22:27 | Edited server/src/config.ts | modified loadConfig() | ~150 |
+| 22:27 | Edited server/src/app.ts | added 4 import(s) | ~173 |
+| 22:27 | Edited server/src/app.ts | added 4 import(s) | ~173 |
+| 22:27 | Edited server/src/app.ts | expanded (+7 lines) | ~110 |
+| 22:27 | Edited server/src/app.ts | expanded (+7 lines) | ~110 |
+| 22:27 | Created server/test/helpers.ts | — | ~217 |
+| 22:27 | Created server/test/helpers.ts | — | ~217 |
+| 22:28 | Created server/test/phase1.test.ts | — | ~1604 |
+| 22:28 | Created server/test/phase1.test.ts | — | ~1604 |
+| 22:28 | Created server/test/phase2.test.ts | — | ~2504 |
+| 22:28 | Created server/test/phase2.test.ts | — | ~2504 |
+| 22:29 | Created server/test/phase3.test.ts | — | ~3115 |
+| 22:29 | Created server/test/phase3.test.ts | — | ~3115 |
+| 22:29 | Created web/src/auth.tsx | — | ~390 |
+| 22:29 | Created web/src/auth.tsx | — | ~390 |
+| 22:29 | Created web/src/pages/LoginPage.tsx | — | ~825 |
+| 22:29 | Created web/src/pages/LoginPage.tsx | — | ~825 |
+| 22:30 | Created web/src/pages/JoinPage.tsx | — | ~1645 |
+| 22:30 | Created web/src/pages/JoinPage.tsx | — | ~1645 |
+| 22:30 | Created web/src/pages/PlayerPage.tsx | — | ~2032 |
+| 22:30 | Created web/src/pages/PlayerPage.tsx | — | ~2032 |
+| 22:31 | Created web/src/App.tsx | — | ~580 |
+| 22:31 | Created web/src/App.tsx | — | ~580 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | CSS: locked | ~135 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | CSS: locked | ~135 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | expanded (+8 lines) | ~347 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | expanded (+8 lines) | ~347 |
+| 22:31 | Created web/src/components/AuditLog.tsx | — | ~615 |
+| 22:31 | Created web/src/components/AuditLog.tsx | — | ~615 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~50 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~50 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | 12→14 lines | ~88 |
+| 22:31 | Edited web/src/pages/SessionPage.tsx | 12→14 lines | ~88 |
+| 22:31 | Edited web/src/pages/BanksPage.tsx | modified BanksPage() | ~91 |
+| 22:31 | Edited web/src/pages/BanksPage.tsx | modified BanksPage() | ~91 |
+| 22:31 | Edited web/src/pages/BanksPage.tsx | added optional chaining | ~164 |
+| 22:31 | Edited web/src/pages/BanksPage.tsx | added optional chaining | ~164 |

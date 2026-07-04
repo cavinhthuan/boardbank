@@ -1,7 +1,11 @@
 import Fastify, { type FastifyError, type FastifyInstance } from "fastify";
+import fastifyCookie from "@fastify/cookie";
+import fastifyRateLimit from "@fastify/rate-limit";
 import type Database from "better-sqlite3";
 import { statSync } from "node:fs";
 import type { Config } from "./config.js";
+import { registerAuthHook } from "./auth.js";
+import { authRoutes } from "./routes/auth.js";
 import { bankRoutes } from "./routes/banks.js";
 import { sessionRoutes } from "./routes/sessions.js";
 import { playerRoutes } from "./routes/players.js";
@@ -58,10 +62,17 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
     };
   });
 
-  bankRoutes(app);
-  sessionRoutes(app);
-  playerRoutes(app);
-  transactionRoutes(app);
+  app.register(fastifyCookie);
+  // Rate limit chỉ áp cho các route khai báo config.rateLimit (auth)
+  app.register(fastifyRateLimit, { global: false });
+  app.register(async (instance) => {
+    registerAuthHook(instance);
+    authRoutes(instance);
+    bankRoutes(instance);
+    sessionRoutes(instance);
+    playerRoutes(instance);
+    transactionRoutes(instance);
+  });
 
   return app;
 }

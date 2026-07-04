@@ -566,6 +566,420 @@
       "action": "edit",
       "tokens": 202,
       "at": "2026-07-04T15:17:37.957Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/db.ts",
+      "action": "edit",
+      "tokens": 264,
+      "at": "2026-07-04T15:23:40.296Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/db.ts",
+      "action": "edit",
+      "tokens": 264,
+      "at": "2026-07-04T15:23:40.320Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/lib/passwords.ts",
+      "action": "create",
+      "tokens": 265,
+      "at": "2026-07-04T15:23:44.688Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/lib/passwords.ts",
+      "action": "create",
+      "tokens": 265,
+      "at": "2026-07-04T15:23:44.706Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/auth.ts",
+      "action": "create",
+      "tokens": 1823,
+      "at": "2026-07-04T15:24:16.056Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/auth.ts",
+      "action": "create",
+      "tokens": 1823,
+      "at": "2026-07-04T15:24:16.089Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/services/playerService.ts",
+      "action": "create",
+      "tokens": 801,
+      "at": "2026-07-04T15:24:35.749Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/services/playerService.ts",
+      "action": "create",
+      "tokens": 801,
+      "at": "2026-07-04T15:24:35.764Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/auth.ts",
+      "action": "create",
+      "tokens": 2415,
+      "at": "2026-07-04T15:25:09.442Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/auth.ts",
+      "action": "create",
+      "tokens": 2415,
+      "at": "2026-07-04T15:25:09.452Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/banks.ts",
+      "action": "create",
+      "tokens": 442,
+      "at": "2026-07-04T15:25:25.950Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/banks.ts",
+      "action": "create",
+      "tokens": 442,
+      "at": "2026-07-04T15:25:25.967Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 73,
+      "at": "2026-07-04T15:25:33.745Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 73,
+      "at": "2026-07-04T15:25:33.765Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 47,
+      "at": "2026-07-04T15:25:36.129Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 47,
+      "at": "2026-07-04T15:25:36.150Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 83,
+      "at": "2026-07-04T15:25:39.043Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 146,
+      "at": "2026-07-04T15:25:42.704Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 146,
+      "at": "2026-07-04T15:25:42.739Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 102,
+      "at": "2026-07-04T15:25:45.266Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 102,
+      "at": "2026-07-04T15:25:45.279Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 312,
+      "at": "2026-07-04T15:25:58.460Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 312,
+      "at": "2026-07-04T15:25:58.470Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/players.ts",
+      "action": "create",
+      "tokens": 1570,
+      "at": "2026-07-04T15:26:15.531Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/players.ts",
+      "action": "create",
+      "tokens": 1570,
+      "at": "2026-07-04T15:26:15.553Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 95,
+      "at": "2026-07-04T15:26:26.066Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 95,
+      "at": "2026-07-04T15:26:26.101Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 67,
+      "at": "2026-07-04T15:26:27.779Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 67,
+      "at": "2026-07-04T15:26:27.790Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 553,
+      "at": "2026-07-04T15:26:37.780Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 553,
+      "at": "2026-07-04T15:26:37.796Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 140,
+      "at": "2026-07-04T15:26:46.853Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 140,
+      "at": "2026-07-04T15:26:46.880Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 195,
+      "at": "2026-07-04T15:26:51.110Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 195,
+      "at": "2026-07-04T15:26:51.128Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/transactions.ts",
+      "action": "edit",
+      "tokens": 133,
+      "at": "2026-07-04T15:26:54.622Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/config.ts",
+      "action": "edit",
+      "tokens": 150,
+      "at": "2026-07-04T15:27:09.383Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/config.ts",
+      "action": "edit",
+      "tokens": 150,
+      "at": "2026-07-04T15:27:09.397Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 173,
+      "at": "2026-07-04T15:27:12.395Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 173,
+      "at": "2026-07-04T15:27:12.406Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 110,
+      "at": "2026-07-04T15:27:14.235Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 110,
+      "at": "2026-07-04T15:27:14.274Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/helpers.ts",
+      "action": "create",
+      "tokens": 217,
+      "at": "2026-07-04T15:27:35.739Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/helpers.ts",
+      "action": "create",
+      "tokens": 217,
+      "at": "2026-07-04T15:27:35.757Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase1.test.ts",
+      "action": "create",
+      "tokens": 1604,
+      "at": "2026-07-04T15:28:00.581Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase1.test.ts",
+      "action": "create",
+      "tokens": 1604,
+      "at": "2026-07-04T15:28:00.606Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase2.test.ts",
+      "action": "create",
+      "tokens": 2504,
+      "at": "2026-07-04T15:28:35.517Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase2.test.ts",
+      "action": "create",
+      "tokens": 2504,
+      "at": "2026-07-04T15:28:35.541Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase3.test.ts",
+      "action": "create",
+      "tokens": 3115,
+      "at": "2026-07-04T15:29:18.203Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase3.test.ts",
+      "action": "create",
+      "tokens": 3115,
+      "at": "2026-07-04T15:29:18.230Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/auth.tsx",
+      "action": "create",
+      "tokens": 390,
+      "at": "2026-07-04T15:29:48.485Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/auth.tsx",
+      "action": "create",
+      "tokens": 390,
+      "at": "2026-07-04T15:29:48.500Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/LoginPage.tsx",
+      "action": "create",
+      "tokens": 825,
+      "at": "2026-07-04T15:29:58.347Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/LoginPage.tsx",
+      "action": "create",
+      "tokens": 825,
+      "at": "2026-07-04T15:29:58.379Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/JoinPage.tsx",
+      "action": "create",
+      "tokens": 1645,
+      "at": "2026-07-04T15:30:21.375Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "create",
+      "tokens": 2032,
+      "at": "2026-07-04T15:30:50.258Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "create",
+      "tokens": 2032,
+      "at": "2026-07-04T15:30:50.279Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/App.tsx",
+      "action": "create",
+      "tokens": 580,
+      "at": "2026-07-04T15:31:05.316Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 135,
+      "at": "2026-07-04T15:31:15.454Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 135,
+      "at": "2026-07-04T15:31:15.470Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 347,
+      "at": "2026-07-04T15:31:22.235Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/AuditLog.tsx",
+      "action": "create",
+      "tokens": 615,
+      "at": "2026-07-04T15:31:35.656Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/AuditLog.tsx",
+      "action": "create",
+      "tokens": 615,
+      "at": "2026-07-04T15:31:35.676Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 50,
+      "at": "2026-07-04T15:31:37.551Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 88,
+      "at": "2026-07-04T15:31:40.406Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 88,
+      "at": "2026-07-04T15:31:40.433Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/BanksPage.tsx",
+      "action": "edit",
+      "tokens": 91,
+      "at": "2026-07-04T15:31:43.210Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/BanksPage.tsx",
+      "action": "edit",
+      "tokens": 91,
+      "at": "2026-07-04T15:31:43.222Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/BanksPage.tsx",
+      "action": "edit",
+      "tokens": 164,
+      "at": "2026-07-04T15:31:47.184Z"
     }
   ],
   "edit_counts": {
@@ -574,9 +988,9 @@
     "package.json": 2,
     "server/package.json": 2,
     "server/tsconfig.json": 2,
-    "server/src/config.ts": 2,
-    "server/src/db.ts": 4,
-    "server/src/app.ts": 13,
+    "server/src/config.ts": 4,
+    "server/src/db.ts": 6,
+    "server/src/app.ts": 17,
     "server/src/index.ts": 1,
     "server/test/health.test.ts": 2,
     "web/package.json": 2,
@@ -585,26 +999,37 @@
     "web/index.html": 1,
     "web/src/main.tsx": 2,
     "web/src/index.css": 2,
-    "web/src/App.tsx": 4,
+    "web/src/App.tsx": 5,
     "server/src/lib/ids.ts": 2,
     "server/src/ledger.ts": 4,
     "server/src/lib/audit.ts": 2,
-    "server/src/routes/banks.ts": 2,
-    "server/src/routes/sessions.ts": 8,
-    "server/src/routes/players.ts": 2,
-    "server/test/phase1.test.ts": 2,
+    "server/src/routes/banks.ts": 4,
+    "server/src/routes/sessions.ts": 19,
+    "server/src/routes/players.ts": 4,
+    "server/test/phase1.test.ts": 4,
     "web/src/api.ts": 6,
-    "web/src/pages/BanksPage.tsx": 2,
+    "web/src/pages/BanksPage.tsx": 5,
     "web/src/pages/NewSessionPage.tsx": 2,
-    "web/src/pages/SessionPage.tsx": 7,
-    "server/src/routes/transactions.ts": 2,
-    "server/test/phase2.test.ts": 2,
+    "web/src/pages/SessionPage.tsx": 13,
+    "server/src/routes/transactions.ts": 13,
+    "server/test/phase2.test.ts": 4,
     "web/src/components/TransactionForm.tsx": 2,
-    "web/src/components/TransactionHistory.tsx": 2
+    "web/src/components/TransactionHistory.tsx": 2,
+    "server/src/lib/passwords.ts": 2,
+    "server/src/auth.ts": 2,
+    "server/src/services/playerService.ts": 2,
+    "server/src/routes/auth.ts": 2,
+    "server/test/helpers.ts": 2,
+    "server/test/phase3.test.ts": 2,
+    "web/src/auth.tsx": 2,
+    "web/src/pages/LoginPage.tsx": 2,
+    "web/src/pages/JoinPage.tsx": 1,
+    "web/src/pages/PlayerPage.tsx": 2,
+    "web/src/components/AuditLog.tsx": 2
   },
   "anatomy_hits": 0,
   "anatomy_misses": 1,
   "repeated_reads_warned": 1,
   "cerebrum_warnings": 0,
-  "stop_count": 3
+  "stop_count": 5
 }

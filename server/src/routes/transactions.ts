@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { LedgerError, ensureAccount, postTransaction, reverseTransaction, type EntryInput } from "../ledger.js";
 import { logAudit } from "../lib/audit.js";
 import { getSessionOr404 } from "./sessions.js";
+import { deny, isSessionAdmin, isSessionMember, verifyPin } from "../auth.js";
 
 // Các loại giao dịch Phase 2. Tất cả đều là tổ hợp entries của cùng một engine:
 //   transfer        người chơi → người chơi
@@ -22,6 +23,7 @@ interface CreateTxBody {
   assetTypeId?: number;
   note?: string;
   idempotencyKey?: string;
+  pin?: string;
 }
 
 function getActivePlayer(app: FastifyInstance, sessionId: number, playerId: number) {
@@ -49,6 +51,7 @@ export function transactionRoutes(app: FastifyInstance): void {
             assetTypeId: { type: "integer" },
             note: { type: "string", maxLength: 200 },
             idempotencyKey: { type: "string", minLength: 8, maxLength: 64 },
+            pin: { type: "string", pattern: "^[0-9]{4,6}$" },
           },
           additionalProperties: false,
         },
@@ -64,6 +67,32 @@ export function transactionRoutes(app: FastifyInstance): void {
       if (session.status === "ended") {
         return reply.status(422).send({ ok: false, error: { code: "SESSION_ENDED", message: "Phiên đã kết thúc" } });
       }
+
+      // Phân quyền: session-admin làm được mọi loại (không cần PIN).
+      // Người chơi thường: CHỈ 'transfer' từ chính tài khoản mình + bắt buộc PIN.
+      const principal = req.principal;
+      if (!principal) return deny(app, req, reply, sessionId);
+      const admin = isSessionAdmin(app.db, principal, sessionId);
+      if (!admin) {
+        if (
+          principal.type !== "player" ||
+          principal.sessionId !== sessionId ||
+          body.type !== "transfer" ||
+          body.fromPlayerId !== principal.id
+        ) {
+          return deny(app, req, reply, sessionId);
+        }
+        try {
+          if (!body.pin) throw new LedgerError("PIN_REQUIRED", "Cần nhập PIN để xác nhận giao dịch", 422);
+          verifyPin(app.db, principal.id, body.pin);
+        } catch (err) {
+          if (err instanceof LedgerError) {
+            return reply.status(err.statusCode).send({ ok: false, error: { code: err.code, message: err.message } });
+          }
+          throw err;
+        }
+      }
+      const createdBy = `${principal.type}:${principal.id}`;
       const config = JSON.parse(session.config_json) as { allowNegative?: boolean };
 
       // Tài sản: mặc định là tài sản chính của phiên
@@ -132,12 +161,19 @@ export function transactionRoutes(app: FastifyInstance): void {
           sessionId,
           type: body.type,
           note: body.note,
-          createdBy: "admin",
+          createdBy,
           idempotencyKey: body.idempotencyKey,
           entries,
           allowNegative,
         });
-        logAudit(app.db, { sessionId, actorType: "admin", action: `tx.${body.type}`, target: `tx:${tx.id}`, detail: body });
+        logAudit(app.db, {
+          sessionId,
+          actorType: principal.type,
+          actorId: principal.id,
+          action: `tx.${body.type}`,
+          target: `tx:${tx.id}`,
+          detail: { ...body, pin: undefined },
+        });
         reply.status(201).send({ ok: true, data: tx });
       } catch (err) {
         if (err instanceof LedgerError) {
@@ -155,9 +191,17 @@ export function transactionRoutes(app: FastifyInstance): void {
     if (!session) {
       return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
     }
+    if (!req.principal || !isSessionAdmin(app.db, req.principal, sessionId)) return deny(app, req, reply, sessionId);
     try {
-      const reversal = reverseTransaction(app.db, sessionId, Number(txId), "admin");
-      logAudit(app.db, { sessionId, actorType: "admin", action: "tx.reverse", target: `tx:${txId}`, detail: { reversalId: reversal.id } });
+      const reversal = reverseTransaction(app.db, sessionId, Number(txId), `${req.principal.type}:${req.principal.id}`);
+      logAudit(app.db, {
+        sessionId,
+        actorType: req.principal.type,
+        actorId: req.principal.id,
+        action: "tx.reverse",
+        target: `tx:${txId}`,
+        detail: { reversalId: reversal.id },
+      });
       reply.status(201).send({ ok: true, data: reversal });
     } catch (err) {
       if (err instanceof LedgerError) {
@@ -189,6 +233,7 @@ export function transactionRoutes(app: FastifyInstance): void {
       if (!getSessionOr404(app, sessionId)) {
         return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
       }
+      if (!req.principal || !isSessionMember(app.db, req.principal, sessionId)) return deny(app, req, reply, sessionId);
 
       const conds = ["t.session_id = ?"];
       const params: unknown[] = [sessionId];

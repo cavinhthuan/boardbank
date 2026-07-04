@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { api, type SessionDetail } from "../api";
 import TransactionForm from "../components/TransactionForm";
 import TransactionHistory from "../components/TransactionHistory";
+import AuditLog from "../components/AuditLog";
 
 function formatAmount(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -39,6 +40,15 @@ export default function SessionPage() {
   async function removePlayer(playerId: number) {
     try {
       await api.delete(`/api/v1/sessions/${id}/players/${playerId}`);
+      await load();
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  }
+
+  async function toggleLock(playerId: number, locked: boolean) {
+    try {
+      await api.post(`/api/v1/sessions/${id}/players/${playerId}/lock`, { locked });
       await load();
     } catch (err) {
       setError((err as Error).message);
@@ -98,11 +108,19 @@ export default function SessionPage() {
             <div className="flex items-center gap-3">
               <span className="text-2xl">{p.avatar}</span>
               <span className="font-semibold">{p.display_name}</span>
+              {p.status === "locked" && <span className="text-sm" title="Đang khóa">🔒</span>}
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <span className="font-mono text-lg">
                 {formatAmount(balanceOf(p.id))} <span className="text-slate-400 text-sm">{primaryAsset?.name}</span>
               </span>
+              <button
+                onClick={() => toggleLock(p.id, p.status !== "locked")}
+                className="rounded-lg px-2 py-1 text-slate-500 hover:bg-amber-900/40 hover:text-amber-300"
+                title={p.status === "locked" ? "Mở khóa tài khoản" : "Khóa tài khoản"}
+              >
+                {p.status === "locked" ? "🔓" : "🔒"}
+              </button>
               <button
                 onClick={() => removePlayer(p.id)}
                 className="rounded-lg px-2 py-1 text-slate-500 hover:bg-red-900/40 hover:text-red-300"
@@ -139,6 +157,8 @@ export default function SessionPage() {
           setRefreshKey((k) => k + 1);
         }}
       />
+
+      <AuditLog sessionId={id!} refreshKey={refreshKey} />
     </div>
   );
 }
