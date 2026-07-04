@@ -3,6 +3,7 @@ import { LedgerError, ensureAccount, postTransaction, reverseTransaction, type E
 import { logAudit } from "../lib/audit.js";
 import { getSessionOr404 } from "./sessions.js";
 import { deny, isSessionAdmin, isSessionMember, verifyPin } from "../auth.js";
+import { emitTxEvents } from "../events.js";
 
 // Các loại giao dịch Phase 2. Tất cả đều là tổ hợp entries của cùng một engine:
 //   transfer        người chơi → người chơi
@@ -174,6 +175,7 @@ export function transactionRoutes(app: FastifyInstance): void {
           target: `tx:${tx.id}`,
           detail: { ...body, pin: undefined },
         });
+        emitTxEvents(app, sessionId, tx.id);
         reply.status(201).send({ ok: true, data: tx });
       } catch (err) {
         if (err instanceof LedgerError) {
@@ -202,6 +204,7 @@ export function transactionRoutes(app: FastifyInstance): void {
         target: `tx:${txId}`,
         detail: { reversalId: reversal.id },
       });
+      emitTxEvents(app, sessionId, reversal.id);
       reply.status(201).send({ ok: true, data: reversal });
     } catch (err) {
       if (err instanceof LedgerError) {

@@ -108,6 +108,18 @@ const MIGRATIONS: string[] = [
   ALTER TABLE banks ADD COLUMN owner_admin_id INTEGER REFERENCES admins(id);
   ALTER TABLE players ADD COLUMN pin_failed_count INTEGER NOT NULL DEFAULT 0;
   ALTER TABLE players ADD COLUMN pin_locked_until TEXT;`,
+
+  // 004: thông báo Phase 4 (player_id NULL = broadcast cho cả phiên)
+  `CREATE TABLE notifications (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    player_id INTEGER REFERENCES players(id),
+    type TEXT NOT NULL,
+    payload_json TEXT NOT NULL DEFAULT '{}',
+    read_at TEXT,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+  );
+  CREATE INDEX idx_notif_target ON notifications(session_id, player_id, id);`,
 ];
 
 export function openDb(dbPath: string): Database.Database {

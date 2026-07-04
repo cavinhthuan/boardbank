@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-04T15:31:47.163Z
-> Files: 46 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-04T15:52:37.766Z
+> Files: 52 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -28,10 +28,11 @@
 
 ## server/src/
 
-- `app.ts` — API routes: GET (1 endpoints) (~608 tok)
+- `app.ts` — API routes: GET (1 endpoints) (~683 tok)
 - `auth.ts` — Gắn req.principal cho mọi request từ cookie (nếu có). (~1823 tok)
 - `config.ts` — Exports Config, loadConfig (~150 tok)
-- `db.ts` — Migration là additive-only (quy tắc tương thích ngược trong master plan). (~1432 tok)
+- `db.ts` — Migration là additive-only (quy tắc tương thích ngược trong master plan). (~1571 tok)
+- `events.ts` — null = admin theo dõi phiên (nhận mọi broadcast, không nhận event cá nhân) (~1567 tok)
 - `index.ts` — Declares config (~139 tok)
 - `ledger.ts` — account id được phép âm số dư (vd: kho bạc bank khi phát hành tiền) (~1985 tok)
 
@@ -45,9 +46,10 @@
 
 - `auth.ts` — API routes: POST, GET (7 endpoints) (~2415 tok)
 - `banks.ts` — API routes: POST, GET (2 endpoints) (~442 tok)
+- `events.ts` — API routes: GET, POST (3 endpoints) (~1033 tok)
 - `players.ts` — API routes: POST, DELETE (3 endpoints) (~1570 tok)
 - `sessions.ts` — API routes: POST, GET (4 endpoints) (~1913 tok)
-- `transactions.ts` — Các loại giao dịch Phase 2. Tất cả đều là tổ hợp entries của cùng một engine: (~3463 tok)
+- `transactions.ts` — Các loại giao dịch Phase 2. Tất cả đều là tổ hợp entries của cùng một engine: (~3503 tok)
 
 ## server/src/services/
 
@@ -60,6 +62,7 @@
 - `phase1.test.ts` — Cookies: createBank, createSession, addPlayer (~1604 tok)
 - `phase2.test.ts` — Cookies: setup, balanceOf, tx (~2504 tok)
 - `phase3.test.ts` — Cookies: setupSession, claimPlayer (~3115 tok)
+- `phase4.test.ts` — Cookies: fakeRaw, setupSession (~2213 tok)
 
 ## web/
 
@@ -79,8 +82,14 @@
 ## web/src/components/
 
 - `AuditLog.tsx` — AuditLog — renders table (~615 tok)
+- `NotificationBell.tsx` — describeNotification (~809 tok)
+- `Toasts.tsx` — useToasts (~338 tok)
 - `TransactionForm.tsx` — TX_TYPES — renders form (~1321 tok)
 - `TransactionHistory.tsx` — TYPE_LABELS (~1502 tok)
+
+## web/src/hooks/
+
+- `useSessionEvents.ts` — gọi khi kết nối lại sau khi rớt, và mỗi 10s khi SSE đang hỏng (fallback polling) (~566 tok)
 
 ## web/src/pages/
 
@@ -88,5 +97,5 @@
 - `JoinPage.tsx` — JoinPage — renders form (~1645 tok)
 - `LoginPage.tsx` — LoginPage — renders form (~825 tok)
 - `NewSessionPage.tsx` — NewSessionPage — renders form (~804 tok)
-- `PlayerPage.tsx` — fmt — renders form (~2032 tok)
-- `SessionPage.tsx` — formatAmount — renders form (~1712 tok)
+- `PlayerPage.tsx` — fmt — renders form (~2303 tok)
+- `SessionPage.tsx` — formatAmount — renders form (~1808 tok)

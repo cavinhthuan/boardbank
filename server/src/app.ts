@@ -5,7 +5,9 @@ import type Database from "better-sqlite3";
 import { statSync } from "node:fs";
 import type { Config } from "./config.js";
 import { registerAuthHook } from "./auth.js";
+import { EventHub } from "./events.js";
 import { authRoutes } from "./routes/auth.js";
+import { eventRoutes } from "./routes/events.js";
 import { bankRoutes } from "./routes/banks.js";
 import { sessionRoutes } from "./routes/sessions.js";
 import { playerRoutes } from "./routes/players.js";
@@ -31,6 +33,9 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
 
   app.decorate("db", db);
   app.decorate("config", config);
+  const hub = new EventHub();
+  app.decorate("events", hub);
+  app.addHook("onClose", async () => hub.close());
 
   app.setErrorHandler((err: FastifyError, req, reply) => {
     req.log.error(err);
@@ -58,6 +63,7 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
         uptime: Math.round(process.uptime()),
         rss: process.memoryUsage.rss(),
         dbSize,
+        sseClients: hub.count(),
       },
     };
   });
@@ -72,6 +78,7 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
     sessionRoutes(instance);
     playerRoutes(instance);
     transactionRoutes(instance);
+    eventRoutes(instance);
   });
 
   return app;

@@ -225,6 +225,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-04T15:31:47.188Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-07-04T15:49:08.141Z",
+      "error_message": "Function not marked async",
+      "file": "server/src/app.ts",
+      "root_cause": "Function uses await but wasn't declared async",
+      "fix": "Added async modifier",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:49:08.165Z"
     }
   ]
 }

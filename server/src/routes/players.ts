@@ -4,6 +4,7 @@ import { logAudit } from "../lib/audit.js";
 import { getSessionOr404 } from "./sessions.js";
 import { deny, isSessionAdmin } from "../auth.js";
 import { createPlayer } from "../services/playerService.js";
+import { emitPlayersChanged } from "../events.js";
 
 export function playerRoutes(app: FastifyInstance): void {
   app.post(
@@ -39,6 +40,7 @@ export function playerRoutes(app: FastifyInstance): void {
           action: "player.create",
           target: `player:${player.id}`,
         });
+        emitPlayersChanged(app, sessionId);
         reply.status(201).send({ ok: true, data: player });
       } catch (err) {
         if (err instanceof LedgerError) {
@@ -85,6 +87,7 @@ export function playerRoutes(app: FastifyInstance): void {
         action: locked ? "player.lock" : "player.unlock",
         target: `player:${pid}`,
       });
+      emitPlayersChanged(app, sessionId);
       return { ok: true, data: { id: pid, status: locked ? "locked" : "active" } };
     },
   );
@@ -123,6 +126,7 @@ export function playerRoutes(app: FastifyInstance): void {
         action: "player.soft_remove",
         target: `player:${pid}`,
       });
+      emitPlayersChanged(app, sessionId);
       return { ok: true, data: { removed: "soft" } };
     }
     app.db.transaction(() => {
@@ -136,6 +140,7 @@ export function playerRoutes(app: FastifyInstance): void {
       action: "player.delete",
       target: `player:${pid}`,
     });
+    emitPlayersChanged(app, sessionId);
     return { ok: true, data: { removed: "hard" } };
   });
 }

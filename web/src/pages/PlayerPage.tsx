@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, type SessionDetail, type Tx } from "../api";
 import { useAuth, type PlayerMe } from "../auth";
+import { useSessionEvents } from "../hooks/useSessionEvents";
+import { ToastStack, useToasts } from "../components/Toasts";
+import NotificationBell, { describeNotification } from "../components/NotificationBell";
 
 function fmt(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -20,6 +23,8 @@ export default function PlayerPage() {
   const [pin, setPin] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [notifKey, setNotifKey] = useState(0);
+  const { toasts, addToast } = useToasts();
 
   const load = useCallback(async () => {
     const d = await api.get<SessionDetail>(`/api/v1/sessions/${player.sessionId}`);
@@ -33,6 +38,24 @@ export default function PlayerPage() {
   useEffect(() => {
     load().catch((e) => setError((e as Error).message));
   }, [load]);
+
+  useSessionEvents(player.sessionId, {
+    onTx: () => {
+      load().catch(() => {});
+    },
+    onPlayers: () => {
+      load().catch(() => {});
+    },
+    onNotification: (n) => {
+      addToast(describeNotification(n), n.type === "tx.received" ? "success" : "warn");
+      setNotifKey((k) => k + 1);
+      load().catch(() => {});
+    },
+    onResync: () => {
+      load().catch(() => {});
+      setNotifKey((k) => k + 1);
+    },
+  });
 
   if (!detail) return <div className="p-6 text-slate-400">{error ?? "Đang tải…"}</div>;
 
@@ -73,6 +96,7 @@ export default function PlayerPage() {
 
   return (
     <div className="mx-auto max-w-md p-5">
+      <ToastStack toasts={toasts} />
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-3xl">{meRow?.avatar}</span>
@@ -81,15 +105,18 @@ export default function PlayerPage() {
             <div className="text-xs text-slate-500">{detail.session.name}</div>
           </div>
         </div>
-        <button
-          onClick={async () => {
-            await logout();
-            navigate("/join");
-          }}
-          className="rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800"
-        >
-          Thoát
-        </button>
+        <div className="flex items-center gap-1">
+          <NotificationBell sessionId={player.sessionId} refreshKey={notifKey} />
+          <button
+            onClick={async () => {
+              await logout();
+              navigate("/join");
+            }}
+            className="rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800"
+          >
+            Thoát
+          </button>
+        </div>
       </header>
 
       <div className="mt-5 rounded-2xl bg-gradient-to-br from-emerald-700 to-emerald-900 p-6 shadow-lg">

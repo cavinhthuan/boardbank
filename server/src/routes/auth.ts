@@ -4,6 +4,7 @@ import { hashSecret, verifySecret } from "../lib/passwords.js";
 import { logAudit } from "../lib/audit.js";
 import { LedgerError } from "../ledger.js";
 import { createPlayer } from "../services/playerService.js";
+import { emitPlayersChanged } from "../events.js";
 
 const PIN_PATTERN = "^[0-9]{4,6}$";
 // Chặt trên các endpoint auth để chống dò mật khẩu/PIN (DoD Phase 3)
@@ -195,6 +196,7 @@ export function authRoutes(app: FastifyInstance): void {
       try {
         const player = createPlayer(app.db, session.id, displayName, undefined, hashSecret(pin));
         logAudit(app.db, { sessionId: session.id, actorType: "player", actorId: player.id, action: "player.self_join" });
+        emitPlayersChanged(app, session.id);
         setAuthCookie(app, reply, createAuthSession(app.db, "player", player.id));
         reply
           .status(201)

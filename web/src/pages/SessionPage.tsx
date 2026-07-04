@@ -4,6 +4,7 @@ import { api, type SessionDetail } from "../api";
 import TransactionForm from "../components/TransactionForm";
 import TransactionHistory from "../components/TransactionHistory";
 import AuditLog from "../components/AuditLog";
+import { useSessionEvents } from "../hooks/useSessionEvents";
 
 function formatAmount(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -23,6 +24,20 @@ export default function SessionPage() {
   useEffect(() => {
     load().catch((e) => setError((e as Error).message));
   }, [load]);
+
+  useSessionEvents(id, {
+    onTx: () => {
+      load().catch(() => {});
+      setRefreshKey((k) => k + 1);
+    },
+    onPlayers: () => {
+      load().catch(() => {});
+    },
+    onResync: () => {
+      load().catch(() => {});
+      setRefreshKey((k) => k + 1);
+    },
+  });
 
   async function addPlayer(e: FormEvent) {
     e.preventDefault();

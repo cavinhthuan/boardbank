@@ -196,3 +196,46 @@
 | 22:31 | Edited web/src/pages/BanksPage.tsx | modified BanksPage() | ~91 |
 | 22:31 | Edited web/src/pages/BanksPage.tsx | added optional chaining | ~164 |
 | 22:31 | Edited web/src/pages/BanksPage.tsx | added optional chaining | ~164 |
+| 15:35 | Phase 3 xong: auth admin scrypt+cookie, join code+PIN (khoa 5 lan sai), phan quyen tap trung (bank owner/session-admin/member), lock account, audit + UI login/join/vi nguoi choi; 29/29 test xanh; verify e2e cookie jars | server/src/auth.ts, routes/auth.ts, web/src/pages/* | ok | ~12000 |
+| 22:35 | Session end: 162 writes across 39 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~107688 tok |
+| 22:35 | Session end: 162 writes across 39 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~107688 tok |
+| 22:48 | Edited server/src/db.ts | expanded (+12 lines) | ~201 |
+| 22:48 | Edited server/src/db.ts | expanded (+12 lines) | ~201 |
+| 22:48 | Created server/src/events.ts | — | ~1567 |
+| 22:48 | Created server/src/events.ts | — | ~1567 |
+| 22:48 | Created server/src/routes/events.ts | — | ~1033 |
+| 22:48 | Created server/src/routes/events.ts | — | ~1033 |
+| 22:49 | Edited server/src/app.ts | added 2 import(s) | ~52 |
+| 22:49 | Edited server/src/app.ts | added 2 import(s) | ~52 |
+| 22:49 | Edited server/src/app.ts | 2→5 lines | ~49 |
+| 22:49 | Edited server/src/app.ts | 2→5 lines | ~49 |
+| 22:49 | Edited server/src/app.ts | 10→11 lines | ~64 |
+| 22:49 | Edited server/src/app.ts | 10→11 lines | ~64 |
+| 22:49 | Edited server/src/app.ts | 3→4 lines | ~27 |
+| 22:49 | Edited server/src/app.ts | 3→4 lines | ~27 |
+| 22:49 | Edited server/src/routes/transactions.ts | added 1 import(s) | ~36 |
+| 22:49 | Edited server/src/routes/transactions.ts | added 1 import(s) | ~36 |
+| 22:49 | Edited server/src/routes/transactions.ts | 3→4 lines | ~46 |
+| 22:49 | Edited server/src/routes/transactions.ts | 3→4 lines | ~46 |
+| 22:49 | Edited server/src/routes/transactions.ts | 3→4 lines | ~47 |
+| 22:49 | Edited server/src/routes/transactions.ts | 3→4 lines | ~47 |
+| 22:51 | Created server/test/phase4.test.ts | — | ~2213 |
+| 22:51 | Created server/test/phase4.test.ts | — | ~2213 |
+| 22:51 | Created web/src/hooks/useSessionEvents.ts | — | ~566 |
+| 22:51 | Created web/src/hooks/useSessionEvents.ts | — | ~566 |
+| 22:51 | Created web/src/components/Toasts.tsx | — | ~338 |
+| 22:51 | Created web/src/components/Toasts.tsx | — | ~338 |
+| 22:52 | Created web/src/components/NotificationBell.tsx | — | ~809 |
+| 22:52 | Created web/src/components/NotificationBell.tsx | — | ~809 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | added 3 import(s) | ~127 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | added 3 import(s) | ~127 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | 4→6 lines | ~72 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | 4→6 lines | ~72 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | expanded (+18 lines) | ~177 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | expanded (+18 lines) | ~177 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | 20→24 lines | ~254 |
+| 22:52 | Edited web/src/pages/PlayerPage.tsx | 20→24 lines | ~254 |
+| 22:52 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~31 |
+| 22:52 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~31 |
+| 22:52 | Edited web/src/pages/SessionPage.tsx | CSS: onTx, onPlayers, onResync | ~118 |
+| 22:52 | Edited web/src/pages/SessionPage.tsx | CSS: onTx, onPlayers, onResync | ~118 |
