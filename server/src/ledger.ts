@@ -30,6 +30,8 @@ export interface PostTxInput {
   entries: EntryInput[];
   /** account id được phép âm số dư (vd: kho bạc bank khi phát hành tiền) */
   allowNegative?: number[];
+  /** dữ liệu bất biến của giao dịch (vd: snapshot tỷ giá quy đổi) */
+  meta?: unknown;
 }
 
 export interface TxRecord {
@@ -94,8 +96,8 @@ export function postTransaction(db: Database.Database, input: PostTxInput): TxRe
 
     const txr = db
       .prepare(
-        `INSERT INTO transactions (session_id, code, type, status, note, created_by, idempotency_key, completed_at)
-         VALUES (?,?,?,'completed',?,?,?, strftime('%Y-%m-%dT%H:%M:%fZ','now'))`,
+        `INSERT INTO transactions (session_id, code, type, status, note, created_by, idempotency_key, meta_json, completed_at)
+         VALUES (?,?,?,'completed',?,?,?,?, strftime('%Y-%m-%dT%H:%M:%fZ','now'))`,
       )
       .run(
         input.sessionId,
@@ -104,6 +106,7 @@ export function postTransaction(db: Database.Database, input: PostTxInput): TxRe
         input.note ?? null,
         input.createdBy ?? null,
         input.idempotencyKey ?? null,
+        input.meta === undefined ? null : JSON.stringify(input.meta),
       );
     const txId = Number(txr.lastInsertRowid);
 

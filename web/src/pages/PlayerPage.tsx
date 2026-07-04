@@ -5,6 +5,8 @@ import { useAuth, type PlayerMe } from "../auth";
 import { useSessionEvents } from "../hooks/useSessionEvents";
 import { ToastStack, useToasts } from "../components/Toasts";
 import NotificationBell, { describeNotification } from "../components/NotificationBell";
+import ExchangeForm from "../components/ExchangeForm";
+import { formatMinor } from "../money";
 
 function fmt(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -19,6 +21,7 @@ export default function PlayerPage() {
   const [txs, setTxs] = useState<Tx[]>([]);
   const [toId, setToId] = useState("");
   const [amount, setAmount] = useState("");
+  const [assetId, setAssetId] = useState("");
   const [note, setNote] = useState("");
   const [pin, setPin] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -59,13 +62,16 @@ export default function PlayerPage() {
 
   if (!detail) return <div className="p-6 text-slate-400">{error ?? "Đang tải…"}</div>;
 
-  const primaryAsset = detail.assets.find((a) => a.is_primary) ?? detail.assets[0];
-  const myBalance =
-    detail.balances.find(
-      (b) => b.owner_type === "player" && b.owner_id === player.id && b.asset_type_id === primaryAsset?.id,
-    )?.balance_cached ?? 0;
+  const activeAssets = detail.assets.filter((a) => a.status === "active");
+  const primaryAsset = activeAssets.find((a) => a.is_primary) ?? activeAssets[0];
+  const balanceFor = (aid: number | undefined) =>
+    detail.balances.find((b) => b.owner_type === "player" && b.owner_id === player.id && b.asset_type_id === aid)
+      ?.balance_cached ?? 0;
+  const myBalance = balanceFor(primaryAsset?.id);
   const meRow = detail.players.find((p) => p.id === player.id);
   const others = detail.players.filter((p) => p.id !== player.id && p.status === "active");
+  const selectedAsset = activeAssets.find((a) => String(a.id) === assetId) ?? primaryAsset;
+  const secondaryAssets = activeAssets.filter((a) => !a.is_primary);
 
   async function transfer(e: FormEvent) {
     e.preventDefault();
@@ -77,6 +83,7 @@ export default function PlayerPage() {
         fromPlayerId: player.id,
         toPlayerId: Number(toId),
         amount: Number(amount),
+        ...(selectedAsset && !selectedAsset.is_primary ? { assetTypeId: selectedAsset.id } : {}),
         ...(note.trim() ? { note: note.trim() } : {}),
         pin,
         idempotencyKey: crypto.randomUUID(),
@@ -124,6 +131,15 @@ export default function PlayerPage() {
         <div className="mt-1 text-4xl font-bold tracking-tight">
           {fmt(myBalance)} <span className="text-lg font-normal text-emerald-200">{primaryAsset?.name}</span>
         </div>
+        {secondaryAssets.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2 border-t border-emerald-600/40 pt-3">
+            {secondaryAssets.map((a) => (
+              <span key={a.id} className="rounded-lg bg-emerald-950/50 px-2.5 py-1 text-sm">
+                {a.icon} {formatMinor(balanceFor(a.id), a.decimals)} {a.name}
+              </span>
+            ))}
+          </div>
+        )}
         {meRow?.status === "locked" && (
           <div className="mt-2 rounded bg-red-950/60 px-2 py-1 text-sm text-red-300">🔒 Tài khoản đang bị khóa</div>
         )}
@@ -140,12 +156,21 @@ export default function PlayerPage() {
               </option>
             ))}
           </select>
+          {activeAssets.length > 1 && (
+            <select value={assetId || String(primaryAsset?.id ?? "")} onChange={(e) => setAssetId(e.target.value)} className={field}>
+              {activeAssets.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.icon} {a.name}
+                </option>
+              ))}
+            </select>
+          )}
           <input
             type="number"
             min={1}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder={`Số tiền (${primaryAsset?.name})`}
+            placeholder={`Số tiền (${selectedAsset?.name})`}
             className={field}
             required
           />
@@ -168,6 +193,17 @@ export default function PlayerPage() {
           Chuyển
         </button>
       </form>
+
+      <ExchangeForm
+        sessionId={player.sessionId}
+        playerId={player.id}
+        assets={detail.assets}
+        rates={detail.rates}
+        onDone={() => {
+          setFlash("✅ Quy đổi thành công!");
+          load().catch(() => {});
+        }}
+      />
 
       <section className="mt-6">
         <h2 className="mb-2 font-semibold">Giao dịch gần đây</h2>

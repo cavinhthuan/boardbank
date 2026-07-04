@@ -4,7 +4,9 @@ import { api, type SessionDetail } from "../api";
 import TransactionForm from "../components/TransactionForm";
 import TransactionHistory from "../components/TransactionHistory";
 import AuditLog from "../components/AuditLog";
+import AssetsPanel from "../components/AssetsPanel";
 import { useSessionEvents } from "../hooks/useSessionEvents";
+import { formatMinor } from "../money";
 
 function formatAmount(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -74,10 +76,12 @@ export default function SessionPage() {
     return <div className="p-6 text-slate-400">{error ?? "Đang tải…"}</div>;
   }
 
-  const { session, bank, assets, players, balances } = detail;
-  const primaryAsset = assets.find((a) => a.is_primary) ?? assets[0];
-  const balanceOf = (playerId: number) =>
-    balances.find((b) => b.owner_type === "player" && b.owner_id === playerId && b.asset_type_id === primaryAsset?.id)
+  const { session, bank, assets, rates, players, balances } = detail;
+  const activeAssets = assets.filter((a) => a.status === "active");
+  const primaryAsset = activeAssets.find((a) => a.is_primary) ?? activeAssets[0];
+  const secondaryAssets = activeAssets.filter((a) => !a.is_primary);
+  const balanceOf = (playerId: number, assetId = primaryAsset?.id) =>
+    balances.find((b) => b.owner_type === "player" && b.owner_id === playerId && b.asset_type_id === assetId)
       ?.balance_cached ?? 0;
   const circulating = balances
     .filter((b) => b.owner_type === "player" && b.asset_type_id === primaryAsset?.id)
@@ -122,8 +126,19 @@ export default function SessionPage() {
           >
             <div className="flex items-center gap-3">
               <span className="text-2xl">{p.avatar}</span>
-              <span className="font-semibold">{p.display_name}</span>
-              {p.status === "locked" && <span className="text-sm" title="Đang khóa">🔒</span>}
+              <div>
+                <span className="font-semibold">{p.display_name}</span>
+                {p.status === "locked" && <span className="ml-1 text-sm" title="Đang khóa">🔒</span>}
+                {secondaryAssets.length > 0 && (
+                  <div className="mt-0.5 flex flex-wrap gap-2 text-xs text-slate-400">
+                    {secondaryAssets.map((a) => (
+                      <span key={a.id}>
+                        {a.icon} {formatMinor(balanceOf(p.id, a.id), a.decimals)}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <span className="font-mono text-lg">
@@ -154,7 +169,7 @@ export default function SessionPage() {
           <TransactionForm
             sessionId={id!}
             players={players}
-            asset={primaryAsset}
+            assets={assets}
             onDone={() => {
               load().catch(() => {});
               setRefreshKey((k) => k + 1);
@@ -162,6 +177,15 @@ export default function SessionPage() {
           />
         </div>
       )}
+
+      <AssetsPanel
+        sessionId={id!}
+        assets={assets}
+        rates={rates}
+        onChanged={() => {
+          load().catch(() => {});
+        }}
+      />
 
       <TransactionHistory
         sessionId={id!}

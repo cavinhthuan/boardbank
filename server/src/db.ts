@@ -120,6 +120,22 @@ const MIGRATIONS: string[] = [
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
   );
   CREATE INDEX idx_notif_target ON notifications(session_id, player_id, id);`,
+
+  // 005: đa tài sản & quy đổi Phase 5
+  // Tỷ giá lưu dạng phân số nguyên (num/den) — tính bằng BigInt, không sai số float.
+  `CREATE TABLE exchange_rates (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    from_asset_id INTEGER NOT NULL REFERENCES asset_types(id),
+    to_asset_id INTEGER NOT NULL REFERENCES asset_types(id),
+    rate_num INTEGER NOT NULL CHECK (rate_num > 0),
+    rate_den INTEGER NOT NULL DEFAULT 1 CHECK (rate_den > 0),
+    updated_by TEXT,
+    updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+    UNIQUE(session_id, from_asset_id, to_asset_id)
+  );
+  ALTER TABLE asset_types ADD COLUMN status TEXT NOT NULL DEFAULT 'active';
+  ALTER TABLE transactions ADD COLUMN meta_json TEXT;`,
 ];
 
 export function openDb(dbPath: string): Database.Database {

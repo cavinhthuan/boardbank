@@ -12,20 +12,23 @@ const TX_TYPES = [
 interface Props {
   sessionId: string;
   players: Player[];
-  asset: AssetType | undefined;
+  assets: AssetType[];
   onDone: () => void;
 }
 
-export default function TransactionForm({ sessionId, players, asset, onDone }: Props) {
+export default function TransactionForm({ sessionId, players, assets, onDone }: Props) {
   const [type, setType] = useState<(typeof TX_TYPES)[number]["value"]>("transfer");
   const [fromId, setFromId] = useState("");
   const [toId, setToId] = useState("");
   const [amount, setAmount] = useState("");
+  const [assetId, setAssetId] = useState("");
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   const spec = TX_TYPES.find((t) => t.value === type)!;
+  const activeAssets = assets.filter((a) => a.status === "active");
+  const asset = activeAssets.find((a) => String(a.id) === assetId) ?? activeAssets.find((a) => a.is_primary) ?? activeAssets[0];
   const field =
     "rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 outline-none focus:border-emerald-500 w-full";
 
@@ -42,6 +45,7 @@ export default function TransactionForm({ sessionId, players, asset, onDone }: P
       await api.post(`/api/v1/sessions/${sessionId}/transactions`, {
         type,
         amount: amt,
+        ...(asset && !asset.is_primary ? { assetTypeId: asset.id } : {}),
         ...(spec.needsFrom ? { fromPlayerId: Number(fromId) } : {}),
         ...(spec.needsTo ? { toPlayerId: Number(toId) } : {}),
         ...(note.trim() ? { note: note.trim() } : {}),
@@ -94,6 +98,18 @@ export default function TransactionForm({ sessionId, players, asset, onDone }: P
             <select value={toId} onChange={(e) => setToId(e.target.value)} className={field} required>
               <option value="">— chọn người chơi —</option>
               {playerOptions}
+            </select>
+          </label>
+        )}
+        {activeAssets.length > 1 && (
+          <label className="block">
+            <span className="mb-1 block text-sm text-slate-400">Tài sản</span>
+            <select value={String(asset?.id ?? "")} onChange={(e) => setAssetId(e.target.value)} className={field}>
+              {activeAssets.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.icon} {a.name}
+                </option>
+              ))}
             </select>
           </label>
         )}

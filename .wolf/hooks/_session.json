@@ -1202,6 +1202,354 @@
       "action": "edit",
       "tokens": 118,
       "at": "2026-07-04T15:52:37.794Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/db.ts",
+      "action": "edit",
+      "tokens": 244,
+      "at": "2026-07-04T16:03:24.827Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/db.ts",
+      "action": "edit",
+      "tokens": 244,
+      "at": "2026-07-04T16:03:24.852Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/ledger.ts",
+      "action": "edit",
+      "tokens": 71,
+      "at": "2026-07-04T16:03:28.374Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/ledger.ts",
+      "action": "edit",
+      "tokens": 71,
+      "at": "2026-07-04T16:03:28.385Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/ledger.ts",
+      "action": "edit",
+      "tokens": 147,
+      "at": "2026-07-04T16:03:32.848Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/assets.ts",
+      "action": "create",
+      "tokens": 4146,
+      "at": "2026-07-04T16:04:28.928Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/assets.ts",
+      "action": "create",
+      "tokens": 4146,
+      "at": "2026-07-04T16:04:28.957Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 32,
+      "at": "2026-07-04T16:04:39.237Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 27,
+      "at": "2026-07-04T16:04:40.617Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/app.ts",
+      "action": "edit",
+      "tokens": 27,
+      "at": "2026-07-04T16:04:40.640Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/services/playerService.ts",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-07-04T16:04:42.512Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/services/playerService.ts",
+      "action": "edit",
+      "tokens": 38,
+      "at": "2026-07-04T16:04:42.541Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 53,
+      "at": "2026-07-04T16:04:44.901Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 53,
+      "at": "2026-07-04T16:04:44.922Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 44,
+      "at": "2026-07-04T16:04:46.755Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/src/routes/sessions.ts",
+      "action": "edit",
+      "tokens": 44,
+      "at": "2026-07-04T16:04:46.775Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase5.test.ts",
+      "action": "create",
+      "tokens": 3471,
+      "at": "2026-07-04T16:05:39.346Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/server/test/phase5.test.ts",
+      "action": "create",
+      "tokens": 3471,
+      "at": "2026-07-04T16:05:39.360Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/money.ts",
+      "action": "create",
+      "tokens": 528,
+      "at": "2026-07-04T16:06:18.022Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/money.ts",
+      "action": "create",
+      "tokens": 528,
+      "at": "2026-07-04T16:06:18.058Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/api.ts",
+      "action": "edit",
+      "tokens": 89,
+      "at": "2026-07-04T16:06:20.484Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/api.ts",
+      "action": "edit",
+      "tokens": 89,
+      "at": "2026-07-04T16:06:20.500Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/api.ts",
+      "action": "edit",
+      "tokens": 59,
+      "at": "2026-07-04T16:06:22.636Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/api.ts",
+      "action": "edit",
+      "tokens": 59,
+      "at": "2026-07-04T16:06:22.651Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/AssetsPanel.tsx",
+      "action": "create",
+      "tokens": 1828,
+      "at": "2026-07-04T16:06:50.638Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/AssetsPanel.tsx",
+      "action": "create",
+      "tokens": 1828,
+      "at": "2026-07-04T16:06:50.662Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/api.ts",
+      "action": "edit",
+      "tokens": 83,
+      "at": "2026-07-04T16:07:01.455Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/api.ts",
+      "action": "edit",
+      "tokens": 83,
+      "at": "2026-07-04T16:07:01.487Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/AssetsPanel.tsx",
+      "action": "edit",
+      "tokens": 93,
+      "at": "2026-07-04T16:07:05.784Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/AssetsPanel.tsx",
+      "action": "edit",
+      "tokens": 93,
+      "at": "2026-07-04T16:07:05.817Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/ExchangeForm.tsx",
+      "action": "create",
+      "tokens": 1243,
+      "at": "2026-07-04T16:07:29.225Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/ExchangeForm.tsx",
+      "action": "create",
+      "tokens": 1243,
+      "at": "2026-07-04T16:07:29.249Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 53,
+      "at": "2026-07-04T16:07:39.966Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 53,
+      "at": "2026-07-04T16:07:39.999Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 60,
+      "at": "2026-07-04T16:07:42.338Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 60,
+      "at": "2026-07-04T16:07:42.364Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 205,
+      "at": "2026-07-04T16:07:47.538Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 205,
+      "at": "2026-07-04T16:07:47.563Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 121,
+      "at": "2026-07-04T16:07:50.833Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 121,
+      "at": "2026-07-04T16:07:50.847Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 169,
+      "at": "2026-07-04T16:07:55.108Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 169,
+      "at": "2026-07-04T16:07:55.132Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 186,
+      "at": "2026-07-04T16:07:58.384Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 106,
+      "at": "2026-07-04T16:08:01.038Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/PlayerPage.tsx",
+      "action": "edit",
+      "tokens": 106,
+      "at": "2026-07-04T16:08:01.071Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/TransactionForm.tsx",
+      "action": "edit",
+      "tokens": 243,
+      "at": "2026-07-04T16:08:16.709Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/TransactionForm.tsx",
+      "action": "edit",
+      "tokens": 243,
+      "at": "2026-07-04T16:08:16.741Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/TransactionForm.tsx",
+      "action": "edit",
+      "tokens": 120,
+      "at": "2026-07-04T16:08:20.883Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/TransactionForm.tsx",
+      "action": "edit",
+      "tokens": 120,
+      "at": "2026-07-04T16:08:20.905Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/TransactionForm.tsx",
+      "action": "edit",
+      "tokens": 242,
+      "at": "2026-07-04T16:08:24.473Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/components/TransactionForm.tsx",
+      "action": "edit",
+      "tokens": 242,
+      "at": "2026-07-04T16:08:24.497Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 58,
+      "at": "2026-07-04T16:08:33.854Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 58,
+      "at": "2026-07-04T16:08:33.892Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 142,
+      "at": "2026-07-04T16:08:38.091Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 142,
+      "at": "2026-07-04T16:08:38.111Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 215,
+      "at": "2026-07-04T16:08:42.348Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 145,
+      "at": "2026-07-04T16:08:45.394Z"
+    },
+    {
+      "file": "D:/CODE/WEB_APP/BoardBank/web/src/pages/SessionPage.tsx",
+      "action": "edit",
+      "tokens": 145,
+      "at": "2026-07-04T16:08:45.413Z"
     }
   ],
   "edit_counts": {
@@ -1211,8 +1559,8 @@
     "server/package.json": 2,
     "server/tsconfig.json": 2,
     "server/src/config.ts": 4,
-    "server/src/db.ts": 8,
-    "server/src/app.ts": 25,
+    "server/src/db.ts": 10,
+    "server/src/app.ts": 28,
     "server/src/index.ts": 1,
     "server/test/health.test.ts": 2,
     "web/package.json": 2,
@@ -1223,41 +1571,46 @@
     "web/src/index.css": 2,
     "web/src/App.tsx": 5,
     "server/src/lib/ids.ts": 2,
-    "server/src/ledger.ts": 4,
+    "server/src/ledger.ts": 7,
     "server/src/lib/audit.ts": 2,
     "server/src/routes/banks.ts": 4,
-    "server/src/routes/sessions.ts": 19,
+    "server/src/routes/sessions.ts": 23,
     "server/src/routes/players.ts": 4,
     "server/test/phase1.test.ts": 4,
-    "web/src/api.ts": 6,
+    "web/src/api.ts": 12,
     "web/src/pages/BanksPage.tsx": 5,
     "web/src/pages/NewSessionPage.tsx": 2,
-    "web/src/pages/SessionPage.tsx": 17,
+    "web/src/pages/SessionPage.tsx": 24,
     "server/src/routes/transactions.ts": 18,
     "server/test/phase2.test.ts": 4,
-    "web/src/components/TransactionForm.tsx": 2,
+    "web/src/components/TransactionForm.tsx": 8,
     "web/src/components/TransactionHistory.tsx": 2,
     "server/src/lib/passwords.ts": 2,
     "server/src/auth.ts": 2,
-    "server/src/services/playerService.ts": 2,
+    "server/src/services/playerService.ts": 4,
     "server/src/routes/auth.ts": 2,
     "server/test/helpers.ts": 2,
     "server/test/phase3.test.ts": 2,
     "web/src/auth.tsx": 2,
     "web/src/pages/LoginPage.tsx": 2,
     "web/src/pages/JoinPage.tsx": 1,
-    "web/src/pages/PlayerPage.tsx": 9,
+    "web/src/pages/PlayerPage.tsx": 22,
     "web/src/components/AuditLog.tsx": 2,
     "server/src/events.ts": 2,
     "server/src/routes/events.ts": 1,
     "server/test/phase4.test.ts": 2,
     "web/src/hooks/useSessionEvents.ts": 2,
     "web/src/components/Toasts.tsx": 2,
-    "web/src/components/NotificationBell.tsx": 2
+    "web/src/components/NotificationBell.tsx": 2,
+    "server/src/routes/assets.ts": 2,
+    "server/test/phase5.test.ts": 2,
+    "web/src/money.ts": 2,
+    "web/src/components/AssetsPanel.tsx": 4,
+    "web/src/components/ExchangeForm.tsx": 2
   },
   "anatomy_hits": 0,
   "anatomy_misses": 1,
   "repeated_reads_warned": 1,
   "cerebrum_warnings": 0,
-  "stop_count": 6
+  "stop_count": 8
 }

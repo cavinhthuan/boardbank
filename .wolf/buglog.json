@@ -241,6 +241,134 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-04T15:49:08.165Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-07-04T16:03:24.832Z",
+      "error_message": "Type error",
+      "file": "server/src/db.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: // 005: đa tài sản & quy đổi Phase 5; // Tỷ giá lưu dạng phân số nguyên (num/den) — tính bằng BigI",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T16:03:24.861Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-07-04T16:04:42.517Z",
+      "error_message": "Incorrect value in code",
+      "file": "server/src/services/playerService.ts",
+      "root_cause": "Had \"SELECT id, is_primary FROM asset_types WHERE sess",
+      "fix": "Changed to \"SELECT id, is_primary FROM asset_types WHERE sess",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T16:04:42.551Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-07-04T16:07:05.789Z",
+      "error_message": "Significant refactor of ",
+      "file": "web/src/components/AssetsPanel.tsx",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 25→13 lines (11 removed) | Also: await api.post; // noop to satisfy linter pattern?; } catch {",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T16:07:05.828Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-07-04T16:07:47.542Z",
+      "error_message": "Significant refactor of ",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 7→10 lines (5 removed) | Also: const primaryAsset = detail.assets.find((a) => a.i; const myBalance =",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T16:07:47.572Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-07-04T16:07:58.388Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-04T16:07:58.388Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-07-04T16:08:01.041Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: <ExchangeForm; sessionId={player.sessionId}",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T16:08:01.077Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-07-04T16:08:16.712Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/components/TransactionForm.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: assets: AssetType[];; export default function TransactionForm({ sessionId, players | Also: {activeAssets.length > 1 && (; <span className=\"mb-1 block text-sm text-slate-400\">Tài sản<",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-07-04T16:08:24.507Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-07-04T16:08:38.095Z",
+      "error_message": "CSS fix: playerId",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "playerId: number) => → number, assetId = primaryAsset?.id) =>",
+      "fix": "Changed playerId: number) => → number, assetId = primaryAsset?.id) =>",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T16:08:38.118Z"
     }
   ]
 }

@@ -49,7 +49,7 @@ export function createPlayer(
       .run(sessionId, name, pickedAvatar, pinHash ?? null);
     const pid = Number(pr.lastInsertRowid);
 
-    const assets = db.prepare("SELECT id, is_primary FROM asset_types WHERE session_id=?").all(sessionId) as {
+    const assets = db.prepare("SELECT id, is_primary FROM asset_types WHERE session_id=? AND status='active'").all(sessionId) as {
       id: number;
       is_primary: number;
     }[];

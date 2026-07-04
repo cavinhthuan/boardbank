@@ -239,3 +239,68 @@
 | 22:52 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~31 |
 | 22:52 | Edited web/src/pages/SessionPage.tsx | CSS: onTx, onPlayers, onResync | ~118 |
 | 22:52 | Edited web/src/pages/SessionPage.tsx | CSS: onTx, onPlayers, onResync | ~118 |
+| 15:56 | Phase 4 xong: EventHub SSE (heartbeat 30s, don zombie), notifications DB + bell + toast, hook client tu reconnect + polling fallback; 35/35 test xanh; verify SSE that bang curl -N | server/src/events.ts, routes/events.ts, web/src/hooks/*, web/src/components/* | ok | ~9000 |
+| 22:55 | Session end: 199 writes across 44 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~122201 tok |
+| 22:55 | Session end: 199 writes across 44 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~122201 tok |
+| 23:03 | Edited server/src/db.ts | expanded (+16 lines) | ~244 |
+| 23:03 | Edited server/src/db.ts | expanded (+16 lines) | ~244 |
+| 23:03 | Edited server/src/ledger.ts | 5→7 lines | ~71 |
+| 23:03 | Edited server/src/ledger.ts | 5→7 lines | ~71 |
+| 23:03 | Edited server/src/ledger.ts | 13→14 lines | ~147 |
+| 23:03 | Edited server/src/ledger.ts | 13→14 lines | ~147 |
+| 23:04 | Created server/src/routes/assets.ts | — | ~4146 |
+| 23:04 | Created server/src/routes/assets.ts | — | ~4146 |
+| 23:04 | Edited server/src/app.ts | added 1 import(s) | ~32 |
+| 23:04 | Edited server/src/app.ts | added 1 import(s) | ~32 |
+| 23:04 | Edited server/src/app.ts | 3→4 lines | ~27 |
+| 23:04 | Edited server/src/app.ts | 3→4 lines | ~27 |
+| 23:04 | Edited server/src/services/playerService.ts | "SELECT id, is_primary FRO" → "SELECT id, is_primary FRO" | ~38 |
+| 23:04 | Edited server/src/services/playerService.ts | "SELECT id, is_primary FRO" → "SELECT id, is_primary FRO" | ~38 |
+| 23:04 | Edited server/src/routes/sessions.ts | 1→2 lines | ~53 |
+| 23:04 | Edited server/src/routes/sessions.ts | 1→2 lines | ~53 |
+| 23:04 | Edited server/src/routes/sessions.ts | 5→6 lines | ~44 |
+| 23:04 | Edited server/src/routes/sessions.ts | 5→6 lines | ~44 |
+| 23:05 | Created server/test/phase5.test.ts | — | ~3471 |
+| 23:05 | Created server/test/phase5.test.ts | — | ~3471 |
+| 23:06 | Created web/src/money.ts | — | ~528 |
+| 23:06 | Created web/src/money.ts | — | ~528 |
+| 23:06 | Edited web/src/api.ts | expanded (+9 lines) | ~89 |
+| 23:06 | Edited web/src/api.ts | expanded (+9 lines) | ~89 |
+| 23:06 | Edited web/src/api.ts | 7→8 lines | ~59 |
+| 23:06 | Edited web/src/api.ts | 7→8 lines | ~59 |
+| 23:06 | Created web/src/components/AssetsPanel.tsx | — | ~1828 |
+| 23:06 | Created web/src/components/AssetsPanel.tsx | — | ~1828 |
+| 23:07 | Edited web/src/api.ts | 3→5 lines | ~83 |
+| 23:07 | Edited web/src/api.ts | 3→5 lines | ~83 |
+| 23:07 | Edited web/src/components/AssetsPanel.tsx | modified catch() | ~93 |
+| 23:07 | Edited web/src/components/AssetsPanel.tsx | modified catch() | ~93 |
+| 23:07 | Created web/src/components/ExchangeForm.tsx | — | ~1243 |
+| 23:07 | Created web/src/components/ExchangeForm.tsx | — | ~1243 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | added 2 import(s) | ~53 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | added 2 import(s) | ~53 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | 4→5 lines | ~60 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | 4→5 lines | ~60 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | CSS: aid | ~205 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | CSS: aid | ~205 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | CSS: assetTypeId | ~121 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | CSS: assetTypeId | ~121 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | expanded (+9 lines) | ~169 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | expanded (+9 lines) | ~169 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | added nullish coalescing | ~186 |
+| 23:07 | Edited web/src/pages/PlayerPage.tsx | added nullish coalescing | ~186 |
+| 23:08 | Edited web/src/pages/PlayerPage.tsx | expanded (+11 lines) | ~106 |
+| 23:08 | Edited web/src/pages/PlayerPage.tsx | expanded (+11 lines) | ~106 |
+| 23:08 | Edited web/src/components/TransactionForm.tsx | added nullish coalescing | ~243 |
+| 23:08 | Edited web/src/components/TransactionForm.tsx | added nullish coalescing | ~243 |
+| 23:08 | Edited web/src/components/TransactionForm.tsx | CSS: assetTypeId | ~120 |
+| 23:08 | Edited web/src/components/TransactionForm.tsx | CSS: assetTypeId | ~120 |
+| 23:08 | Edited web/src/components/TransactionForm.tsx | added nullish coalescing | ~242 |
+| 23:08 | Edited web/src/components/TransactionForm.tsx | added nullish coalescing | ~242 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | added 2 import(s) | ~58 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | added 2 import(s) | ~58 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | 5→7 lines | ~142 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | 5→7 lines | ~142 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | expanded (+11 lines) | ~215 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | expanded (+11 lines) | ~215 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | expanded (+9 lines) | ~145 |
+| 23:08 | Edited web/src/pages/SessionPage.tsx | expanded (+9 lines) | ~145 |

@@ -12,6 +12,7 @@ import { bankRoutes } from "./routes/banks.js";
 import { sessionRoutes } from "./routes/sessions.js";
 import { playerRoutes } from "./routes/players.js";
 import { transactionRoutes } from "./routes/transactions.js";
+import { assetRoutes } from "./routes/assets.js";
 
 export interface AppDeps {
   db: Database.Database;
@@ -78,6 +79,7 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
     sessionRoutes(instance);
     playerRoutes(instance);
     transactionRoutes(instance);
+    assetRoutes(instance);
     eventRoutes(instance);
   });
 

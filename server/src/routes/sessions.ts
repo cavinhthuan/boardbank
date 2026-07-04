@@ -128,6 +128,7 @@ export function sessionRoutes(app: FastifyInstance): void {
     }
     if (!req.principal || !isSessionMember(app.db, req.principal, id)) return deny(app, req, reply, id);
     const assets = app.db.prepare("SELECT * FROM asset_types WHERE session_id=?").all(id);
+    const rates = app.db.prepare("SELECT * FROM exchange_rates WHERE session_id=?").all(id);
     const players = app.db
       .prepare(
         `SELECT p.id, p.display_name, p.avatar, p.role, p.status, p.created_at
@@ -147,6 +148,7 @@ export function sessionRoutes(app: FastifyInstance): void {
         session: { ...session, config: JSON.parse(session.config_json) },
         bank,
         assets,
+        rates,
         players,
         balances,
       },

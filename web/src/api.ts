@@ -30,6 +30,8 @@ export const api = {
   getWithMeta: <T, M>(url: string) => requestFull<T, M>(url),
   post: <T>(url: string, data: unknown) =>
     request<T>(url, { method: "POST", body: JSON.stringify(data) }),
+  put: <T>(url: string, data: unknown) =>
+    request<T>(url, { method: "PUT", body: JSON.stringify(data) }),
   delete: <T>(url: string) => request<T>(url, { method: "DELETE" }),
 };
 
@@ -57,6 +59,15 @@ export interface AssetType {
   icon: string | null;
   decimals: number;
   is_primary: number;
+  status: "active" | "hidden";
+}
+
+export interface ExchangeRate {
+  id: number;
+  from_asset_id: number;
+  to_asset_id: number;
+  rate_num: number;
+  rate_den: number;
 }
 
 export interface Player {
@@ -98,6 +109,7 @@ export interface SessionDetail {
   session: GameSession & { config: { initialBalance: number } };
   bank: Bank;
   assets: AssetType[];
+  rates: ExchangeRate[];
   players: Player[];
   balances: Balance[];
 }
