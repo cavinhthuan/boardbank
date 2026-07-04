@@ -17,6 +17,78 @@ const MIGRATIONS: string[] = [
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
   );
   CREATE INDEX idx_audit_session ON audit_log(session_id, created_at);`,
+
+  // 002: lõi domain Phase 1 — bank, phiên chơi, tài sản, người chơi, tài khoản, sổ cái
+  `CREATE TABLE banks (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    logo_path TEXT,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+  );
+  CREATE TABLE game_sessions (
+    id INTEGER PRIMARY KEY,
+    bank_id INTEGER NOT NULL REFERENCES banks(id),
+    name TEXT NOT NULL,
+    join_code TEXT NOT NULL UNIQUE,
+    status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft','active','paused','ended')),
+    config_json TEXT NOT NULL DEFAULT '{}',
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+    started_at TEXT,
+    ended_at TEXT
+  );
+  CREATE TABLE asset_types (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    code TEXT NOT NULL,
+    name TEXT NOT NULL,
+    icon TEXT,
+    decimals INTEGER NOT NULL DEFAULT 0,
+    is_primary INTEGER NOT NULL DEFAULT 0,
+    UNIQUE(session_id, code)
+  );
+  CREATE TABLE players (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    display_name TEXT NOT NULL,
+    avatar TEXT,
+    pin_hash TEXT,
+    role TEXT NOT NULL DEFAULT 'player' CHECK (role IN ('player','admin')),
+    status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active','locked','removed')),
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+    UNIQUE(session_id, display_name)
+  );
+  CREATE TABLE accounts (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    owner_type TEXT NOT NULL CHECK (owner_type IN ('player','bank')),
+    owner_id INTEGER NOT NULL,
+    asset_type_id INTEGER NOT NULL REFERENCES asset_types(id),
+    balance_cached INTEGER NOT NULL DEFAULT 0,
+    UNIQUE(session_id, owner_type, owner_id, asset_type_id)
+  );
+  CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    code TEXT NOT NULL UNIQUE,
+    type TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'completed' CHECK (status IN ('pending','completed','reversed','failed')),
+    note TEXT,
+    created_by TEXT,
+    idempotency_key TEXT UNIQUE,
+    reversed_by_tx_id INTEGER REFERENCES transactions(id),
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+    completed_at TEXT
+  );
+  CREATE INDEX idx_tx_session ON transactions(session_id, created_at);
+  CREATE TABLE transaction_entries (
+    id INTEGER PRIMARY KEY,
+    transaction_id INTEGER NOT NULL REFERENCES transactions(id),
+    account_id INTEGER NOT NULL REFERENCES accounts(id),
+    asset_type_id INTEGER NOT NULL REFERENCES asset_types(id),
+    amount INTEGER NOT NULL
+  );
+  CREATE INDEX idx_entries_tx ON transaction_entries(transaction_id);
+  CREATE INDEX idx_entries_account ON transaction_entries(account_id);`,
 ];
 
 export function openDb(dbPath: string): Database.Database {

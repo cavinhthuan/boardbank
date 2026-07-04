@@ -16,6 +16,22 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-04T15:01:48.881Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-07-04T15:04:27.846Z",
+      "error_message": "Type error",
+      "file": "server/src/db.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: // 002: lõi domain Phase 1 — bank, phiên chơi, tài sản, ngườ; `CREATE TABLE banks (",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:04:27.872Z"
     }
   ]
 }

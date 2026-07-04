@@ -2,6 +2,9 @@ import Fastify, { type FastifyError, type FastifyInstance } from "fastify";
 import type Database from "better-sqlite3";
 import { statSync } from "node:fs";
 import type { Config } from "./config.js";
+import { bankRoutes } from "./routes/banks.js";
+import { sessionRoutes } from "./routes/sessions.js";
+import { playerRoutes } from "./routes/players.js";
 
 export interface AppDeps {
   db: Database.Database;
@@ -53,6 +56,10 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
       },
     };
   });
+
+  bankRoutes(app);
+  sessionRoutes(app);
+  playerRoutes(app);
 
   return app;
 }

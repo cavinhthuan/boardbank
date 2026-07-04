@@ -53,3 +53,34 @@
 | 22:01 | Edited server/src/app.ts | inline fix | ~17 |
 | 22:01 | Edited server/src/app.ts | inline fix | ~22 |
 | 22:01 | Edited server/src/app.ts | inline fix | ~22 |
+| 15:05 | Phase 0 xong: monorepo server (Fastify+better-sqlite3+migration user_version+health) + web (Vite React Tailwind v4); test 3/3 xanh, build ok, server RSS ~93MB; commit c16729e | server/*, web/* | ok | ~3000 |
+| 22:04 | Edited server/src/db.ts | expanded (+72 lines) | ~842 |
+| 22:04 | Edited server/src/db.ts | expanded (+72 lines) | ~842 |
+| 22:04 | Created server/src/lib/ids.ts | — | ~131 |
+| 22:04 | Created server/src/lib/ids.ts | — | ~131 |
+| 22:04 | Created server/src/ledger.ts | — | ~1498 |
+| 22:04 | Created server/src/ledger.ts | — | ~1498 |
+| 22:05 | Created server/src/lib/audit.ts | — | ~174 |
+| 22:05 | Created server/src/lib/audit.ts | — | ~174 |
+| 22:05 | Created server/src/routes/banks.ts | — | ~342 |
+| 22:05 | Created server/src/routes/banks.ts | — | ~342 |
+| 22:05 | Created server/src/routes/sessions.ts | — | ~1408 |
+| 22:05 | Created server/src/routes/sessions.ts | — | ~1408 |
+| 22:06 | Created server/src/routes/players.ts | — | ~1440 |
+| 22:06 | Created server/src/routes/players.ts | — | ~1440 |
+| 22:06 | Edited server/src/app.ts | added 3 import(s) | ~56 |
+| 22:06 | Edited server/src/app.ts | added 3 import(s) | ~56 |
+| 22:06 | Edited server/src/app.ts | 2→6 lines | ~23 |
+| 22:06 | Edited server/src/app.ts | 2→6 lines | ~23 |
+| 22:06 | Created server/test/phase1.test.ts | — | ~1587 |
+| 22:06 | Created server/test/phase1.test.ts | — | ~1587 |
+| 22:07 | Created web/src/api.ts | — | ~487 |
+| 22:07 | Created web/src/api.ts | — | ~487 |
+| 22:07 | Created web/src/pages/BanksPage.tsx | — | ~1014 |
+| 22:07 | Created web/src/pages/BanksPage.tsx | — | ~1014 |
+| 22:07 | Created web/src/pages/NewSessionPage.tsx | — | ~804 |
+| 22:07 | Created web/src/pages/NewSessionPage.tsx | — | ~804 |
+| 22:08 | Created web/src/pages/SessionPage.tsx | — | ~1259 |
+| 22:08 | Created web/src/pages/SessionPage.tsx | — | ~1259 |
+| 22:08 | Created web/src/App.tsx | — | ~176 |
+| 22:08 | Created web/src/App.tsx | — | ~176 |
