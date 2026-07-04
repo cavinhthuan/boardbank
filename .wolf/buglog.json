@@ -32,6 +32,71 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-04T15:04:27.872Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-07-04T15:10:42.602Z",
+      "error_message": "rm: cannot remove data/boardbank.db: Device or resource busy",
+      "file": "server/data/boardbank.db",
+      "root_cause": "TaskStop on Windows kills the npm wrapper but the child node process survives, keeping the SQLite file handle open and port 3000 occupied",
+      "fix": "Find PID via netstat -ano | grep :3000, kill with taskkill //F //PID <pid>, then delete DB files",
+      "tags": [
+        "windows",
+        "background-task",
+        "sqlite",
+        "orphan-process"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-04T15:10:42.603Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-07-04T15:14:27.483Z",
+      "error_message": "Missing guard clause",
+      "file": "server/src/ledger.ts",
+      "root_cause": "No early return/throw for edge case: !orig",
+      "fix": "Added guard clause: if (!orig)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:14:27.509Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-07-04T15:16:31.418Z",
+      "error_message": "Type error",
+      "file": "web/src/api.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: export interface TxEntry {; amount: number;",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-04T15:16:31.439Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-07-04T15:17:37.964Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-04T15:17:37.964Z"
     }
   ]
 }

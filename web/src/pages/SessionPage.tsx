@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api, type SessionDetail } from "../api";
+import TransactionForm from "../components/TransactionForm";
+import TransactionHistory from "../components/TransactionHistory";
 
 function formatAmount(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -11,6 +13,7 @@ export default function SessionPage() {
   const [detail, setDetail] = useState<SessionDetail | null>(null);
   const [newName, setNewName] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const load = useCallback(async () => {
     setDetail(await api.get<SessionDetail>(`/api/v1/sessions/${id}`));
@@ -112,6 +115,30 @@ export default function SessionPage() {
         ))}
         {players.length === 0 && <li className="text-slate-500">Chưa có người chơi — thêm ở trên.</li>}
       </ul>
+
+      {players.length >= 1 && (
+        <div className="mt-8">
+          <TransactionForm
+            sessionId={id!}
+            players={players}
+            asset={primaryAsset}
+            onDone={() => {
+              load().catch(() => {});
+              setRefreshKey((k) => k + 1);
+            }}
+          />
+        </div>
+      )}
+
+      <TransactionHistory
+        sessionId={id!}
+        players={players}
+        refreshKey={refreshKey}
+        onChanged={() => {
+          load().catch(() => {});
+          setRefreshKey((k) => k + 1);
+        }}
+      />
     </div>
   );
 }

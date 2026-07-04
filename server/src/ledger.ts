@@ -142,6 +142,51 @@ export function postTransaction(db: Database.Database, input: PostTxInput): TxRe
   return run();
 }
 
+/**
+ * Hoàn tác: tạo giao dịch bù (đảo dấu toàn bộ entries) — KHÔNG sửa/xóa bản ghi gốc.
+ * Cho phép số dư âm khi hoàn tác (quyết định của admin; người nhận có thể đã tiêu tiền).
+ */
+export function reverseTransaction(
+  db: Database.Database,
+  sessionId: number,
+  txId: number,
+  createdBy?: string,
+): TxRecord {
+  const run = db.transaction((): TxRecord => {
+    const orig = db
+      .prepare("SELECT id, code, type, status FROM transactions WHERE id=? AND session_id=?")
+      .get(txId, sessionId) as { id: number; code: string; type: string; status: string } | undefined;
+    if (!orig) throw new LedgerError("TX_NOT_FOUND", "Giao dịch không tồn tại", 404);
+    if (orig.type === "reversal") {
+      throw new LedgerError("CANNOT_REVERSE_REVERSAL", "Không thể hoàn tác một giao dịch hoàn tác");
+    }
+    if (orig.status !== "completed") {
+      throw new LedgerError("ALREADY_REVERSED", "Giao dịch đã được hoàn tác hoặc không ở trạng thái hoàn tất", 409);
+    }
+
+    const entries = db
+      .prepare("SELECT account_id, asset_type_id, amount FROM transaction_entries WHERE transaction_id=?")
+      .all(orig.id) as { account_id: number; asset_type_id: number; amount: number }[];
+
+    const reversal = postTransaction(db, {
+      sessionId,
+      type: "reversal",
+      note: `Hoàn tác ${orig.code}`,
+      createdBy,
+      entries: entries.map((e) => ({
+        accountId: e.account_id,
+        assetTypeId: e.asset_type_id,
+        amount: -e.amount,
+      })),
+      allowNegative: entries.map((e) => e.account_id),
+    });
+
+    db.prepare("UPDATE transactions SET status='reversed', reversed_by_tx_id=? WHERE id=?").run(reversal.id, orig.id);
+    return reversal;
+  });
+  return run();
+}
+
 /** Đối soát: balance_cached phải khớp SUM(entries) cho mọi tài khoản của phiên. */
 export function reconcile(db: Database.Database, sessionId: number): { accountId: number; cached: number; actual: number }[] {
   const rows = db

@@ -39,6 +39,7 @@ export function sessionRoutes(app: FastifyInstance): void {
             currencyCode: { type: "string", minLength: 1, maxLength: 10, default: "CASH" },
             currencyIcon: { type: "string", maxLength: 8, default: "💰" },
             initialBalance: { type: "integer", minimum: 0, default: 0 },
+            allowNegative: { type: "boolean", default: false },
           },
           additionalProperties: false,
         },
@@ -52,6 +53,7 @@ export function sessionRoutes(app: FastifyInstance): void {
         currencyCode: string;
         currencyIcon: string;
         initialBalance: number;
+        allowNegative: boolean;
       };
       const bank = app.db.prepare("SELECT id FROM banks WHERE id=?").get(bankId);
       if (!bank) {
@@ -67,7 +69,12 @@ export function sessionRoutes(app: FastifyInstance): void {
               .prepare(
                 "INSERT INTO game_sessions (bank_id, name, join_code, config_json) VALUES (?,?,?,?)",
               )
-              .run(bankId, body.name.trim(), generateJoinCode(), JSON.stringify({ initialBalance: body.initialBalance }));
+              .run(
+                bankId,
+                body.name.trim(),
+                generateJoinCode(),
+                JSON.stringify({ initialBalance: body.initialBalance, allowNegative: body.allowNegative }),
+              );
             sessionId = Number(r.lastInsertRowid);
             break;
           } catch (e) {

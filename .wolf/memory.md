@@ -84,3 +84,36 @@
 | 22:08 | Created web/src/pages/SessionPage.tsx | — | ~1259 |
 | 22:08 | Created web/src/App.tsx | — | ~176 |
 | 22:08 | Created web/src/App.tsx | — | ~176 |
+| 15:12 | Phase 1 xong: schema lõi + ledger engine (zero-sum, reconcile) + API banks/sessions/players + UI admin 3 trang; 9/9 test xanh; verify end-to-end bang curl; commit a730bc7 | server/src/*, web/src/* | ok | ~8000 |
+| 22:11 | Session end: 65 writes across 25 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~42777 tok |
+| 22:11 | Session end: 65 writes across 25 files (2026-07-04-boardbank-architecture-and-roadmap.md, .gitignore, package.json, tsconfig.json, config.ts) | 1 reads | ~42777 tok |
+| 22:14 | Edited server/src/ledger.ts | added 3 condition(s) | ~511 |
+| 22:14 | Edited server/src/ledger.ts | added 3 condition(s) | ~511 |
+| 22:14 | Edited server/src/routes/sessions.ts | 2→3 lines | ~61 |
+| 22:14 | Edited server/src/routes/sessions.ts | 2→3 lines | ~61 |
+| 22:14 | Edited server/src/routes/sessions.ts | 3→4 lines | ~30 |
+| 22:14 | Edited server/src/routes/sessions.ts | 3→4 lines | ~30 |
+| 22:14 | Edited server/src/routes/sessions.ts | 1→6 lines | ~68 |
+| 22:14 | Edited server/src/routes/sessions.ts | 1→6 lines | ~68 |
+| 22:15 | Created server/src/routes/transactions.ts | — | ~2975 |
+| 22:15 | Created server/src/routes/transactions.ts | — | ~2975 |
+| 22:15 | Edited server/src/app.ts | added 1 import(s) | ~33 |
+| 22:15 | Edited server/src/app.ts | added 1 import(s) | ~33 |
+| 22:15 | Edited server/src/app.ts | 3→4 lines | ~18 |
+| 22:15 | Edited server/src/app.ts | 3→4 lines | ~18 |
+| 22:16 | Created server/test/phase2.test.ts | — | ~2470 |
+| 22:16 | Created server/test/phase2.test.ts | — | ~2470 |
+| 22:16 | Edited web/src/api.ts | expanded (+20 lines) | ~127 |
+| 22:16 | Edited web/src/api.ts | expanded (+20 lines) | ~127 |
+| 22:16 | Edited web/src/api.ts | modified requestFull() | ~244 |
+| 22:16 | Edited web/src/api.ts | modified requestFull() | ~244 |
+| 22:17 | Created web/src/components/TransactionForm.tsx | — | ~1321 |
+| 22:17 | Created web/src/components/TransactionForm.tsx | — | ~1321 |
+| 22:17 | Created web/src/components/TransactionHistory.tsx | — | ~1502 |
+| 22:17 | Created web/src/components/TransactionHistory.tsx | — | ~1502 |
+| 22:17 | Edited web/src/pages/SessionPage.tsx | added 2 import(s) | ~87 |
+| 22:17 | Edited web/src/pages/SessionPage.tsx | added 2 import(s) | ~87 |
+| 22:17 | Edited web/src/pages/SessionPage.tsx | 3→4 lines | ~64 |
+| 22:17 | Edited web/src/pages/SessionPage.tsx | 3→4 lines | ~64 |
+| 22:17 | Edited web/src/pages/SessionPage.tsx | expanded (+24 lines) | ~202 |
+| 22:17 | Edited web/src/pages/SessionPage.tsx | expanded (+24 lines) | ~202 |

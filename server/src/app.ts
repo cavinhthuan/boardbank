@@ -5,6 +5,7 @@ import type { Config } from "./config.js";
 import { bankRoutes } from "./routes/banks.js";
 import { sessionRoutes } from "./routes/sessions.js";
 import { playerRoutes } from "./routes/players.js";
+import { transactionRoutes } from "./routes/transactions.js";
 
 export interface AppDeps {
   db: Database.Database;
@@ -60,6 +61,7 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
   bankRoutes(app);
   sessionRoutes(app);
   playerRoutes(app);
+  transactionRoutes(app);
 
   return app;
 }

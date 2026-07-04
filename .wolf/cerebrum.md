@@ -17,6 +17,10 @@
 <!-- Mistakes made and corrected. Each entry prevents the same mistake recurring. -->
 <!-- Format: [YYYY-MM-DD] Description of what went wrong and what to do instead. -->
 
+- [2026-07-04] PowerShell tool lỗi `spawn D:\WORK\pwsh.cmd EINVAL` trên máy này — luôn dùng Bash tool (Git Bash) thay thế.
+- [2026-07-04] Dừng server nền bằng TaskStop trên Windows để lại node con mồ côi giữ file SQLite + port 3000. Trước khi khởi động lại server: `netstat -ano | grep :3000` rồi `taskkill //F //PID <pid>` (xem bug-002).
+- [2026-07-04] Fastify setErrorHandler cần khai báo kiểu `(err: FastifyError, ...)` tường minh, nếu không tsc strict báo TS18046 'err is unknown' (xem bug-001).
+
 ## Decision Log
 
 <!-- Significant technical decisions with rationale. Why X was chosen over Y. -->
