@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T16:55:32.431Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T17:15:03.669Z
 > Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -19,7 +19,7 @@
 
 ## docs/
 
-- `DEPLOY.md` — Triển khai BoardBank lên VPS (Ubuntu 24.04, 1 vCPU / 512 MB / 5 GB) (~1301 tok)
+- `DEPLOY.md` — Triển khai BoardBank lên VPS (Ubuntu 24.04, 1 vCPU / 512 MB / 5 GB) (~1473 tok)
 
 ## docs/superpowers/plans/
 
@@ -27,7 +27,7 @@
 
 ## scripts/
 
-- `deploy.sh` — Deploy BoardBank lên VPS — BUILD Ở MÁY DEV, server chỉ nhận artifact. (~283 tok)
+- `deploy.sh` — Deploy BoardBank lên VPS — BUILD Ở MÁY DEV, server chỉ nhận artifact. (~391 tok)
 
 ## server/
 

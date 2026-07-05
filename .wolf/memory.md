@@ -610,3 +610,10 @@
 | 23:55 | Created scripts/deploy.sh | — | ~283 |
 | 23:55 | Edited docs/DEPLOY.md | modified server() | ~352 |
 | 23:55 | Edited docs/DEPLOY.md | modified server() | ~352 |
+| 17:05 | Fix OOM deploy (bug-064): tsx sang dependencies, scripts/deploy.sh build-local-push-artifact, DEPLOY.md viet lai muc 2 + cap cuu swap; khong bao gio build tren VPS 512MB | scripts/deploy.sh, docs/DEPLOY.md, server/package.json | ok | ~3000 |
+| 23:57 | Session end: 45 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~21717 tok |
+| 23:57 | Session end: 45 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~21717 tok |
+| 00:14 | Created scripts/deploy.sh | — | ~391 |
+| 00:14 | Created scripts/deploy.sh | — | ~391 |
+| 00:15 | Edited docs/DEPLOY.md | modified c() | ~380 |
+| 00:15 | Edited docs/DEPLOY.md | modified c() | ~380 |

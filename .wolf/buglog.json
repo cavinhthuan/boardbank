@@ -1045,6 +1045,44 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-05T16:55:51.661Z"
+    },
+    {
+      "id": "bug-066",
+      "timestamp": "2026-07-05T17:15:03.685Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/DEPLOY.md",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 18→35 lines (8 removed) | Also: bash scripts/deploy.sh boardbank@your-vps; # script sẽ: build local → git pull trên server → ",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T17:15:03.713Z"
+    },
+    {
+      "id": "bug-065",
+      "timestamp": "2026-07-05T17:17:50.687Z",
+      "error_message": "fallocate failed: No space left on device (disk 5GB day) + Permission denied khi ssh boardbank@",
+      "file": "scripts/deploy.sh",
+      "root_cause": "Dia day do npm ci full-deps truoc do (vite/tsc/rollup ~0.5-1GB) + cache npm; dong /swapfile bi ghi vao fstab du swap chua tao duoc (&& chain van chay tee). User boardbank la system user shell nologin nen khong the SSH — script cu huong dan sai boardbank@.",
+      "fix": "DEPLOY.md: quy trinh cap cuu don dia TRUOC (rm node_modules + .npm cache + apt clean + vacuum journal + go dong fstab), swap 512M SAU. deploy.sh: dung root@, StrictHostKeyChecking=accept-new, chown ve boardbank sau khi cap nhat, npm cache clean sau ci.",
+      "tags": [
+        "disk-full",
+        "swap",
+        "fstab",
+        "ssh",
+        "nologin",
+        "deploy",
+        "vps"
+      ],
+      "related_bugs": [
+        "bug-064"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T17:17:50.688Z"
     }
   ]
 }

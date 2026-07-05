@@ -32,20 +32,37 @@ npm ci --omit=dev --no-audit --no-fund   # chỉ prod deps — không vite/tsc/t
 Rồi từ **máy dev** đẩy bản build đầu tiên + mọi lần cập nhật sau này bằng một lệnh:
 
 ```bash
-bash scripts/deploy.sh boardbank@your-vps
-# script sẽ: build local → git pull trên server → npm ci --omit=dev → upload web/dist → restart → health check
+bash scripts/deploy.sh root@your-vps
+# script sẽ: build local → git pull trên server → npm ci --omit=dev → upload web/dist
+#            → chown về boardbank → restart → health check
 ```
 
-### Cấp cứu nếu server đã bị OOM / npm cũng chết vì thiếu RAM
+> SSH bằng **root@** (hoặc user sudo của bạn). User `boardbank` là system user shell
+> nologin — chủ đích không đăng nhập được, chỉ để chạy service.
+
+### Cấp cứu khi đầy đĩa / OOM (thứ tự quan trọng: dọn đĩa TRƯỚC, swap SAU)
 
 ```bash
-# 1. Thêm swap file 1GB làm lưới an toàn (ngoài zram):
-fallocate -l 1G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
-echo '/swapfile none swap sw 0 0' >> /etc/fstab
-# 2. Dọn rác build cũ nếu lỡ chạy npm run build:
+# 0. Xem ai chiếm đĩa:
+df -h /
+du -sh /home/boardbank/app/node_modules /root/.npm /home/boardbank/.npm \
+       /var/cache/apt /var/log/journal /swapfile 2>/dev/null
+
+# 1. Dọn rác (node_modules full-deps cũ + cache npm là thủ phạm chính, thường 0.5–1GB):
 rm -rf /home/boardbank/app/node_modules
-cd /home/boardbank/app && npm ci --omit=dev --no-audit --no-fund
-# 3. Kiểm tra RAM: free -h  (Node app ~150-200MB, còn dư là ổn)
+rm -rf /root/.npm /home/boardbank/.npm
+apt-get clean
+journalctl --vacuum-size=20M
+rm -f /swapfile                      # xóa swapfile tạo dở (nếu fallocate từng fail)
+sed -i '\|/swapfile|d' /etc/fstab    # gỡ dòng fstab đã lỡ thêm khi swap chưa tồn tại
+
+# 2. Giờ mới tạo swap 512MB (đĩa 5GB không nên dành 1GB cho swap):
+fallocate -l 512M /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+
+# 3. Cài lại CHỈ prod deps rồi kiểm tra:
+cd /home/boardbank/app && npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
+df -h / && free -h
 ```
 
 ## 3. systemd
