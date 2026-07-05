@@ -593,6 +593,70 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-05T05:28:06.552Z"
+    },
+    {
+      "id": "bug-038",
+      "timestamp": "2026-07-05T06:40:41.604Z",
+      "error_message": "Missing error handling in applyPayPayload",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: const [showQr, setShowQr] = useState(false);; const [showScanner, setShowScanner] = useState(false);",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T06:40:41.636Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-07-05T06:40:59.068Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: {detail.session.status === \"active\" && (; <div className=\"mt-4 grid grid-cols-2 gap-2\">",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T06:40:59.122Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-07-05T06:41:15.675Z",
+      "error_message": "Incorrect value in code",
+      "file": "web/src/App.tsx",
+      "root_cause": "Had \"react\"",
+      "fix": "Changed to \"./pages/PayPage\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T06:41:15.696Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-07-05T06:41:20.752Z",
+      "error_message": "Missing error handling in pendingJoinCode",
+      "file": "web/src/pages/JoinPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: // Nếu vừa quét QR chuyển tiền mà chưa vào phiên → điền sẵn ; function pendingJoinCode(): string {",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T06:41:20.791Z"
     }
   ]
 }

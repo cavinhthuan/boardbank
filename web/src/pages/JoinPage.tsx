@@ -8,8 +8,19 @@ interface JoinPreview {
   players: { id: number; display_name: string; avatar: string | null; status: string; has_pin: number }[];
 }
 
+// Nếu vừa quét QR chuyển tiền mà chưa vào phiên → điền sẵn mã phiên từ payload chờ
+function pendingJoinCode(): string {
+  try {
+    const raw = sessionStorage.getItem("bb.pendingPay");
+    if (!raw) return "";
+    return (JSON.parse(raw) as { c?: string }).c ?? "";
+  } catch {
+    return "";
+  }
+}
+
 export default function JoinPage() {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(pendingJoinCode);
   const [preview, setPreview] = useState<JoinPreview | null>(null);
   const [selected, setSelected] = useState<number | "new" | null>(null);
   const [newName, setNewName] = useState("");

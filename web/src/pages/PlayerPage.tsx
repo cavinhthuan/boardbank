@@ -7,6 +7,9 @@ import { ToastStack, useToasts } from "../components/Toasts";
 import NotificationBell, { describeNotification } from "../components/NotificationBell";
 import ExchangeForm from "../components/ExchangeForm";
 import SessionResults from "../components/SessionResults";
+import QrCodeCard from "../components/QrCodeCard";
+import QrScannerModal from "../components/QrScannerModal";
+import { parsePayInput, type PayPayload } from "../qr";
 import { formatMinor } from "../money";
 
 function fmt(n: number): string {
@@ -28,7 +31,49 @@ export default function PlayerPage() {
   const [error, setError] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
   const [notifKey, setNotifKey] = useState(0);
+  const [showQr, setShowQr] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
   const { toasts, addToast } = useToasts();
+
+  function applyPayPayload(p: PayPayload): void {
+    if (p.s !== player.sessionId) {
+      addToast("Mã QR này thuộc phiên chơi khác", "warn");
+      return;
+    }
+    if (p.p === player.id) {
+      addToast("Đây là mã QR của chính bạn", "warn");
+      return;
+    }
+    setToId(String(p.p));
+    setAmount(p.a ? String(p.a) : "");
+    setNote(p.n ?? "");
+    addToast("✅ Đã điền sẵn từ QR — nhập PIN để chuyển", "success");
+  }
+
+  function handleScan(text: string): void {
+    setShowScanner(false);
+    const p = parsePayInput(text);
+    if (!p) {
+      addToast("Không phải mã QR BoardBank hợp lệ", "warn");
+      return;
+    }
+    applyPayPayload(p);
+  }
+
+  // QR quét từ camera ngoài app → /pay lưu payload chờ ở sessionStorage
+  useEffect(() => {
+    const raw = sessionStorage.getItem("bb.pendingPay");
+    if (!raw) return;
+    sessionStorage.removeItem("bb.pendingPay");
+    try {
+      const p = JSON.parse(raw) as PayPayload;
+      applyPayPayload(p);
+    } catch {
+      /* payload hỏng — bỏ qua */
+    }
+    // chỉ chạy một lần khi vào trang
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const load = useCallback(async () => {
     const d = await api.get<SessionDetail>(`/api/v1/sessions/${player.sessionId}`);
@@ -148,6 +193,35 @@ export default function PlayerPage() {
           <div className="mt-2 rounded bg-red-950/60 px-2 py-1 text-sm text-red-300">🔒 Tài khoản đang bị khóa</div>
         )}
       </div>
+
+      {detail.session.status === "active" && (
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button
+            onClick={() => setShowQr(!showQr)}
+            className={`rounded-xl border px-3 py-2.5 text-sm font-semibold ${
+              showQr ? "border-emerald-600 bg-emerald-950/40" : "border-slate-700 bg-slate-900 hover:bg-slate-800"
+            }`}
+          >
+            🧾 Mã QR của tôi
+          </button>
+          <button
+            onClick={() => setShowScanner(true)}
+            className="rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm font-semibold hover:bg-slate-800"
+          >
+            📷 Quét QR
+          </button>
+        </div>
+      )}
+      {showQr && detail.session.status === "active" && (
+        <QrCodeCard
+          sessionId={player.sessionId}
+          playerId={player.id}
+          joinCode={detail.session.join_code}
+          playerName={player.displayName}
+          assetName={primaryAsset?.name}
+        />
+      )}
+      {showScanner && <QrScannerModal onResult={handleScan} onClose={() => setShowScanner(false)} />}
 
       {detail.session.status === "paused" && (
         <div className="mt-4 rounded-xl border border-amber-800 bg-amber-950/40 px-4 py-3 text-amber-200">

@@ -410,3 +410,26 @@
 | 12:28 | Edited web/src/pages/BanksPage.tsx | expanded (+6 lines) | ~199 |
 | 12:28 | Created docs/DEPLOY.md | — | ~1148 |
 | 12:28 | Created docs/DEPLOY.md | — | ~1148 |
+| 12:35 | Phase 7 xong -> TAG v1.0: backup VACUUM INTO+gzip+rotation+verify (restore drill), clone phien (giu PIN, khong copy lich su), export JSON, load test 50VU/20s = 528 req/s p95 128ms 0 loi 0 lech so cai, docs/DEPLOY.md runbook VPS; 54/54 test xanh | server/src/backup.ts, routes/admin.ts, scripts/loadtest.mjs, docs/DEPLOY.md | ok | ~9000 |
+| 12:31 | Session end: 73 writes across 18 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 0 reads | ~33126 tok |
+| 12:31 | Session end: 73 writes across 18 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 0 reads | ~33126 tok |
+| 13:39 | Created web/src/qr.ts | — | ~675 |
+| 13:39 | Created web/src/qr.ts | — | ~675 |
+| 13:40 | Created web/src/components/QrCodeCard.tsx | — | ~872 |
+| 13:40 | Created web/src/components/QrCodeCard.tsx | — | ~872 |
+| 13:40 | Created web/src/components/QrScannerModal.tsx | — | ~543 |
+| 13:40 | Created web/src/components/QrScannerModal.tsx | — | ~543 |
+| 13:40 | Edited web/src/pages/PlayerPage.tsx | added 3 import(s) | ~76 |
+| 13:40 | Edited web/src/pages/PlayerPage.tsx | added 3 import(s) | ~76 |
+| 13:40 | Edited web/src/pages/PlayerPage.tsx | added error handling | ~378 |
+| 13:40 | Edited web/src/pages/PlayerPage.tsx | added error handling | ~378 |
+| 13:40 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~330 |
+| 13:40 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~330 |
+| 13:41 | Created web/src/pages/PayPage.tsx | — | ~296 |
+| 13:41 | Created web/src/pages/PayPage.tsx | — | ~296 |
+| 13:41 | Edited web/src/App.tsx | added 1 import(s) | ~36 |
+| 13:41 | Edited web/src/App.tsx | added 1 import(s) | ~36 |
+| 13:41 | Edited web/src/App.tsx | 2→3 lines | ~50 |
+| 13:41 | Edited web/src/App.tsx | 2→3 lines | ~50 |
+| 13:41 | Edited web/src/pages/JoinPage.tsx | added error handling | ~112 |
+| 13:41 | Edited web/src/pages/JoinPage.tsx | added error handling | ~112 |

@@ -6,6 +6,7 @@ import SessionPage from "./pages/SessionPage";
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
 import PlayerPage from "./pages/PlayerPage";
+import PayPage from "./pages/PayPage";
 import type { ReactNode } from "react";
 
 function Guard({ need, children }: { need: "admin" | "player"; children: ReactNode }) {
@@ -24,6 +25,7 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/join" element={<JoinPage />} />
+            <Route path="/pay" element={<PayPage />} />
             <Route
               path="/"
               element={

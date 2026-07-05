@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T05:28:46.352Z
-> Files: 65 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T06:41:20.739Z
+> Files: 69 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -88,11 +88,12 @@
 ## web/src/
 
 - `api.ts` — Exports ApiError, ApiRequestError, api, Bank + 11 more (~955 tok)
-- `App.tsx` — Guard (~580 tok)
+- `App.tsx` — Guard (~607 tok)
 - `auth.tsx` — AuthContext (~390 tok)
 - `index.css` — Styles: 1 rules (~7 tok)
 - `main.tsx` (~66 tok)
 - `money.ts` — "12,5" hoặc "12.5" → minor units; null nếu không hợp lệ hoặc quá nhiều số lẻ. (~528 tok)
+- `qr.ts` — session id (~675 tok)
 
 ## web/src/components/
 
@@ -101,6 +102,8 @@
 - `ConfigPanel.tsx` — ConfigPanel — renders form (~959 tok)
 - `ExchangeForm.tsx` — Tìm tỷ giá hiệu lực: chiều thuận hoặc nghịch đảo — giống logic server. (~1243 tok)
 - `NotificationBell.tsx` — describeNotification (~809 tok)
+- `QrCodeCard.tsx` — QrCodeCard (~872 tok)
+- `QrScannerModal.tsx` — QrScannerModal (~543 tok)
 - `SessionResults.tsx` — MEDALS (~712 tok)
 - `Toasts.tsx` — useToasts (~338 tok)
 - `TransactionForm.tsx` — TX_TYPES — renders form (~1550 tok)
@@ -113,8 +116,9 @@
 ## web/src/pages/
 
 - `BanksPage.tsx` — BanksPage — renders form (~1387 tok)
-- `JoinPage.tsx` — JoinPage — renders form (~1645 tok)
+- `JoinPage.tsx` — pendingJoinCode — renders form (~1734 tok)
 - `LoginPage.tsx` — LoginPage — renders form (~825 tok)
 - `NewSessionPage.tsx` — NewSessionPage — renders form (~804 tok)
-- `PlayerPage.tsx` — fmt — renders form (~2958 tok)
+- `PayPage.tsx` — Đích đến của QR khi quét bằng camera hệ thống: /pay?d=<payload>. (~296 tok)
+- `PlayerPage.tsx` — fmt — renders form (~3673 tok)
 - `SessionPage.tsx` — STATUS_LABELS — renders form (~3393 tok)
