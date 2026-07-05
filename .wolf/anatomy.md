@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T06:41:20.739Z
-> Files: 69 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T08:00:20.439Z
+> Files: 72 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -90,10 +90,13 @@
 - `api.ts` — Exports ApiError, ApiRequestError, api, Bank + 11 more (~955 tok)
 - `App.tsx` — Guard (~607 tok)
 - `auth.tsx` — AuthContext (~390 tok)
-- `index.css` — Styles: 1 rules (~7 tok)
+- `index.css` — Styles: 3 rules (~68 tok)
 - `main.tsx` (~66 tok)
 - `money.ts` — "12,5" hoặc "12.5" → minor units; null nếu không hợp lệ hoặc quá nhiều số lẻ. (~528 tok)
 - `qr.ts` — session id (~675 tok)
+- `settings.ts` — Cài đặt theo thiết bị (localStorage) — mỗi người chơi tự bật/tắt trên máy mình. (~190 tok)
+- `sound.ts` — Hiệu ứng âm thanh sinh bằng WebAudio — không cần file audio, 0 KB asset. (~323 tok)
+- `speech.ts` — Câu đọc cho một thông báo giao dịch — số để trần (không dấu chấm ngăn cách) cho TTS đọc đúng. (~568 tok)
 
 ## web/src/components/
 
@@ -120,5 +123,5 @@
 - `LoginPage.tsx` — LoginPage — renders form (~825 tok)
 - `NewSessionPage.tsx` — NewSessionPage — renders form (~804 tok)
 - `PayPage.tsx` — Đích đến của QR khi quét bằng camera hệ thống: /pay?d=<payload>. (~296 tok)
-- `PlayerPage.tsx` — fmt — renders form (~3673 tok)
+- `PlayerPage.tsx` — fmt — renders form (~4438 tok)
 - `SessionPage.tsx` — STATUS_LABELS — renders form (~3393 tok)

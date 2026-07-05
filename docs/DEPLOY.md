@@ -20,7 +20,8 @@ systemctl disable --now snapd 2>/dev/null || true
 useradd -r -m -s /usr/sbin/nologin boardbank
 sudo -u boardbank git clone <repo> /home/boardbank/app
 cd /home/boardbank/app
-npm ci
+npm cache clean --force
+npm ci --verbose
 npm run build            # typecheck server + build web ra web/dist
 npm prune --omit=dev     # bỏ devDeps sau khi build — tiết kiệm disk
 ```

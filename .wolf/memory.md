@@ -433,3 +433,38 @@
 | 13:41 | Edited web/src/App.tsx | 2→3 lines | ~50 |
 | 13:41 | Edited web/src/pages/JoinPage.tsx | added error handling | ~112 |
 | 13:41 | Edited web/src/pages/JoinPage.tsx | added error handling | ~112 |
+| 12:50 | Phase 8 xong: QR payload version hoa (/pay?d=base64url), QrCodeCard tinh/dong + share, QrScannerModal (qr-scanner lazy chunk), prefill form chuyen + pendingPay flow qua /pay va /join; build ok, roundtrip unicode verify bang tsx; quet camera can thu tay tren browser | web/src/qr.ts, components/QrCodeCard.tsx, QrScannerModal.tsx, pages/PayPage.tsx | ok | ~6000 |
+| 14:23 | Session end: 91 writes across 24 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 0 reads | ~39137 tok |
+| 14:23 | Session end: 91 writes across 24 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 0 reads | ~39137 tok |
+| 14:58 | Created web/src/sound.ts | — | ~323 |
+| 14:58 | Created web/src/sound.ts | — | ~323 |
+| 14:58 | Created web/src/speech.ts | — | ~568 |
+| 14:58 | Created web/src/speech.ts | — | ~568 |
+| 14:58 | Created web/src/settings.ts | — | ~190 |
+| 14:58 | Created web/src/settings.ts | — | ~190 |
+| 14:58 | Edited web/src/index.css | expanded (+9 lines) | ~68 |
+| 14:58 | Edited web/src/index.css | expanded (+9 lines) | ~68 |
+| 14:58 | Edited web/src/pages/PlayerPage.tsx | inline fix | ~24 |
+| 14:58 | Edited web/src/pages/PlayerPage.tsx | inline fix | ~24 |
+| 14:58 | Edited web/src/pages/PlayerPage.tsx | added 3 import(s) | ~79 |
+| 14:58 | Edited web/src/pages/PlayerPage.tsx | added 3 import(s) | ~79 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | CSS: key | ~172 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | CSS: key | ~172 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | added 3 condition(s) | ~108 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | added 3 condition(s) | ~108 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | 2→3 lines | ~72 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | 2→3 lines | ~72 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | modified transfer() | ~58 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | modified transfer() | ~58 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~144 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~144 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | CSS: hover, hover | ~245 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | CSS: hover, hover | ~245 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | 2→4 lines | ~89 |
+| 14:59 | Edited web/src/pages/PlayerPage.tsx | 2→4 lines | ~89 |
+| 15:00 | Edited web/src/pages/PlayerPage.tsx | 4→2 lines | ~45 |
+| 15:00 | Edited web/src/pages/PlayerPage.tsx | 4→2 lines | ~45 |
+| 15:00 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~245 |
+| 15:00 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~245 |
+| 15:00 | Edited web/src/pages/PlayerPage.tsx | "mt-5 rounded-2xl bg-gradi" → "mt-5 rounded-2xl bg-gradi" | ~41 |
+| 15:00 | Edited web/src/pages/PlayerPage.tsx | "mt-5 rounded-2xl bg-gradi" → "mt-5 rounded-2xl bg-gradi" | ~41 |

@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@keyframes bb-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.05); box-shadow: 0 0 32px rgba(16, 185, 129, 0.45); }
+  100% { transform: scale(1); }
+}
+.balance-pop {
+  animation: bb-pop 0.55s ease;
+}

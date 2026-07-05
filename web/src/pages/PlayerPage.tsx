@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, type SessionDetail, type Tx } from "../api";
 import { useAuth, type PlayerMe } from "../auth";
@@ -11,6 +11,9 @@ import QrCodeCard from "../components/QrCodeCard";
 import QrScannerModal from "../components/QrScannerModal";
 import { parsePayInput, type PayPayload } from "../qr";
 import { formatMinor } from "../money";
+import { playChime } from "../sound";
+import { speak, speechAvailable, speechTextFor } from "../speech";
+import { loadSettings, saveSettings, type AppSettings } from "../settings";
 
 function fmt(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -33,7 +36,19 @@ export default function PlayerPage() {
   const [notifKey, setNotifKey] = useState(0);
   const [showQr, setShowQr] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
+  const [settings, setSettings] = useState<AppSettings>(loadSettings);
+  const [balancePop, setBalancePop] = useState(false);
   const { toasts, addToast } = useToasts();
+
+  function toggleSetting(key: keyof AppSettings) {
+    setSettings((s) => {
+      const next = { ...s, [key]: !s[key] };
+      saveSettings(next);
+      if (key === "sound" && next.sound) playChime("send"); // nghe thử ngay
+      if (key === "voice" && next.voice) speak("Đã bật đọc giao dịch");
+      return next;
+    });
+  }
 
   function applyPayPayload(p: PayPayload): void {
     if (p.s !== player.sessionId) {
@@ -97,6 +112,11 @@ export default function PlayerPage() {
     },
     onNotification: (n) => {
       addToast(describeNotification(n), n.type === "tx.received" ? "success" : "warn");
+      if (settings.sound) playChime(n.type === "tx.received" ? "receive" : "send");
+      if (settings.voice) {
+        const text = speechTextFor(n);
+        if (text) speak(text);
+      }
       setNotifKey((k) => k + 1);
       load().catch(() => {});
     },
@@ -108,6 +128,25 @@ export default function PlayerPage() {
       setNotifKey((k) => k + 1);
     },
   });
+
+  // Hoạt ảnh "nảy" thẻ số dư mỗi khi số dư tài sản chính thay đổi
+  const prevBalRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (!detail) return;
+    const active = detail.assets.filter((a) => a.status === "active");
+    const primary = active.find((a) => a.is_primary) ?? active[0];
+    const bal =
+      detail.balances.find(
+        (b) => b.owner_type === "player" && b.owner_id === player.id && b.asset_type_id === primary?.id,
+      )?.balance_cached ?? 0;
+    if (prevBalRef.current !== null && prevBalRef.current !== bal) {
+      setBalancePop(true);
+      const t = setTimeout(() => setBalancePop(false), 600);
+      prevBalRef.current = bal;
+      return () => clearTimeout(t);
+    }
+    prevBalRef.current = bal;
+  }, [detail, player.id]);
 
   if (!detail) return <div className="p-6 text-slate-400">{error ?? "Đang tải…"}</div>;
 
@@ -137,13 +176,19 @@ export default function PlayerPage() {
         pin,
         idempotencyKey: crypto.randomUUID(),
       });
+      const recipient = others.find((p) => p.id === Number(toId));
       setAmount("");
       setNote("");
       setPin("");
       setFlash("✅ Chuyển tiền thành công!");
+      if (settings.sound) playChime("send");
+      if (settings.voice && recipient) {
+        speak(`Đã chuyển ${Number(amount)} ${selectedAsset?.name ?? ""} cho ${recipient.display_name}`);
+      }
       await load();
     } catch (err) {
       setError((err as Error).message);
+      if (settings.sound) playChime("error");
     }
   }
 
@@ -162,6 +207,22 @@ export default function PlayerPage() {
           </div>
         </div>
         <div className="flex items-center gap-1">
+          <button
+            onClick={() => toggleSetting("sound")}
+            className={`rounded-lg px-2 py-1.5 text-lg ${settings.sound ? "" : "opacity-40"} hover:bg-slate-800`}
+            title={settings.sound ? "Tắt âm thanh" : "Bật âm thanh"}
+          >
+            {settings.sound ? "🔊" : "🔇"}
+          </button>
+          {speechAvailable() && (
+            <button
+              onClick={() => toggleSetting("voice")}
+              className={`rounded-lg px-2 py-1.5 text-lg ${settings.voice ? "" : "opacity-40"} hover:bg-slate-800`}
+              title={settings.voice ? "Tắt đọc giao dịch" : "Bật đọc giao dịch"}
+            >
+              {settings.voice ? "🗣️" : "🤐"}
+            </button>
+          )}
           <NotificationBell sessionId={player.sessionId} refreshKey={notifKey} />
           <button
             onClick={async () => {
@@ -175,7 +236,7 @@ export default function PlayerPage() {
         </div>
       </header>
 
-      <div className="mt-5 rounded-2xl bg-gradient-to-br from-emerald-700 to-emerald-900 p-6 shadow-lg">
+      <div className={`mt-5 rounded-2xl bg-gradient-to-br from-emerald-700 to-emerald-900 p-6 shadow-lg ${balancePop ? "balance-pop" : ""}`}>
         <div className="text-sm text-emerald-200">Số dư của bạn</div>
         <div className="mt-1 text-4xl font-bold tracking-tight">
           {fmt(myBalance)} <span className="text-lg font-normal text-emerald-200">{primaryAsset?.name}</span>
