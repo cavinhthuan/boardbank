@@ -1009,6 +1009,42 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-05T16:32:15.471Z"
+    },
+    {
+      "id": "bug-064",
+      "timestamp": "2026-07-05T16:55:32.426Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/DEPLOY.md",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 13→33 lines (6 removed) | Also: ## 2. Mã nguồn & build; npm cache clean --force",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T16:55:32.464Z"
+    },
+    {
+      "id": "bug-064",
+      "timestamp": "2026-07-05T16:55:51.660Z",
+      "error_message": "npm run build tren VPS 512MB bi OOM kill (tsc + vite/rollup can 400-800MB RAM)",
+      "file": "docs/DEPLOY.md",
+      "root_cause": "Runbook muc 2 huong dan chay npm run build tren server — trai voi thiet ke master plan (VPS khong bao gio build). tsx nam trong devDependencies nen npm ci --omit=dev lam server khong chay duoc, buoc phai cai full deps + build.",
+      "fix": "Chuyen tsx sang dependencies; tao scripts/deploy.sh (build o may dev, upload web/dist qua ssh tar, server chi git pull + npm ci --omit=dev); viet lai DEPLOY.md muc 2 kem canh bao va muc cap cuu (swap file 1GB, don node_modules).",
+      "tags": [
+        "oom",
+        "deploy",
+        "vps",
+        "512mb",
+        "build",
+        "vite",
+        "tsc"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T16:55:51.661Z"
     }
   ]
 }

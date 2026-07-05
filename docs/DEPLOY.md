@@ -14,19 +14,39 @@ apt install -y zram-tools && echo -e "ALGO=zstd\nSIZE=512" > /etc/default/zramsw
 systemctl disable --now snapd 2>/dev/null || true
 ```
 
-## 2. Mã nguồn & build
+## 2. Mã nguồn — ⚠️ TUYỆT ĐỐI KHÔNG BUILD TRÊN VPS
+
+**`npm run build` (tsc + vite/rollup) cần 400–800 MB RAM → VPS 512 MB sẽ bị OOM kill.**
+Nguyên tắc: **build ở máy dev, server chỉ nhận artifact**. Server chạy bằng `tsx`
+(đã nằm trong dependencies) nên mã server không cần build; chỉ `web/dist` là artifact build.
+
+Cài lần đầu trên server (KHÔNG có bước build):
 
 ```bash
 useradd -r -m -s /usr/sbin/nologin boardbank
 sudo -u boardbank git clone <repo> /home/boardbank/app
 cd /home/boardbank/app
-npm cache clean --force
-npm ci --verbose
-npm run build            # typecheck server + build web ra web/dist
-npm prune --omit=dev     # bỏ devDeps sau khi build — tiết kiệm disk
+npm ci --omit=dev --no-audit --no-fund   # chỉ prod deps — không vite/tsc/typescript
 ```
 
-Cập nhật phiên bản mới: `git pull && npm ci && npm run build && npm prune --omit=dev && systemctl restart boardbank`.
+Rồi từ **máy dev** đẩy bản build đầu tiên + mọi lần cập nhật sau này bằng một lệnh:
+
+```bash
+bash scripts/deploy.sh boardbank@your-vps
+# script sẽ: build local → git pull trên server → npm ci --omit=dev → upload web/dist → restart → health check
+```
+
+### Cấp cứu nếu server đã bị OOM / npm cũng chết vì thiếu RAM
+
+```bash
+# 1. Thêm swap file 1GB làm lưới an toàn (ngoài zram):
+fallocate -l 1G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+# 2. Dọn rác build cũ nếu lỡ chạy npm run build:
+rm -rf /home/boardbank/app/node_modules
+cd /home/boardbank/app && npm ci --omit=dev --no-audit --no-fund
+# 3. Kiểm tra RAM: free -h  (Node app ~150-200MB, còn dư là ổn)
+```
 
 ## 3. systemd
 

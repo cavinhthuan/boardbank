@@ -601,3 +601,12 @@
 | 23:32 | Edited web/src/pages/BanksPage.tsx | added 1 import(s) | ~25 |
 | 23:32 | Edited web/src/pages/BanksPage.tsx | 7→9 lines | ~59 |
 | 23:32 | Edited web/src/pages/BanksPage.tsx | 7→9 lines | ~59 |
+| 16:40 | Phase 12 xong -> TAG v1.1, HOAN THANH TOAN BO master plan 0-12: /present/:code cong khai theo join code + SSE broadcast + TTS xuong giao dich cho ca ban, timeline tu so cai + TimelineChart SVG (palette dataviz validated), /admin/audit toan he thong; 68/68 test xanh; verify e2e | server/src/routes/present.ts, web/src/pages/PresentPage.tsx, components/TimelineChart.tsx, GlobalAudit.tsx | ok | ~11000 |
+| 23:35 | Session end: 39 writes across 14 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~20187 tok |
+| 23:35 | Session end: 39 writes across 14 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~20187 tok |
+| 23:54 | Edited server/package.json | 11→11 lines | ~84 |
+| 23:54 | Edited server/package.json | 11→11 lines | ~84 |
+| 23:55 | Created scripts/deploy.sh | — | ~283 |
+| 23:55 | Created scripts/deploy.sh | — | ~283 |
+| 23:55 | Edited docs/DEPLOY.md | modified server() | ~352 |
+| 23:55 | Edited docs/DEPLOY.md | modified server() | ~352 |

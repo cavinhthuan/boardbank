@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T16:32:34.790Z
-> Files: 84 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T16:55:32.431Z
+> Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -19,15 +19,19 @@
 
 ## docs/
 
-- `DEPLOY.md` — Triển khai BoardBank lên VPS (Ubuntu 24.04, 1 vCPU / 512 MB / 5 GB) (~1076 tok)
+- `DEPLOY.md` — Triển khai BoardBank lên VPS (Ubuntu 24.04, 1 vCPU / 512 MB / 5 GB) (~1301 tok)
 
 ## docs/superpowers/plans/
 
 - `2026-07-04-boardbank-architecture-and-roadmap.md` — BoardBank — Kiến trúc & Kế hoạch triển khai tổng thể (~6620 tok)
 
+## scripts/
+
+- `deploy.sh` — Deploy BoardBank lên VPS — BUILD Ở MÁY DEV, server chỉ nhận artifact. (~283 tok)
+
 ## server/
 
-- `package.json` — Node.js package manifest (~148 tok)
+- `package.json` — Node.js package manifest (~168 tok)
 - `tsconfig.json` — TypeScript configuration (~96 tok)
 
 ## server/scripts/
