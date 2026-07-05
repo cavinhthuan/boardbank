@@ -566,3 +566,38 @@
 | 23:21 | Edited web/src/components/NotificationBell.tsx | CSS: x, default | ~360 |
 | 23:22 | Edited web/src/speech.ts | modified speechTextFor() | ~327 |
 | 23:22 | Edited web/src/speech.ts | modified speechTextFor() | ~327 |
+| 16:25 | Phase 11 xong: migration 007 loans/savings/invoices (contract state, tien chi qua so cai), batch 1-tx nguyen tu, split, vay/tra no, tiet kiem, accrue-interest theo config rate, hoa don pay/cancel + notify; 63/63 test xanh; verify e2e tron luong | server/src/routes/finance.ts, web/src/components/FinanceSection.tsx, FinanceAdminPanel.tsx | ok | ~14000 |
+| 23:25 | Session end: 10 writes across 4 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts) | 0 reads | ~2278 tok |
+| 23:25 | Session end: 10 writes across 4 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts) | 0 reads | ~2278 tok |
+| 23:28 | Created server/src/routes/present.ts | — | ~1009 |
+| 23:28 | Created server/src/routes/present.ts | — | ~1009 |
+| 23:29 | Edited server/src/routes/sessions.ts | added optional chaining | ~767 |
+| 23:29 | Edited server/src/routes/sessions.ts | added optional chaining | ~767 |
+| 23:29 | Edited server/src/routes/admin.ts | added optional chaining | ~342 |
+| 23:29 | Edited server/src/routes/admin.ts | added optional chaining | ~342 |
+| 23:29 | Edited server/src/app.ts | added 1 import(s) | ~30 |
+| 23:29 | Edited server/src/app.ts | added 1 import(s) | ~30 |
+| 23:29 | Edited server/src/app.ts | 2→3 lines | ~24 |
+| 23:29 | Edited server/src/app.ts | 2→3 lines | ~24 |
+| 23:30 | Created server/test/phase12.test.ts | — | ~2006 |
+| 23:30 | Created server/test/phase12.test.ts | — | ~2006 |
+| 23:31 | Created web/src/components/TimelineChart.tsx | — | ~1493 |
+| 23:31 | Created web/src/components/TimelineChart.tsx | — | ~1493 |
+| 23:31 | Created web/src/pages/PresentPage.tsx | — | ~2256 |
+| 23:31 | Created web/src/pages/PresentPage.tsx | — | ~2256 |
+| 23:31 | Edited web/src/App.tsx | added 1 import(s) | ~25 |
+| 23:31 | Edited web/src/App.tsx | added 1 import(s) | ~25 |
+| 23:32 | Edited web/src/App.tsx | 1→2 lines | ~36 |
+| 23:32 | Edited web/src/App.tsx | 1→2 lines | ~36 |
+| 23:32 | Edited web/src/pages/SessionPage.tsx | expanded (+9 lines) | ~197 |
+| 23:32 | Edited web/src/pages/SessionPage.tsx | expanded (+9 lines) | ~197 |
+| 23:32 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~35 |
+| 23:32 | Edited web/src/pages/SessionPage.tsx | added 1 import(s) | ~35 |
+| 23:32 | Edited web/src/pages/SessionPage.tsx | added optional chaining | ~90 |
+| 23:32 | Edited web/src/pages/SessionPage.tsx | added optional chaining | ~90 |
+| 23:32 | Created web/src/components/GlobalAudit.tsx | — | ~636 |
+| 23:32 | Created web/src/components/GlobalAudit.tsx | — | ~636 |
+| 23:32 | Edited web/src/pages/BanksPage.tsx | added 1 import(s) | ~25 |
+| 23:32 | Edited web/src/pages/BanksPage.tsx | added 1 import(s) | ~25 |
+| 23:32 | Edited web/src/pages/BanksPage.tsx | 7→9 lines | ~59 |
+| 23:32 | Edited web/src/pages/BanksPage.tsx | 7→9 lines | ~59 |

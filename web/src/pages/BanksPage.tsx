@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api, type Bank, type GameSession } from "../api";
 import { useAuth } from "../auth";
+import GlobalAudit from "../components/GlobalAudit";
 
 export default function BanksPage() {
   const { me, logout } = useAuth();
@@ -121,6 +122,8 @@ export default function BanksPage() {
           <p className="text-slate-500">Chưa có ngân hàng nào — tạo cái đầu tiên ở trên nhé.</p>
         )}
       </div>
+
+      <GlobalAudit />
     </div>
   );
 }

@@ -18,4 +18,35 @@ export function adminRoutes(app: FastifyInstance): void {
     });
     return { ok: true, data: { ...result, rotatedOut: removed.length, verify: verified } };
   });
+
+  // Nhật ký hoạt động toàn hệ thống: mọi phiên thuộc bank của admin này + hành động của chính họ
+  app.get(
+    "/api/v1/admin/audit",
+    {
+      schema: {
+        querystring: {
+          type: "object",
+          properties: { limit: { type: "integer", minimum: 1, maximum: 500, default: 100 } },
+          additionalProperties: false,
+        },
+      },
+    },
+    async (req, reply) => {
+      if (req.principal?.type !== "admin") return deny(app, req, reply);
+      const { limit } = req.query as { limit: number };
+      const rows = app.db
+        .prepare(
+          `SELECT al.*, s.name AS session_name
+           FROM audit_log al
+           LEFT JOIN game_sessions s ON s.id = al.session_id
+           WHERE al.session_id IN (
+                   SELECT s2.id FROM game_sessions s2 JOIN banks b ON b.id = s2.bank_id WHERE b.owner_admin_id = ?
+                 )
+              OR (al.actor_type = 'admin' AND al.actor_id = ?)
+           ORDER BY al.id DESC LIMIT ?`,
+        )
+        .all(req.principal.id, req.principal.id, limit);
+      return { ok: true, data: rows };
+    },
+  );
 }

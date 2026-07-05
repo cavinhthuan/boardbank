@@ -7,6 +7,7 @@ import AuditLog from "../components/AuditLog";
 import AssetsPanel from "../components/AssetsPanel";
 import ConfigPanel from "../components/ConfigPanel";
 import FinanceAdminPanel from "../components/FinanceAdminPanel";
+import TimelineChart from "../components/TimelineChart";
 import SessionResults from "../components/SessionResults";
 import { useSessionEvents } from "../hooks/useSessionEvents";
 import { formatMinor } from "../money";
@@ -190,6 +191,15 @@ export default function SessionPage() {
         >
           ⬇ Export JSON
         </a>
+        <a
+          href={`/present/${session.join_code}`}
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+          title="Mở màn hình trình chiếu cho TV / máy chiếu (không cần đăng nhập)"
+        >
+          🖥 Trình chiếu
+        </a>
       </div>
 
       {session.status === "ended" && (
@@ -305,6 +315,7 @@ export default function SessionPage() {
             </summary>
             <div className="mt-2">
               <SessionResults sessionId={id!} primaryAsset={primaryAsset} title="Thống kê hiện tại" refreshKey={refreshKey} />
+              <TimelineChart sessionId={id!} decimals={primaryAsset?.decimals ?? 0} refreshKey={refreshKey} />
             </div>
           </details>
         </>

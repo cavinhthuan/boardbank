@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
 import PlayerPage from "./pages/PlayerPage";
 import PayPage from "./pages/PayPage";
+import PresentPage from "./pages/PresentPage";
 import type { ReactNode } from "react";
 
 function Guard({ need, children }: { need: "admin" | "player"; children: ReactNode }) {
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/join" element={<JoinPage />} />
             <Route path="/pay" element={<PayPage />} />
+            <Route path="/present/:code" element={<PresentPage />} />
             <Route
               path="/"
               element={

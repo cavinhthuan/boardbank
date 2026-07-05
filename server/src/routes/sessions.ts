@@ -426,6 +426,70 @@ export function sessionRoutes(app: FastifyInstance): void {
     return { ok: true, data };
   });
 
+  // Biểu đồ tài sản theo thời gian — tính TRỰC TIẾP từ sổ cái (tài sản chính),
+  // tối đa 8 người chơi (theo số dư cuối) và ~120 điểm (stride-sample).
+  app.get("/api/v1/sessions/:id/timeline", async (req, reply) => {
+    const id = Number((req.params as { id: string }).id);
+    if (!getSessionOr404(app, id)) {
+      return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+    }
+    if (!req.principal || !isSessionMember(app.db, req.principal, id)) return deny(app, req, reply, id);
+
+    const primary = app.db.prepare("SELECT id FROM asset_types WHERE session_id=? AND is_primary=1").get(id) as
+      | { id: number }
+      | undefined;
+    const rows = app.db
+      .prepare(
+        `SELECT t.id AS txId, t.created_at AS t, a.owner_id AS playerId, e.amount
+         FROM transaction_entries e
+         JOIN transactions t ON t.id = e.transaction_id
+         JOIN accounts a ON a.id = e.account_id
+         WHERE t.session_id=? AND a.owner_type='player' AND e.asset_type_id=?
+         ORDER BY t.id`,
+      )
+      .all(id, primary?.id ?? 0) as { txId: number; t: string; playerId: number; amount: number }[];
+
+    const playerMeta = app.db
+      .prepare("SELECT id, display_name, avatar FROM players WHERE session_id=? AND status != 'removed'")
+      .all(id) as { id: number; display_name: string; avatar: string | null }[];
+
+    // Cộng dồn theo từng giao dịch
+    const cum = new Map<number, number>();
+    const allPoints: { t: string; balances: Map<number, number> }[] = [];
+    let currentTx = -1;
+    for (const row of rows) {
+      cum.set(row.playerId, (cum.get(row.playerId) ?? 0) + row.amount);
+      if (row.txId !== currentTx) {
+        currentTx = row.txId;
+        allPoints.push({ t: row.t, balances: new Map(cum) });
+      } else {
+        allPoints[allPoints.length - 1]!.balances = new Map(cum);
+      }
+    }
+
+    // Top 8 người chơi theo số dư cuối
+    const finals = [...cum.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const players = finals
+      .map(([pid]) => playerMeta.find((p) => p.id === pid))
+      .filter((p): p is (typeof playerMeta)[number] => !!p);
+
+    // Stride-sample về ~120 điểm, luôn giữ điểm cuối
+    const MAX_POINTS = 120;
+    const stride = Math.max(1, Math.ceil(allPoints.length / MAX_POINTS));
+    const sampled = allPoints.filter((_, i) => i % stride === 0 || i === allPoints.length - 1);
+
+    return {
+      ok: true,
+      data: {
+        players,
+        points: sampled.map((pt) => ({
+          t: pt.t,
+          values: players.map((p) => pt.balances.get(p.id) ?? 0),
+        })),
+      },
+    };
+  });
+
   app.get(
     "/api/v1/sessions/:id/audit",
     {

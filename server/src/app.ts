@@ -16,6 +16,7 @@ import { assetRoutes } from "./routes/assets.js";
 import { adminRoutes } from "./routes/admin.js";
 import { personalRoutes } from "./routes/personal.js";
 import { financeRoutes } from "./routes/finance.js";
+import { presentRoutes } from "./routes/present.js";
 
 export interface AppDeps {
   db: Database.Database;
@@ -86,6 +87,7 @@ export function buildApp({ db, config }: AppDeps): FastifyInstance {
     adminRoutes(instance);
     personalRoutes(instance);
     financeRoutes(instance);
+    presentRoutes(instance);
     eventRoutes(instance);
   });
 
