@@ -4,6 +4,7 @@ export interface Config {
   dbPath: string;
   logLevel: string;
   cookieSecure: boolean;
+  backupDir: string;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
@@ -14,5 +15,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     logLevel: env.LOG_LEVEL ?? "info",
     // Bật khi chạy sau HTTPS (production); local dev dùng HTTP nên tắt
     cookieSecure: env.COOKIE_SECURE === "1" || env.NODE_ENV === "production",
+    backupDir: env.BACKUP_DIR ?? "data/backups",
   };
 }

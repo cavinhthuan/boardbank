@@ -10,6 +10,17 @@ export default function BanksPage() {
   const [sessionsByBank, setSessionsByBank] = useState<Record<number, GameSession[]>>({});
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [backupMsg, setBackupMsg] = useState<string | null>(null);
+
+  async function backupNow() {
+    setBackupMsg("Đang sao lưu…");
+    try {
+      const r = await api.post<{ bytes: number; verify: { ok: boolean } }>("/api/v1/admin/backup", {});
+      setBackupMsg(`✅ Đã sao lưu ${(r.bytes / 1024).toFixed(1)} KB — kiểm tra ${r.verify.ok ? "OK" : "LỖI"}`);
+    } catch (err) {
+      setBackupMsg(`Lỗi: ${(err as Error).message}`);
+    }
+  }
 
   async function load() {
     const list = await api.get<Bank[]>("/api/v1/banks");
@@ -43,16 +54,22 @@ export default function BanksPage() {
           <h1 className="text-3xl font-bold tracking-tight">🏦 BoardBank</h1>
           <p className="mt-1 text-slate-400">Chọn ngân hàng hoặc tạo mới để bắt đầu</p>
         </div>
-        <button
-          onClick={async () => {
-            await logout();
-            navigate("/login");
-          }}
-          className="rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800"
-        >
-          {me?.type === "admin" ? me.username : ""} · Thoát
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={backupNow} className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800" title="Sao lưu toàn bộ dữ liệu ngay">
+            💾 Sao lưu
+          </button>
+          <button
+            onClick={async () => {
+              await logout();
+              navigate("/login");
+            }}
+            className="rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800"
+          >
+            {me?.type === "admin" ? me.username : ""} · Thoát
+          </button>
+        </div>
       </header>
+      {backupMsg && <p className="mb-4 text-sm text-slate-400">{backupMsg}</p>}
 
       <form onSubmit={createBank} className="mb-8 flex gap-2">
         <input

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, type SessionDetail } from "../api";
 import TransactionForm from "../components/TransactionForm";
 import TransactionHistory from "../components/TransactionHistory";
@@ -28,6 +28,16 @@ export default function SessionPage() {
   const [error, setError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [confirmEnd, setConfirmEnd] = useState(false);
+  const navigate = useNavigate();
+
+  async function cloneSession() {
+    try {
+      const created = await api.post<{ id: number }>(`/api/v1/sessions/${id}/clone`, {});
+      navigate(`/sessions/${created.id}`);
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  }
 
   const load = useCallback(async () => {
     setDetail(await api.get<SessionDetail>(`/api/v1/sessions/${id}`));
@@ -167,6 +177,18 @@ export default function SessionPage() {
               ⏹ Kết thúc phiên
             </button>
           ))}
+        <span className="mx-1 text-slate-700">|</span>
+        <button onClick={cloneSession} className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800" title="Tạo phiên mới cùng cấu hình, người chơi và số dư ban đầu">
+          📋 Nhân bản
+        </button>
+        <a
+          href={`/api/v1/sessions/${id}/export`}
+          download={`boardbank-session-${id}.json`}
+          className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+          title="Tải toàn bộ dữ liệu phiên dạng JSON"
+        >
+          ⬇ Export JSON
+        </a>
       </div>
 
       {session.status === "ended" && (

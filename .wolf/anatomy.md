@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T05:10:49.418Z
-> Files: 60 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T05:28:46.352Z
+> Files: 65 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -17,6 +17,10 @@
 
 - `openwolf.md` (~313 tok)
 
+## docs/
+
+- `DEPLOY.md` — Triển khai BoardBank lên VPS (Ubuntu 24.04, 1 vCPU / 512 MB / 5 GB) (~1076 tok)
+
 ## docs/superpowers/plans/
 
 - `2026-07-04-boardbank-architecture-and-roadmap.md` — BoardBank — Kiến trúc & Kế hoạch triển khai tổng thể (~6620 tok)
@@ -26,11 +30,16 @@
 - `package.json` — Node.js package manifest (~148 tok)
 - `tsconfig.json` — TypeScript configuration (~96 tok)
 
+## server/scripts/
+
+- `loadtest.mjs` — Load test v1.0: N user ảo tạo giao dịch liên tục qua HTTP thật. (~785 tok)
+
 ## server/src/
 
-- `app.ts` — API routes: GET (1 endpoints) (~705 tok)
+- `app.ts` — API routes: GET (1 endpoints) (~727 tok)
 - `auth.ts` — Gắn req.principal cho mọi request từ cookie (nếu có). (~1823 tok)
-- `config.ts` — Exports Config, loadConfig (~150 tok)
+- `backup.ts` — Giữ lại `keep` bản mới nhất, xóa phần còn lại. Trả về danh sách file đã xóa. (~705 tok)
+- `config.ts` — Exports Config, loadConfig (~170 tok)
 - `db.ts` — Migration là additive-only (quy tắc tương thích ngược trong master plan). (~1792 tok)
 - `events.ts` — null = admin theo dõi phiên (nhận mọi broadcast, không nhận event cá nhân) (~1567 tok)
 - `index.ts` — Declares config (~139 tok)
@@ -44,12 +53,13 @@
 
 ## server/src/routes/
 
+- `admin.ts` — API routes: POST (1 endpoints) (~270 tok)
 - `assets.ts` — Tìm tỷ giá cho cặp tài sản: ưu tiên chiều thuận, tự nghịch đảo chiều ngược (phân số → chính xác). (~4300 tok)
 - `auth.ts` — API routes: POST, GET (7 endpoints) (~2415 tok)
 - `banks.ts` — API routes: POST, GET (2 endpoints) (~442 tok)
 - `events.ts` — API routes: GET, POST (3 endpoints) (~1033 tok)
 - `players.ts` — API routes: POST, DELETE (3 endpoints) (~1570 tok)
-- `sessions.ts` — API routes: POST, GET, PATCH (7 endpoints) (~3690 tok)
+- `sessions.ts` — API routes: POST, GET, PATCH (6 endpoints) (~5449 tok)
 - `transactions.ts` — Các loại giao dịch Phase 2. Tất cả đều là tổ hợp entries của cùng một engine: (~3768 tok)
 
 ## server/src/services/
@@ -66,6 +76,7 @@
 - `phase4.test.ts` — Cookies: fakeRaw, setupSession (~2213 tok)
 - `phase5.test.ts` — Cookies: setup, balanceOf (~3471 tok)
 - `phase6.test.ts` — Cookies: setup, setStatus, playerCookies (~2830 tok)
+- `phase7.test.ts` — Exports sums (~2291 tok)
 
 ## web/
 
@@ -101,9 +112,9 @@
 
 ## web/src/pages/
 
-- `BanksPage.tsx` — BanksPage — renders form (~1151 tok)
+- `BanksPage.tsx` — BanksPage — renders form (~1387 tok)
 - `JoinPage.tsx` — JoinPage — renders form (~1645 tok)
 - `LoginPage.tsx` — LoginPage — renders form (~825 tok)
 - `NewSessionPage.tsx` — NewSessionPage — renders form (~804 tok)
 - `PlayerPage.tsx` — fmt — renders form (~2958 tok)
-- `SessionPage.tsx` — STATUS_LABELS — renders form (~3132 tok)
+- `SessionPage.tsx` — STATUS_LABELS — renders form (~3393 tok)

@@ -375,3 +375,38 @@
 | 12:10 | Edited web/src/pages/PlayerPage.tsx | expanded (+12 lines) | ~223 |
 | 12:10 | Edited web/src/pages/PlayerPage.tsx | 15→18 lines | ~147 |
 | 12:10 | Edited web/src/pages/PlayerPage.tsx | 15→18 lines | ~147 |
+| 12:15 | Phase 6 xong: lifecycle draft/active/paused/ended + config (transferLimit, disabledTxTypes, allowNegative) chi rang buoc player + stats tu so cai + UI dashboard/ket qua/medals; 48/48 test xanh; verify e2e day du | server/src/routes/sessions.ts, transactions.ts, web/src/components/SessionResults.tsx, ConfigPanel.tsx | ok | ~11000 |
+| 12:13 | Session end: 43 writes across 10 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 0 reads | ~17366 tok |
+| 12:13 | Session end: 43 writes across 10 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 0 reads | ~17366 tok |
+| 12:25 | Created server/src/backup.ts | — | ~705 |
+| 12:25 | Created server/src/backup.ts | — | ~705 |
+| 12:25 | Created server/src/routes/admin.ts | — | ~270 |
+| 12:25 | Created server/src/routes/admin.ts | — | ~270 |
+| 12:25 | Edited server/src/config.ts | 4→5 lines | ~25 |
+| 12:25 | Edited server/src/config.ts | 4→5 lines | ~25 |
+| 12:25 | Edited server/src/config.ts | added nullish coalescing | ~38 |
+| 12:25 | Edited server/src/config.ts | added nullish coalescing | ~38 |
+| 12:25 | Edited server/src/routes/sessions.ts | 5→5 lines | ~78 |
+| 12:25 | Edited server/src/routes/sessions.ts | 5→5 lines | ~78 |
+| 12:25 | Edited server/src/routes/sessions.ts | added error handling | ~1768 |
+| 12:25 | Edited server/src/routes/sessions.ts | added error handling | ~1768 |
+| 12:26 | Edited server/src/app.ts | added 1 import(s) | ~28 |
+| 12:26 | Edited server/src/app.ts | added 1 import(s) | ~28 |
+| 12:26 | Edited server/src/app.ts | 3→4 lines | ~25 |
+| 12:26 | Edited server/src/app.ts | 3→4 lines | ~25 |
+| 12:26 | Created server/test/phase7.test.ts | — | ~2291 |
+| 12:26 | Created server/test/phase7.test.ts | — | ~2291 |
+| 12:27 | Created server/scripts/loadtest.mjs | — | ~785 |
+| 12:27 | Created server/scripts/loadtest.mjs | — | ~785 |
+| 12:27 | Edited web/src/pages/SessionPage.tsx | inline fix | ~19 |
+| 12:27 | Edited web/src/pages/SessionPage.tsx | inline fix | ~19 |
+| 12:27 | Edited web/src/pages/SessionPage.tsx | added error handling | ~96 |
+| 12:27 | Edited web/src/pages/SessionPage.tsx | added error handling | ~96 |
+| 12:27 | Edited web/src/pages/SessionPage.tsx | expanded (+12 lines) | ~249 |
+| 12:27 | Edited web/src/pages/SessionPage.tsx | expanded (+12 lines) | ~249 |
+| 12:28 | Edited web/src/pages/BanksPage.tsx | added error handling | ~155 |
+| 12:28 | Edited web/src/pages/BanksPage.tsx | added error handling | ~155 |
+| 12:28 | Edited web/src/pages/BanksPage.tsx | expanded (+6 lines) | ~199 |
+| 12:28 | Edited web/src/pages/BanksPage.tsx | expanded (+6 lines) | ~199 |
+| 12:28 | Created docs/DEPLOY.md | — | ~1148 |
+| 12:28 | Created docs/DEPLOY.md | — | ~1148 |

@@ -513,6 +513,86 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-05T05:10:20.036Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-07-05T05:25:25.337Z",
+      "error_message": "Null/undefined access in ",
+      "file": "server/src/config.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: backupDir: env.BACKUP_DIR ?? \"data/backups\",",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:25:25.359Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-07-05T05:25:58.692Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "server/src/routes/sessions.ts",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: // Nhân bản phiên: copy cấu hình + tài sản + tỷ giá + người ; // KHÔNG copy lịch sử giao dịch — phiên mới bắt đầu sạch ở t",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:25:58.714Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-07-05T05:27:44.390Z",
+      "error_message": "Missing error handling in function",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: const navigate = useNavigate();; async function cloneSession() {",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:27:44.416Z"
+    },
+    {
+      "id": "bug-036",
+      "timestamp": "2026-07-05T05:27:50.089Z",
+      "error_message": "CSS fix: hover",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "hover: bg-red-950/40\"> → bg-slate-800\"",
+      "fix": "Changed hover: bg-red-950/40\"> → bg-slate-800\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T05:27:50.089Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-07-05T05:28:06.532Z",
+      "error_message": "Missing error handling in function",
+      "file": "web/src/pages/BanksPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: const [backupMsg, setBackupMsg] = useState<string | null>(nu; async function backupNow() {",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:28:06.552Z"
     }
   ]
 }

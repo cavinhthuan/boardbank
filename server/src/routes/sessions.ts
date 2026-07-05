@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { generateJoinCode } from "../lib/ids.js";
-import { ensureAccount } from "../ledger.js";
+import { ensureAccount, postTransaction } from "../ledger.js";
 import { logAudit } from "../lib/audit.js";
 import { deny, isSessionAdmin, isSessionMember } from "../auth.js";
 
@@ -291,6 +291,137 @@ export function sessionRoutes(app: FastifyInstance): void {
       )
       .all(primary?.id ?? 0, primary?.id ?? 0, primary?.id ?? 0, id);
     return { ok: true, data: { totalTx, circulating, players, primaryAssetId: primary?.id ?? null } };
+  });
+
+  // Nhân bản phiên: copy cấu hình + tài sản + tỷ giá + người chơi (giữ PIN) + số dư ban đầu.
+  // KHÔNG copy lịch sử giao dịch — phiên mới bắt đầu sạch ở trạng thái draft.
+  app.post("/api/v1/sessions/:id/clone", async (req, reply) => {
+    const id = Number((req.params as { id: string }).id);
+    const session = getSessionOr404(app, id);
+    if (!session) {
+      return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+    }
+    if (!req.principal || !isSessionAdmin(app.db, req.principal, id)) return deny(app, req, reply, id);
+
+    const config = JSON.parse(session.config_json) as { initialBalance?: number };
+    const initial = config.initialBalance ?? 0;
+
+    const newId = app.db.transaction(() => {
+      let sid = 0;
+      for (let attempt = 0; ; attempt++) {
+        try {
+          const r = app.db
+            .prepare("INSERT INTO game_sessions (bank_id, name, join_code, config_json) VALUES (?,?,?,?)")
+            .run(session.bank_id, `${session.name} (bản sao)`, generateJoinCode(), session.config_json);
+          sid = Number(r.lastInsertRowid);
+          break;
+        } catch (e) {
+          if (attempt >= 4) throw e;
+        }
+      }
+
+      const assets = app.db
+        .prepare("SELECT * FROM asset_types WHERE session_id=? AND status='active'")
+        .all(id) as { id: number; code: string; name: string; icon: string | null; decimals: number; is_primary: number }[];
+      const assetMap = new Map<number, number>();
+      for (const a of assets) {
+        const r = app.db
+          .prepare("INSERT INTO asset_types (session_id, code, name, icon, decimals, is_primary) VALUES (?,?,?,?,?,?)")
+          .run(sid, a.code, a.name, a.icon, a.decimals, a.is_primary);
+        assetMap.set(a.id, Number(r.lastInsertRowid));
+        ensureAccount(app.db, sid, "bank", 0, Number(r.lastInsertRowid));
+      }
+
+      const rates = app.db.prepare("SELECT * FROM exchange_rates WHERE session_id=?").all(id) as {
+        from_asset_id: number;
+        to_asset_id: number;
+        rate_num: number;
+        rate_den: number;
+      }[];
+      for (const r of rates) {
+        const from = assetMap.get(r.from_asset_id);
+        const to = assetMap.get(r.to_asset_id);
+        if (from && to) {
+          app.db
+            .prepare("INSERT INTO exchange_rates (session_id, from_asset_id, to_asset_id, rate_num, rate_den) VALUES (?,?,?,?,?)")
+            .run(sid, from, to, r.rate_num, r.rate_den);
+        }
+      }
+
+      const players = app.db
+        .prepare("SELECT display_name, avatar, pin_hash, role FROM players WHERE session_id=? AND status != 'removed'")
+        .all(id) as { display_name: string; avatar: string | null; pin_hash: string | null; role: string }[];
+      for (const p of players) {
+        const pr = app.db
+          .prepare("INSERT INTO players (session_id, display_name, avatar, pin_hash, role) VALUES (?,?,?,?,?)")
+          .run(sid, p.display_name, p.avatar, p.pin_hash, p.role);
+        const pid = Number(pr.lastInsertRowid);
+        for (const [oldAid, newAid] of assetMap) {
+          const accId = ensureAccount(app.db, sid, "player", pid, newAid);
+          const isPrimary = assets.find((a) => a.id === oldAid)?.is_primary;
+          if (isPrimary && initial > 0) {
+            const bankAcc = ensureAccount(app.db, sid, "bank", 0, newAid);
+            postTransaction(app.db, {
+              sessionId: sid,
+              type: "issue",
+              note: "Cấp số dư ban đầu",
+              createdBy: "system",
+              entries: [
+                { accountId: bankAcc, assetTypeId: newAid, amount: -initial },
+                { accountId: accId, assetTypeId: newAid, amount: initial },
+              ],
+            });
+          }
+        }
+      }
+      return sid;
+    })();
+
+    logAudit(app.db, {
+      sessionId: newId,
+      actorType: req.principal.type,
+      actorId: req.principal.id,
+      action: "session.clone",
+      detail: { from: id },
+    });
+    const created = app.db.prepare("SELECT * FROM game_sessions WHERE id=?").get(newId);
+    reply.status(201).send({ ok: true, data: created });
+  });
+
+  // Export toàn bộ dữ liệu phiên ra JSON — lưu kết quả vĩnh viễn (không kèm PIN hash)
+  app.get("/api/v1/sessions/:id/export", async (req, reply) => {
+    const id = Number((req.params as { id: string }).id);
+    const session = getSessionOr404(app, id);
+    if (!session) {
+      return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+    }
+    if (!req.principal || !isSessionAdmin(app.db, req.principal, id)) return deny(app, req, reply, id);
+
+    const txs = app.db
+      .prepare("SELECT id, code, type, status, note, created_by, reversed_by_tx_id, meta_json, created_at FROM transactions WHERE session_id=? ORDER BY id")
+      .all(id) as { id: number }[];
+    const getEntries = app.db.prepare(
+      "SELECT account_id, asset_type_id, amount FROM transaction_entries WHERE transaction_id=? ORDER BY id",
+    );
+    const data = {
+      format: "boardbank-session-export",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      session: { ...session, config: JSON.parse(session.config_json) },
+      bank: app.db.prepare("SELECT id, name FROM banks WHERE id=?").get(session.bank_id),
+      assets: app.db.prepare("SELECT * FROM asset_types WHERE session_id=?").all(id),
+      rates: app.db.prepare("SELECT * FROM exchange_rates WHERE session_id=?").all(id),
+      players: app.db
+        .prepare("SELECT id, display_name, avatar, role, status, created_at FROM players WHERE session_id=?")
+        .all(id),
+      accounts: app.db
+        .prepare("SELECT id, owner_type, owner_id, asset_type_id, balance_cached FROM accounts WHERE session_id=?")
+        .all(id),
+      transactions: txs.map((t) => ({ ...t, entries: getEntries.all(t.id) })),
+    };
+    logAudit(app.db, { sessionId: id, actorType: req.principal.type, actorId: req.principal.id, action: "session.export" });
+    reply.header("content-disposition", `attachment; filename="boardbank-session-${id}.json"`);
+    return { ok: true, data };
   });
 
   app.get(
