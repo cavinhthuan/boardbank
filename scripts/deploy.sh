@@ -18,10 +18,12 @@ echo "==> [1/4] Build tại máy dev (typecheck server + build web)…"
 npm run build
 
 echo "==> [2/4] Cập nhật mã nguồn server (git pull) + cài prod deps…"
-ssh $SSH_OPTS "$HOST" "set -e; cd '$APP_DIR' \
+# safe.directory: repo thuộc boardbank nhưng lệnh chạy dưới root → git cần được cho phép
+ssh $SSH_OPTS "$HOST" "set -e; git config --global --add safe.directory '$APP_DIR' 2>/dev/null || true; \
+  cd '$APP_DIR' \
   && git pull --ff-only \
   && npm ci --omit=dev --no-audit --no-fund \
-  && npm cache clean --force >/dev/null 2>&1 || true"
+  && (npm cache clean --force >/dev/null 2>&1 || true)"
 
 echo "==> [3/4] Upload web/dist đã build…"
 tar -czf - -C web/dist . | ssh $SSH_OPTS "$HOST" "set -e; rm -rf '$APP_DIR/web/dist' && mkdir -p '$APP_DIR/web/dist' && tar -xzf - -C '$APP_DIR/web/dist'"

@@ -1083,6 +1083,42 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-05T17:17:50.688Z"
+    },
+    {
+      "id": "bug-068",
+      "timestamp": "2026-07-05T17:25:11.444Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/deploy.sh",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→7 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T17:25:11.444Z"
+    },
+    {
+      "id": "bug-066",
+      "timestamp": "2026-07-05T17:25:32.114Z",
+      "error_message": "fatal: detected dubious ownership in repository at /home/boardbank/app",
+      "file": "scripts/deploy.sh",
+      "root_cause": "Repo clone boi user boardbank nhung git pull chay duoi root — git 2.35+ chan repo khac owner. Buoc 2 fail nen npm ci --omit=dev chua chay, nhung buoc 3-4 van tiep tuc (moi ssh la lenh rieng).",
+      "fix": "deploy.sh tu them git config --global --add safe.directory <app_dir> truoc khi pull.",
+      "tags": [
+        "git",
+        "safe-directory",
+        "deploy",
+        "root",
+        "ownership"
+      ],
+      "related_bugs": [
+        "bug-065"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T17:25:32.115Z"
     }
   ]
 }

@@ -617,3 +617,8 @@
 | 00:14 | Created scripts/deploy.sh | — | ~391 |
 | 00:15 | Edited docs/DEPLOY.md | modified c() | ~380 |
 | 00:15 | Edited docs/DEPLOY.md | modified c() | ~380 |
+| 09:20 | Fix bug-065: dia VPS day (npm full-deps cu + cache) lam fallocate fail, dong fstab mo coi; boardbank nologin khong SSH duoc -> deploy.sh dung root@ + chown; DEPLOY.md cap cuu don dia truoc swap 512M | scripts/deploy.sh, docs/DEPLOY.md | ok | ~2500 |
+| 00:18 | Session end: 49 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~23371 tok |
+| 00:18 | Session end: 49 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~23371 tok |
+| 00:25 | Edited scripts/deploy.sh | 5→7 lines | ~110 |
+| 00:25 | Edited scripts/deploy.sh | 5→7 lines | ~110 |
