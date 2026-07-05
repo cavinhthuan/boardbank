@@ -14,6 +14,7 @@ import { formatMinor } from "../money";
 import { playChime } from "../sound";
 import { speak, speechAvailable, speechTextFor } from "../speech";
 import { loadSettings, saveSettings, type AppSettings } from "../settings";
+import QuickSend, { type QuickData, type QuickPick } from "../components/QuickSend";
 
 function fmt(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -38,6 +39,7 @@ export default function PlayerPage() {
   const [showScanner, setShowScanner] = useState(false);
   const [settings, setSettings] = useState<AppSettings>(loadSettings);
   const [balancePop, setBalancePop] = useState(false);
+  const [quick, setQuick] = useState<QuickData>({ favorites: [], frequent: [], templates: [] });
   const { toasts, addToast } = useToasts();
 
   function toggleSetting(key: keyof AppSettings) {
@@ -48,6 +50,51 @@ export default function PlayerPage() {
       if (key === "voice" && next.voice) speak("Đã bật đọc giao dịch");
       return next;
     });
+  }
+
+  function applyQuickPick(p: QuickPick): void {
+    setToId(String(p.toId));
+    setAmount(p.amount ? String(p.amount) : "");
+    setNote(p.note ?? "");
+    if (p.assetId) setAssetId(String(p.assetId));
+    addToast("⚡ Đã điền sẵn — nhập PIN để chuyển", "info");
+  }
+
+  async function toggleFavorite(): Promise<void> {
+    const target = Number(toId);
+    if (!target) return;
+    try {
+      if (quick.favorites.includes(target)) {
+        await api.delete(`/api/v1/sessions/${player.sessionId}/me/favorites/${target}`);
+      } else {
+        await api.put(`/api/v1/sessions/${player.sessionId}/me/favorites/${target}`, {});
+      }
+      const q = await api.get<QuickData>(`/api/v1/sessions/${player.sessionId}/me/quick`);
+      setQuick(q);
+    } catch (err) {
+      addToast((err as Error).message, "warn");
+    }
+  }
+
+  async function saveTemplate(): Promise<void> {
+    const amt = Number(amount);
+    if (!Number(toId) || !Number.isInteger(amt) || amt <= 0) {
+      addToast("Chọn người nhận và số tiền trước khi lưu mẫu", "warn");
+      return;
+    }
+    try {
+      await api.post(`/api/v1/sessions/${player.sessionId}/me/templates`, {
+        toPlayerId: Number(toId),
+        amount: amt,
+        ...(selectedAsset && !selectedAsset.is_primary ? { assetTypeId: selectedAsset.id } : {}),
+        ...(note.trim() ? { note: note.trim() } : {}),
+      });
+      const q = await api.get<QuickData>(`/api/v1/sessions/${player.sessionId}/me/quick`);
+      setQuick(q);
+      addToast("💾 Đã lưu mẫu giao dịch", "success");
+    } catch (err) {
+      addToast((err as Error).message, "warn");
+    }
   }
 
   function applyPayPayload(p: PayPayload): void {
@@ -97,6 +144,10 @@ export default function PlayerPage() {
       `/api/v1/sessions/${player.sessionId}/transactions?playerId=${player.id}&limit=15`,
     );
     setTxs(data);
+    api
+      .get<QuickData>(`/api/v1/sessions/${player.sessionId}/me/quick`)
+      .then(setQuick)
+      .catch(() => {});
   }, [player.sessionId, player.id]);
 
   useEffect(() => {
@@ -284,6 +335,18 @@ export default function PlayerPage() {
       )}
       {showScanner && <QrScannerModal onResult={handleScan} onClose={() => setShowScanner(false)} />}
 
+      {detail.session.status === "active" && (
+        <QuickSend
+          sessionId={player.sessionId}
+          quick={quick}
+          players={others}
+          onPick={applyQuickPick}
+          onChanged={() => {
+            load().catch(() => {});
+          }}
+        />
+      )}
+
       {detail.session.status === "paused" && (
         <div className="mt-4 rounded-xl border border-amber-800 bg-amber-950/40 px-4 py-3 text-amber-200">
           ⏸ Phiên đang tạm dừng — giao dịch sẽ mở lại khi quản trị viên tiếp tục.
@@ -299,14 +362,26 @@ export default function PlayerPage() {
       <form onSubmit={transfer} className="mt-5 rounded-xl border border-slate-800 bg-slate-900 p-4">
         <h2 className="mb-3 font-semibold">Chuyển tiền</h2>
         <div className="space-y-3">
-          <select value={toId} onChange={(e) => setToId(e.target.value)} className={field} required>
-            <option value="">— chọn người nhận —</option>
-            {others.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.avatar} {p.display_name}
-              </option>
-            ))}
-          </select>
+          <div className="flex gap-2">
+            <select value={toId} onChange={(e) => setToId(e.target.value)} className={field} required>
+              <option value="">— chọn người nhận —</option>
+              {others.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.avatar} {p.display_name}
+                </option>
+              ))}
+            </select>
+            {toId && (
+              <button
+                type="button"
+                onClick={toggleFavorite}
+                className="shrink-0 rounded-lg border border-slate-700 px-3 text-lg hover:bg-slate-800"
+                title={quick.favorites.includes(Number(toId)) ? "Bỏ yêu thích" : "Đánh dấu yêu thích"}
+              >
+                {quick.favorites.includes(Number(toId)) ? "⭐" : "☆"}
+              </button>
+            )}
+          </div>
           {activeAssets.length > 1 && (
             <select value={assetId || String(primaryAsset?.id ?? "")} onChange={(e) => setAssetId(e.target.value)} className={field}>
               {activeAssets.map((a) => (
@@ -340,9 +415,19 @@ export default function PlayerPage() {
         </div>
         {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
         {flash && <p className="mt-2 text-sm text-emerald-400">{flash}</p>}
-        <button className="mt-3 w-full rounded-lg bg-emerald-600 py-2.5 font-semibold hover:bg-emerald-500">
-          Chuyển
-        </button>
+        <div className="mt-3 flex gap-2">
+          <button className="flex-1 rounded-lg bg-emerald-600 py-2.5 font-semibold hover:bg-emerald-500">
+            Chuyển
+          </button>
+          <button
+            type="button"
+            onClick={saveTemplate}
+            className="shrink-0 rounded-lg border border-slate-700 px-3 text-sm text-slate-300 hover:bg-slate-800"
+            title="Lưu người nhận + số tiền + ghi chú thành mẫu gửi nhanh"
+          >
+            💾 Lưu mẫu
+          </button>
+        </div>
       </form>
       )}
 

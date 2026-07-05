@@ -246,6 +246,7 @@ export function transactionRoutes(app: FastifyInstance): void {
             before: { type: "integer" },
             playerId: { type: "integer" },
             type: { type: "string" },
+            q: { type: "string", maxLength: 100 },
           },
           additionalProperties: false,
         },
@@ -253,7 +254,7 @@ export function transactionRoutes(app: FastifyInstance): void {
     },
     async (req, reply) => {
       const sessionId = Number((req.params as { id: string }).id);
-      const q = req.query as { limit: number; before?: number; playerId?: number; type?: string };
+      const q = req.query as { limit: number; before?: number; playerId?: number; type?: string; q?: string };
       if (!getSessionOr404(app, sessionId)) {
         return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
       }
@@ -268,6 +269,16 @@ export function transactionRoutes(app: FastifyInstance): void {
       if (q.type) {
         conds.push("t.type = ?");
         params.push(q.type);
+      }
+      if (q.q) {
+        // Tìm theo ghi chú, mã giao dịch hoặc tên người liên quan
+        conds.push(
+          `(t.note LIKE '%' || ? || '%' OR t.code LIKE '%' || ? || '%' OR EXISTS (
+             SELECT 1 FROM transaction_entries e2 JOIN accounts a2 ON a2.id=e2.account_id
+             JOIN players p2 ON p2.id=a2.owner_id AND a2.owner_type='player'
+             WHERE e2.transaction_id=t.id AND p2.display_name LIKE '%' || ? || '%'))`,
+        );
+        params.push(q.q, q.q, q.q);
       }
       if (q.playerId) {
         conds.push(

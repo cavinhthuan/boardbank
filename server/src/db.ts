@@ -136,6 +136,27 @@ const MIGRATIONS: string[] = [
   );
   ALTER TABLE asset_types ADD COLUMN status TEXT NOT NULL DEFAULT 'active';
   ALTER TABLE transactions ADD COLUMN meta_json TEXT;`,
+
+  // 006: cá nhân hóa Phase 10 — yêu thích & mẫu giao dịch (theo người chơi, lưu server)
+  `CREATE TABLE player_favorites (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    player_id INTEGER NOT NULL REFERENCES players(id),
+    favorite_player_id INTEGER NOT NULL REFERENCES players(id),
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+    UNIQUE(player_id, favorite_player_id)
+  );
+  CREATE TABLE tx_templates (
+    id INTEGER PRIMARY KEY,
+    session_id INTEGER NOT NULL REFERENCES game_sessions(id),
+    player_id INTEGER NOT NULL REFERENCES players(id),
+    to_player_id INTEGER NOT NULL REFERENCES players(id),
+    asset_type_id INTEGER NOT NULL REFERENCES asset_types(id),
+    amount INTEGER NOT NULL CHECK (amount > 0),
+    note TEXT,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+  );
+  CREATE INDEX idx_templates_player ON tx_templates(player_id);`,
 ];
 
 export function openDb(dbPath: string): Database.Database {

@@ -29,12 +29,40 @@ function amountOf(tx: Tx): number {
   return tx.entries.filter((e) => e.amount > 0).reduce((s, e) => s + e.amount, 0);
 }
 
+interface SavedFilter {
+  type?: string;
+  playerId?: string;
+  q?: string;
+}
+
+function loadFilter(sessionId: string): SavedFilter {
+  try {
+    return JSON.parse(localStorage.getItem(`bb.histfilter.${sessionId}`) ?? "{}") as SavedFilter;
+  } catch {
+    return {};
+  }
+}
+
 export default function TransactionHistory({ sessionId, players, refreshKey, onChanged }: Props) {
+  const saved = loadFilter(sessionId);
   const [txs, setTxs] = useState<Tx[]>([]);
   const [nextBefore, setNextBefore] = useState<number | null>(null);
-  const [typeFilter, setTypeFilter] = useState("");
-  const [playerFilter, setPlayerFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState(saved.type ?? "");
+  const [playerFilter, setPlayerFilter] = useState(saved.playerId ?? "");
+  const [search, setSearch] = useState(saved.q ?? "");
   const [error, setError] = useState<string | null>(null);
+
+  // Lưu bộ lọc theo phiên — mở lại vẫn giữ nguyên
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        `bb.histfilter.${sessionId}`,
+        JSON.stringify({ type: typeFilter, playerId: playerFilter, q: search }),
+      );
+    } catch {
+      /* chế độ riêng tư */
+    }
+  }, [sessionId, typeFilter, playerFilter, search]);
 
   const load = useCallback(
     async (before?: number) => {
@@ -42,17 +70,22 @@ export default function TransactionHistory({ sessionId, players, refreshKey, onC
       if (before) params.set("before", String(before));
       if (typeFilter) params.set("type", typeFilter);
       if (playerFilter) params.set("playerId", playerFilter);
+      if (search.trim()) params.set("q", search.trim());
       const { data, meta } = await api.getWithMeta<Tx[], { nextBefore: number | null }>(
         `/api/v1/sessions/${sessionId}/transactions?${params}`,
       );
       setTxs((prev) => (before ? [...prev, ...data] : data));
       setNextBefore(meta.nextBefore);
     },
-    [sessionId, typeFilter, playerFilter],
+    [sessionId, typeFilter, playerFilter, search],
   );
 
+  // debounce nhẹ cho ô tìm kiếm
   useEffect(() => {
-    load().catch((e) => setError((e as Error).message));
+    const t = setTimeout(() => {
+      load().catch((e) => setError((e as Error).message));
+    }, 250);
+    return () => clearTimeout(t);
   }, [load, refreshKey]);
 
   async function reverse(txId: number) {
@@ -88,6 +121,12 @@ export default function TransactionHistory({ sessionId, players, refreshKey, onC
             </option>
           ))}
         </select>
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="🔍 ghi chú, mã TX, tên…"
+          className={`${select} min-w-40 flex-1`}
+        />
       </div>
       {error && <p className="mb-2 text-sm text-red-400">{error}</p>}
 

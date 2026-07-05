@@ -468,3 +468,46 @@
 | 15:00 | Edited web/src/pages/PlayerPage.tsx | added optional chaining | ~245 |
 | 15:00 | Edited web/src/pages/PlayerPage.tsx | "mt-5 rounded-2xl bg-gradi" → "mt-5 rounded-2xl bg-gradi" | ~41 |
 | 15:00 | Edited web/src/pages/PlayerPage.tsx | "mt-5 rounded-2xl bg-gradi" → "mt-5 rounded-2xl bg-gradi" | ~41 |
+| 15:10 | Phase 9 xong: chime WebAudio tu sinh (0 asset), TTS vi-VN qua Web Speech API + speechTextFor, toggle am thanh/giong doc per-device (localStorage), balance-pop animation; build ok, 54/54 test; am thanh/giong can thu tay tren browser | web/src/sound.ts, speech.ts, settings.ts, pages/PlayerPage.tsx | ok | ~5000 |
+| 15:09 | Session end: 121 writes across 28 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 1 reads | ~47527 tok |
+| 15:09 | Session end: 121 writes across 28 files (sessions.ts, transactions.ts, assets.ts, phase6.test.ts, useSessionEvents.ts) | 1 reads | ~47527 tok |
+| 15:13 | Edited server/src/db.ts | expanded (+21 lines) | ~314 |
+| 15:13 | Edited server/src/db.ts | expanded (+21 lines) | ~314 |
+| 15:13 | Created server/src/routes/personal.ts | — | ~1932 |
+| 15:13 | Created server/src/routes/personal.ts | — | ~1932 |
+| 15:13 | Edited server/src/app.ts | added 1 import(s) | ~30 |
+| 15:13 | Edited server/src/app.ts | added 1 import(s) | ~30 |
+| 15:13 | Edited server/src/app.ts | 2→3 lines | ~24 |
+| 15:13 | Edited server/src/app.ts | 2→3 lines | ~24 |
+| 15:13 | Edited server/src/routes/transactions.ts | 6→7 lines | ~87 |
+| 15:13 | Edited server/src/routes/transactions.ts | 6→7 lines | ~87 |
+| 15:13 | Edited server/src/routes/transactions.ts | inline fix | ~32 |
+| 15:13 | Edited server/src/routes/transactions.ts | inline fix | ~32 |
+| 15:13 | Edited server/src/routes/transactions.ts | added 1 condition(s) | ~168 |
+| 15:13 | Edited server/src/routes/transactions.ts | added 1 condition(s) | ~168 |
+| 15:14 | Created server/test/phase10.test.ts | — | ~2370 |
+| 15:14 | Created server/test/phase10.test.ts | — | ~2370 |
+| 15:15 | Edited server/test/phase10.test.ts | modified for() | ~98 |
+| 15:15 | Edited server/test/phase10.test.ts | modified for() | ~98 |
+| 15:15 | Edited server/test/phase10.test.ts | reduced (-9 lines) | ~39 |
+| 15:15 | Edited server/test/phase10.test.ts | reduced (-9 lines) | ~39 |
+| 15:16 | Created web/src/components/QuickSend.tsx | — | ~904 |
+| 15:16 | Created web/src/components/QuickSend.tsx | — | ~904 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | added 1 import(s) | ~46 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | added 1 import(s) | ~46 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | CSS: favorites, frequent, templates | ~64 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | CSS: favorites, frequent, templates | ~64 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | 8→12 lines | ~137 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | 8→12 lines | ~137 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | added error handling | ~474 |
+| 15:16 | Edited web/src/pages/PlayerPage.tsx | added error handling | ~474 |
+| 15:17 | Edited web/src/pages/PlayerPage.tsx | expanded (+12 lines) | ~112 |
+| 15:17 | Edited web/src/pages/PlayerPage.tsx | expanded (+12 lines) | ~112 |
+| 15:17 | Edited web/src/pages/PlayerPage.tsx | CSS: hover | ~246 |
+| 15:17 | Edited web/src/pages/PlayerPage.tsx | CSS: hover | ~246 |
+| 15:17 | Edited web/src/pages/PlayerPage.tsx | expanded (+10 lines) | ~157 |
+| 15:17 | Edited web/src/pages/PlayerPage.tsx | expanded (+10 lines) | ~157 |
+| 15:17 | Edited web/src/components/TransactionHistory.tsx | added nullish coalescing | ~575 |
+| 15:17 | Edited web/src/components/TransactionHistory.tsx | added nullish coalescing | ~575 |
+| 15:17 | Edited web/src/components/TransactionHistory.tsx | expanded (+6 lines) | ~153 |
+| 15:17 | Edited web/src/components/TransactionHistory.tsx | expanded (+6 lines) | ~153 |

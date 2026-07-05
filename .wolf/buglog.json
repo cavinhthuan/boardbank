@@ -705,6 +705,134 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-05T08:00:20.476Z"
+    },
+    {
+      "id": "bug-045",
+      "timestamp": "2026-07-05T08:13:05.747Z",
+      "error_message": "Type error",
+      "file": "server/src/db.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: // 006: cá nhân hóa Phase 10 — yêu thích & mẫu giao dịch (th; `CREATE TABLE player_favorites (",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:13:05.773Z"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-07-05T08:13:50.895Z",
+      "error_message": "Wrong reference: eventRoutes should be personalRoutes",
+      "file": "server/src/app.ts",
+      "root_cause": "Used \"eventRoutes\" instead of \"personalRoutes\"",
+      "fix": "Changed eventRoutes → personalRoutes",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:13:50.929Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-07-05T08:15:33.121Z",
+      "error_message": "Missing await",
+      "file": "server/test/phase10.test.ts",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call | Also: // người nhận không hợp lệ (check trước khi chạm trần); const bad = await app.inject({",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:15:33.155Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-07-05T08:15:35.307Z",
+      "error_message": "Significant refactor of ",
+      "file": "server/test/phase10.test.ts",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 13→4 lines (8 removed) | Also: // người nhận không hợp lệ; const bad = await app.inject({",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:15:35.345Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-07-05T08:16:33.219Z",
+      "error_message": "Type error",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: const [quick, setQuick] = useState<QuickData>({ favorites: [",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:16:33.248Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-07-05T08:16:36.843Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: api; .get<QuickData>(`/api/v1/sessions/${player.sessionId}/me/qui | Also: function applyQuickPick(p: QuickPick): void {; setToId(String(p.toId)); | Also: {detail.session.status === \"active\" && (; <QuickSend",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 6,
+      "last_seen": "2026-07-05T08:17:07.751Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-07-05T08:17:15.411Z",
+      "error_message": "CSS fix: hover",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "hover: bg-emerald-500\"> → bg-slate-800\"",
+      "fix": "Changed hover: bg-emerald-500\"> → bg-slate-800\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:17:15.440Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-07-05T08:17:33.780Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/components/TransactionHistory.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: interface SavedFilter {; type?: string;",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:17:33.805Z"
     }
   ]
 }
