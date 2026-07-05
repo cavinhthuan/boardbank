@@ -68,9 +68,15 @@ export function transactionRoutes(app: FastifyInstance): void {
       if (session.status === "ended") {
         return reply.status(422).send({ ok: false, error: { code: "SESSION_ENDED", message: "Phiên đã kết thúc" } });
       }
+      const config = JSON.parse(session.config_json) as {
+        allowNegative?: boolean;
+        transferLimit?: number;
+        disabledTxTypes?: string[];
+      };
 
       // Phân quyền: session-admin làm được mọi loại (không cần PIN).
-      // Người chơi thường: CHỈ 'transfer' từ chính tài khoản mình + bắt buộc PIN.
+      // Người chơi thường: CHỈ 'transfer' từ chính tài khoản mình + bắt buộc PIN,
+      // và chịu ràng buộc cấu hình phiên (trạng thái active, giới hạn, loại bị tắt).
       const principal = req.principal;
       if (!principal) return deny(app, req, reply, sessionId);
       const admin = isSessionAdmin(app.db, principal, sessionId);
@@ -83,6 +89,22 @@ export function transactionRoutes(app: FastifyInstance): void {
         ) {
           return deny(app, req, reply, sessionId);
         }
+        if (session.status !== "active") {
+          return reply
+            .status(422)
+            .send({ ok: false, error: { code: "SESSION_NOT_ACTIVE", message: "Phiên chưa bắt đầu hoặc đang tạm dừng" } });
+        }
+        if (config.disabledTxTypes?.includes(body.type)) {
+          return reply
+            .status(422)
+            .send({ ok: false, error: { code: "TX_TYPE_DISABLED", message: "Loại giao dịch này đang bị tắt trong phiên" } });
+        }
+        if (config.transferLimit && body.amount && body.amount > config.transferLimit) {
+          return reply.status(422).send({
+            ok: false,
+            error: { code: "LIMIT_EXCEEDED", message: `Vượt giới hạn mỗi lần chuyển (${config.transferLimit})` },
+          });
+        }
         try {
           if (!body.pin) throw new LedgerError("PIN_REQUIRED", "Cần nhập PIN để xác nhận giao dịch", 422);
           verifyPin(app.db, principal.id, body.pin);
@@ -94,7 +116,6 @@ export function transactionRoutes(app: FastifyInstance): void {
         }
       }
       const createdBy = `${principal.type}:${principal.id}`;
-      const config = JSON.parse(session.config_json) as { allowNegative?: boolean };
 
       // Tài sản: mặc định là tài sản chính của phiên
       const asset = body.assetTypeId

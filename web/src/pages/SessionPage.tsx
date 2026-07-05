@@ -5,8 +5,17 @@ import TransactionForm from "../components/TransactionForm";
 import TransactionHistory from "../components/TransactionHistory";
 import AuditLog from "../components/AuditLog";
 import AssetsPanel from "../components/AssetsPanel";
+import ConfigPanel from "../components/ConfigPanel";
+import SessionResults from "../components/SessionResults";
 import { useSessionEvents } from "../hooks/useSessionEvents";
 import { formatMinor } from "../money";
+
+const STATUS_LABELS: Record<string, { label: string; cls: string }> = {
+  draft: { label: "Nháp", cls: "bg-slate-700 text-slate-300" },
+  active: { label: "Đang chơi", cls: "bg-emerald-800 text-emerald-200" },
+  paused: { label: "Tạm dừng", cls: "bg-amber-800 text-amber-200" },
+  ended: { label: "Đã kết thúc", cls: "bg-slate-700 text-slate-400" },
+};
 
 function formatAmount(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -18,6 +27,7 @@ export default function SessionPage() {
   const [newName, setNewName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [confirmEnd, setConfirmEnd] = useState(false);
 
   const load = useCallback(async () => {
     setDetail(await api.get<SessionDetail>(`/api/v1/sessions/${id}`));
@@ -35,11 +45,27 @@ export default function SessionPage() {
     onPlayers: () => {
       load().catch(() => {});
     },
+    onSession: () => {
+      load().catch(() => {});
+      setRefreshKey((k) => k + 1);
+    },
     onResync: () => {
       load().catch(() => {});
       setRefreshKey((k) => k + 1);
     },
   });
+
+  async function changeStatus(status: "active" | "paused" | "ended") {
+    try {
+      setError(null);
+      await api.post(`/api/v1/sessions/${id}/status`, { status });
+      setConfirmEnd(false);
+      await load();
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  }
 
   async function addPlayer(e: FormEvent) {
     e.preventDefault();
@@ -90,9 +116,14 @@ export default function SessionPage() {
   return (
     <div className="mx-auto max-w-3xl p-6">
       <Link to="/" className="text-sm text-slate-400 hover:text-slate-200">← {bank.name}</Link>
-      <header className="mt-2 mb-6 flex flex-wrap items-end justify-between gap-3">
+      <header className="mt-2 mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">{session.name}</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold">{session.name}</h1>
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_LABELS[session.status]?.cls}`}>
+              {STATUS_LABELS[session.status]?.label}
+            </span>
+          </div>
           <p className="mt-1 text-slate-400">
             Mã tham gia: <span className="font-mono text-lg text-emerald-400">{session.join_code}</span>
           </p>
@@ -105,6 +136,46 @@ export default function SessionPage() {
         </div>
       </header>
 
+      <div className="mb-6 flex flex-wrap items-center gap-2">
+        {session.status === "draft" && (
+          <button onClick={() => changeStatus("active")} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold hover:bg-emerald-500">
+            ▶ Bắt đầu phiên
+          </button>
+        )}
+        {session.status === "active" && (
+          <button onClick={() => changeStatus("paused")} className="rounded-lg bg-amber-700 px-4 py-2 text-sm font-semibold hover:bg-amber-600">
+            ⏸ Tạm dừng
+          </button>
+        )}
+        {session.status === "paused" && (
+          <button onClick={() => changeStatus("active")} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold hover:bg-emerald-500">
+            ▶ Tiếp tục
+          </button>
+        )}
+        {(session.status === "active" || session.status === "paused") &&
+          (confirmEnd ? (
+            <>
+              <button onClick={() => changeStatus("ended")} className="rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold hover:bg-red-600">
+                Xác nhận kết thúc — không thể hoàn tác
+              </button>
+              <button onClick={() => setConfirmEnd(false)} className="rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-slate-800">
+                Hủy
+              </button>
+            </>
+          ) : (
+            <button onClick={() => setConfirmEnd(true)} className="rounded-lg border border-red-900 px-4 py-2 text-sm text-red-400 hover:bg-red-950/40">
+              ⏹ Kết thúc phiên
+            </button>
+          ))}
+      </div>
+
+      {session.status === "ended" && (
+        <div className="mb-6">
+          <SessionResults sessionId={id!} primaryAsset={primaryAsset} refreshKey={refreshKey} />
+        </div>
+      )}
+
+      {session.status !== "ended" && (
       <form onSubmit={addPlayer} className="mb-6 flex gap-2">
         <input
           value={newName}
@@ -116,6 +187,7 @@ export default function SessionPage() {
           + Thêm
         </button>
       </form>
+      )}
       {error && <p className="mb-4 text-red-400">{error}</p>}
 
       <ul className="space-y-2">
@@ -164,7 +236,7 @@ export default function SessionPage() {
         {players.length === 0 && <li className="text-slate-500">Chưa có người chơi — thêm ở trên.</li>}
       </ul>
 
-      {players.length >= 1 && (
+      {players.length >= 1 && session.status !== "ended" && (
         <div className="mt-8">
           <TransactionForm
             sessionId={id!}
@@ -178,14 +250,33 @@ export default function SessionPage() {
         </div>
       )}
 
-      <AssetsPanel
-        sessionId={id!}
-        assets={assets}
-        rates={rates}
-        onChanged={() => {
-          load().catch(() => {});
-        }}
-      />
+      {session.status !== "ended" && (
+        <>
+          <AssetsPanel
+            sessionId={id!}
+            assets={assets}
+            rates={rates}
+            onChanged={() => {
+              load().catch(() => {});
+            }}
+          />
+          <ConfigPanel
+            sessionId={id!}
+            config={session.config}
+            onChanged={() => {
+              load().catch(() => {});
+            }}
+          />
+          <details className="mt-8">
+            <summary className="cursor-pointer font-semibold text-slate-300 hover:text-slate-100">
+              Bảng xếp hạng & thống kê
+            </summary>
+            <div className="mt-2">
+              <SessionResults sessionId={id!} primaryAsset={primaryAsset} title="Thống kê hiện tại" refreshKey={refreshKey} />
+            </div>
+          </details>
+        </>
+      )}
 
       <TransactionHistory
         sessionId={id!}

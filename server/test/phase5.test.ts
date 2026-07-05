@@ -67,6 +67,7 @@ async function setup() {
       cookies: admin,
     })
   ).json().data;
+  await app.inject({ method: "POST", url: `/api/v1/sessions/${session.id}/status`, payload: { status: "active" }, cookies: admin });
   const detail = (await app.inject({ method: "GET", url: `/api/v1/sessions/${session.id}`, cookies: admin })).json().data;
   const cash = detail.assets.find((a: { is_primary: number }) => a.is_primary === 1);
   return { sessionId: session.id as number, joinCode: session.join_code as string, cash, gold, wood, an, binh };

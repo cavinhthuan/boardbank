@@ -155,6 +155,144 @@ export function sessionRoutes(app: FastifyInstance): void {
     };
   });
 
+  // Vòng đời phiên: draft → active ⇄ paused → ended (ended là trạng thái cuối)
+  const TRANSITIONS: Record<string, string[]> = {
+    draft: ["active"],
+    active: ["paused", "ended"],
+    paused: ["active", "ended"],
+    ended: [],
+  };
+
+  app.post(
+    "/api/v1/sessions/:id/status",
+    {
+      schema: {
+        body: {
+          type: "object",
+          required: ["status"],
+          properties: { status: { type: "string", enum: ["active", "paused", "ended"] } },
+          additionalProperties: false,
+        },
+      },
+    },
+    async (req, reply) => {
+      const id = Number((req.params as { id: string }).id);
+      const { status: next } = req.body as { status: string };
+      const session = getSessionOr404(app, id);
+      if (!session) {
+        return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+      }
+      if (!req.principal || !isSessionAdmin(app.db, req.principal, id)) return deny(app, req, reply, id);
+      if (!TRANSITIONS[session.status]?.includes(next)) {
+        return reply.status(422).send({
+          ok: false,
+          error: { code: "INVALID_TRANSITION", message: `Không thể chuyển từ '${session.status}' sang '${next}'` },
+        });
+      }
+      app.db
+        .prepare(
+          `UPDATE game_sessions SET status=?,
+             started_at = CASE WHEN ?='active' THEN COALESCE(started_at, strftime('%Y-%m-%dT%H:%M:%fZ','now')) ELSE started_at END,
+             ended_at   = CASE WHEN ?='ended'  THEN strftime('%Y-%m-%dT%H:%M:%fZ','now') ELSE ended_at END
+           WHERE id=?`,
+        )
+        .run(next, next, next, id);
+      logAudit(app.db, {
+        sessionId: id,
+        actorType: req.principal.type,
+        actorId: req.principal.id,
+        action: "session.status",
+        detail: { from: session.status, to: next },
+      });
+      app.events.publish(id, { type: "session", data: { status: next } });
+      const updated = app.db.prepare("SELECT * FROM game_sessions WHERE id=?").get(id);
+      return { ok: true, data: updated };
+    },
+  );
+
+  app.patch(
+    "/api/v1/sessions/:id/config",
+    {
+      schema: {
+        body: {
+          type: "object",
+          properties: {
+            allowNegative: { type: "boolean" },
+            transferLimit: { type: ["integer", "null"], minimum: 1, maximum: 1_000_000_000_000 },
+            disabledTxTypes: {
+              type: "array",
+              items: { type: "string", enum: ["transfer", "exchange"] },
+              maxItems: 2,
+            },
+          },
+          additionalProperties: false,
+        },
+      },
+    },
+    async (req, reply) => {
+      const id = Number((req.params as { id: string }).id);
+      const session = getSessionOr404(app, id);
+      if (!session) {
+        return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+      }
+      if (!req.principal || !isSessionAdmin(app.db, req.principal, id)) return deny(app, req, reply, id);
+      const patch = req.body as Record<string, unknown>;
+      // Merge chỉ-thêm: trường không gửi giữ nguyên — tương thích ngược
+      const config = { ...JSON.parse(session.config_json), ...patch };
+      if (patch.transferLimit === null) delete config.transferLimit;
+      app.db.prepare("UPDATE game_sessions SET config_json=? WHERE id=?").run(JSON.stringify(config), id);
+      logAudit(app.db, {
+        sessionId: id,
+        actorType: req.principal.type,
+        actorId: req.principal.id,
+        action: "session.config",
+        detail: patch,
+      });
+      app.events.publish(id, { type: "session", data: { status: session.status } });
+      return { ok: true, data: config };
+    },
+  );
+
+  // Thống kê tính TRỰC TIẾP từ sổ cái — nguồn sự thật duy nhất
+  app.get("/api/v1/sessions/:id/stats", async (req, reply) => {
+    const id = Number((req.params as { id: string }).id);
+    if (!getSessionOr404(app, id)) {
+      return reply.status(404).send({ ok: false, error: { code: "SESSION_NOT_FOUND", message: "Phiên không tồn tại" } });
+    }
+    if (!req.principal || !isSessionMember(app.db, req.principal, id)) return deny(app, req, reply, id);
+
+    const primary = app.db
+      .prepare("SELECT id FROM asset_types WHERE session_id=? AND is_primary=1")
+      .get(id) as { id: number } | undefined;
+    const circulating = app.db
+      .prepare(
+        `SELECT asset_type_id, SUM(balance_cached) AS total
+         FROM accounts WHERE session_id=? AND owner_type='player' GROUP BY asset_type_id`,
+      )
+      .all(id);
+    const totalTx = (
+      app.db.prepare("SELECT COUNT(*) AS c FROM transactions WHERE session_id=?").get(id) as { c: number }
+    ).c;
+    const players = app.db
+      .prepare(
+        `SELECT p.id, p.display_name, p.avatar, p.status,
+                COALESCE((SELECT balance_cached FROM accounts a
+                          WHERE a.session_id=p.session_id AND a.owner_type='player' AND a.owner_id=p.id AND a.asset_type_id=?), 0) AS balance,
+                COALESCE((SELECT SUM(e.amount) FROM transaction_entries e JOIN accounts a ON a.id=e.account_id
+                          WHERE a.owner_type='player' AND a.owner_id=p.id AND a.session_id=p.session_id
+                            AND a.asset_type_id=? AND e.amount>0), 0) AS total_in,
+                COALESCE((SELECT SUM(-e.amount) FROM transaction_entries e JOIN accounts a ON a.id=e.account_id
+                          WHERE a.owner_type='player' AND a.owner_id=p.id AND a.session_id=p.session_id
+                            AND a.asset_type_id=? AND e.amount<0), 0) AS total_out,
+                (SELECT COUNT(DISTINCT e.transaction_id) FROM transaction_entries e JOIN accounts a ON a.id=e.account_id
+                 WHERE a.owner_type='player' AND a.owner_id=p.id AND a.session_id=p.session_id) AS tx_count
+         FROM players p WHERE p.session_id=? AND p.status != 'removed'
+         ORDER BY balance DESC`,
+      )
+      .all(primary?.id ?? 0, primary?.id ?? 0, primary?.id ?? 0, id);
+    return { ok: true, data: { totalTx, circulating, players, primaryAssetId: primary?.id ?? null } };
+  });
+
   app.get(
     "/api/v1/sessions/:id/audit",
     {

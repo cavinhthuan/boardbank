@@ -369,6 +369,150 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-04T16:08:38.118Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-07-05T05:06:16.704Z",
+      "error_message": "Null/undefined access in ",
+      "file": "server/src/routes/sessions.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T05:06:16.705Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-07-05T05:06:37.501Z",
+      "error_message": "Null/undefined access in ",
+      "file": "server/src/routes/transactions.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: const config = JSON.parse(session.config_json) as {; allowNegative?: boolean;",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:06:37.513Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-07-05T05:06:43.551Z",
+      "error_message": "Null/undefined access in ",
+      "file": "server/src/routes/assets.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: if (session.status !== \"active\") {; return reply",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:06:43.566Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-07-05T05:08:15.703Z",
+      "error_message": "Type error",
+      "file": "web/src/hooks/useSessionEvents.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T05:08:15.703Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-07-05T05:08:20.689Z",
+      "error_message": "Wrong reference: initialBalance should be SessionConfig",
+      "file": "web/src/api.ts",
+      "root_cause": "Used \"initialBalance\" instead of \"SessionConfig\"",
+      "fix": "Changed initialBalance → SessionConfig",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:08:20.714Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-07-05T05:09:04.204Z",
+      "error_message": "CSS fix: body",
+      "file": "web/src/components/ConfigPanel.tsx",
+      "root_cause": "body: JSON.stringify(body), → Record<string, unknown>) {",
+      "fix": "Changed body: JSON.stringify(body), → Record<string, unknown>) {",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:09:04.239Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-07-05T05:09:21.479Z",
+      "error_message": "Missing await",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call | Also: onSession: () => {; async function changeStatus(status: \"active\" | \"paused\" | \"e",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:09:21.492Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-07-05T05:09:59.679Z",
+      "error_message": "Incorrect value in code",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "Had \"mb-6 flex gap-2\"",
+      "fix": "Changed to \"ended\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-07-05T05:10:03.859Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-07-05T05:10:20.020Z",
+      "error_message": "Incorrect value in code",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Had \"../money\"",
+      "fix": "Changed to \"../components/SessionResults\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T05:10:20.036Z"
     }
   ]
 }

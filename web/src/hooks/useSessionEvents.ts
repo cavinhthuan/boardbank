@@ -11,6 +11,7 @@ interface Handlers {
   onTx?: (data: { id: number; code: string; type: string; status: string }) => void;
   onNotification?: (n: NotificationData) => void;
   onPlayers?: () => void;
+  onSession?: (data: { status: string }) => void;
   /** gọi khi kết nối lại sau khi rớt, và mỗi 10s khi SSE đang hỏng (fallback polling) */
   onResync?: () => void;
 }
@@ -55,6 +56,7 @@ export function useSessionEvents(sessionId: number | string | undefined, handler
       es.addEventListener("tx", (e) => ref.current.onTx?.(JSON.parse((e as MessageEvent).data)));
       es.addEventListener("notification", (e) => ref.current.onNotification?.(JSON.parse((e as MessageEvent).data)));
       es.addEventListener("players", () => ref.current.onPlayers?.());
+      es.addEventListener("session", (e) => ref.current.onSession?.(JSON.parse((e as MessageEvent).data)));
     };
 
     connect();

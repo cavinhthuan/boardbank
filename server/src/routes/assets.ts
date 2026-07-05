@@ -236,6 +236,17 @@ export function assetRoutes(app: FastifyInstance): void {
         if (principal.type !== "player" || principal.sessionId !== sessionId || body.playerId !== principal.id) {
           return deny(app, req, reply, sessionId);
         }
+        if (session.status !== "active") {
+          return reply
+            .status(422)
+            .send({ ok: false, error: { code: "SESSION_NOT_ACTIVE", message: "Phiên chưa bắt đầu hoặc đang tạm dừng" } });
+        }
+        const cfg = JSON.parse(session.config_json) as { disabledTxTypes?: string[] };
+        if (cfg.disabledTxTypes?.includes("exchange")) {
+          return reply
+            .status(422)
+            .send({ ok: false, error: { code: "TX_TYPE_DISABLED", message: "Quy đổi đang bị tắt trong phiên" } });
+        }
         try {
           if (!body.pin) throw new LedgerError("PIN_REQUIRED", "Cần nhập PIN để xác nhận giao dịch", 422);
           verifyPin(app.db, principal.id, body.pin);

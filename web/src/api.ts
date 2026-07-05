@@ -32,6 +32,8 @@ export const api = {
     request<T>(url, { method: "POST", body: JSON.stringify(data) }),
   put: <T>(url: string, data: unknown) =>
     request<T>(url, { method: "PUT", body: JSON.stringify(data) }),
+  patch: <T>(url: string, data: unknown) =>
+    request<T>(url, { method: "PATCH", body: JSON.stringify(data) }),
   delete: <T>(url: string) => request<T>(url, { method: "DELETE" }),
 };
 
@@ -49,7 +51,34 @@ export interface GameSession {
   join_code: string;
   status: "draft" | "active" | "paused" | "ended";
   created_at: string;
+  started_at: string | null;
+  ended_at: string | null;
   player_count?: number;
+}
+
+export interface SessionConfig {
+  initialBalance: number;
+  allowNegative?: boolean;
+  transferLimit?: number;
+  disabledTxTypes?: string[];
+}
+
+export interface StatsPlayer {
+  id: number;
+  display_name: string;
+  avatar: string | null;
+  status: string;
+  balance: number;
+  total_in: number;
+  total_out: number;
+  tx_count: number;
+}
+
+export interface SessionStats {
+  totalTx: number;
+  circulating: { asset_type_id: number; total: number }[];
+  players: StatsPlayer[];
+  primaryAssetId: number | null;
 }
 
 export interface AssetType {
@@ -106,7 +135,7 @@ export interface Tx {
 }
 
 export interface SessionDetail {
-  session: GameSession & { config: { initialBalance: number } };
+  session: GameSession & { config: SessionConfig };
   bank: Bank;
   assets: AssetType[];
   rates: ExchangeRate[];

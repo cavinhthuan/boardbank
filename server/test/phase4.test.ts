@@ -69,6 +69,7 @@ async function setupSession() {
       cookies: admin,
     })
   ).json().data;
+  await app.inject({ method: "POST", url: `/api/v1/sessions/${session.id}/status`, payload: { status: "active" }, cookies: admin });
   return { sessionId: session.id as number, joinCode: session.join_code as string, an, binh };
 }
 

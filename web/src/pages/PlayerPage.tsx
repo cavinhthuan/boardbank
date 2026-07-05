@@ -6,6 +6,7 @@ import { useSessionEvents } from "../hooks/useSessionEvents";
 import { ToastStack, useToasts } from "../components/Toasts";
 import NotificationBell, { describeNotification } from "../components/NotificationBell";
 import ExchangeForm from "../components/ExchangeForm";
+import SessionResults from "../components/SessionResults";
 import { formatMinor } from "../money";
 
 function fmt(n: number): string {
@@ -52,6 +53,9 @@ export default function PlayerPage() {
     onNotification: (n) => {
       addToast(describeNotification(n), n.type === "tx.received" ? "success" : "warn");
       setNotifKey((k) => k + 1);
+      load().catch(() => {});
+    },
+    onSession: () => {
       load().catch(() => {});
     },
     onResync: () => {
@@ -145,6 +149,18 @@ export default function PlayerPage() {
         )}
       </div>
 
+      {detail.session.status === "paused" && (
+        <div className="mt-4 rounded-xl border border-amber-800 bg-amber-950/40 px-4 py-3 text-amber-200">
+          ⏸ Phiên đang tạm dừng — giao dịch sẽ mở lại khi quản trị viên tiếp tục.
+        </div>
+      )}
+      {detail.session.status === "ended" && (
+        <div className="mt-5">
+          <SessionResults sessionId={player.sessionId} primaryAsset={primaryAsset} />
+        </div>
+      )}
+
+      {detail.session.status === "active" && (
       <form onSubmit={transfer} className="mt-5 rounded-xl border border-slate-800 bg-slate-900 p-4">
         <h2 className="mb-3 font-semibold">Chuyển tiền</h2>
         <div className="space-y-3">
@@ -193,17 +209,20 @@ export default function PlayerPage() {
           Chuyển
         </button>
       </form>
+      )}
 
-      <ExchangeForm
-        sessionId={player.sessionId}
-        playerId={player.id}
-        assets={detail.assets}
-        rates={detail.rates}
-        onDone={() => {
-          setFlash("✅ Quy đổi thành công!");
-          load().catch(() => {});
-        }}
-      />
+      {detail.session.status === "active" && (
+        <ExchangeForm
+          sessionId={player.sessionId}
+          playerId={player.id}
+          assets={detail.assets}
+          rates={detail.rates}
+          onDone={() => {
+            setFlash("✅ Quy đổi thành công!");
+            load().catch(() => {});
+          }}
+        />
+      )}
 
       <section className="mt-6">
         <h2 className="mb-2 font-semibold">Giao dịch gần đây</h2>
