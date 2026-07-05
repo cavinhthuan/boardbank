@@ -44,12 +44,25 @@ export function speechTextFor(n: { type: string; payload_json: string }): string
       counterparty?: string | null;
       assetName?: string;
       note?: string | null;
+      from?: string;
+      interest?: number;
     };
     const amt = `${p.amount ?? 0} ${p.assetName ?? ""}`.trim();
     const note = p.note ? `. Nội dung: ${p.note}` : "";
-    if (n.type === "tx.received") return `${p.counterparty ?? "Ngân hàng"} chuyển cho bạn ${amt}${note}`;
-    if (n.type === "tx.deducted") return `Bạn bị trừ ${amt} bởi ${p.counterparty ?? "ngân hàng"}${note}`;
-    return null;
+    switch (n.type) {
+      case "tx.received":
+        return `${p.counterparty ?? "Ngân hàng"} chuyển cho bạn ${amt}${note}`;
+      case "tx.deducted":
+        return `Bạn bị trừ ${amt} bởi ${p.counterparty ?? "ngân hàng"}${note}`;
+      case "invoice.created":
+        return `${p.from ?? "Ai đó"} gửi bạn hóa đơn ${p.amount ?? 0}${note}`;
+      case "loan.interest":
+        return `Khoản vay của bạn bị tính lãi ${p.interest ?? 0}`;
+      case "saving.interest":
+        return `Sổ tiết kiệm của bạn nhận lãi ${p.interest ?? 0}`;
+      default:
+        return null;
+    }
   } catch {
     return null;
   }

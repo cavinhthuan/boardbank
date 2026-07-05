@@ -16,12 +16,30 @@ export function describeNotification(n: { type: string; payload_json: string }):
       counterparty?: string | null;
       note?: string | null;
       assetName?: string;
+      from?: string;
+      interest?: number;
+      outstanding?: number;
+      balance?: number;
     };
-    const amt = `${(p.amount ?? 0).toLocaleString("vi-VN")} ${p.assetName ?? ""}`.trim();
+    const fmt = (x: number | undefined) => (x ?? 0).toLocaleString("vi-VN");
+    const amt = `${fmt(p.amount)} ${p.assetName ?? ""}`.trim();
     const note = p.note ? ` — ${p.note}` : "";
-    if (n.type === "tx.received") return `💰 Nhận ${amt} từ ${p.counterparty ?? "?"}${note}`;
-    if (n.type === "tx.deducted") return `📤 Bị trừ ${amt} (${p.counterparty ?? "ngân hàng"})${note}`;
-    return n.type;
+    switch (n.type) {
+      case "tx.received":
+        return `💰 Nhận ${amt} từ ${p.counterparty ?? "?"}${note}`;
+      case "tx.deducted":
+        return `📤 Bị trừ ${amt} (${p.counterparty ?? "ngân hàng"})${note}`;
+      case "invoice.created":
+        return `🧾 ${p.from ?? "?"} gửi hóa đơn ${fmt(p.amount)}${note}`;
+      case "invoice.canceled":
+        return `🧾 Hóa đơn ${fmt(p.amount)} đã bị hủy`;
+      case "loan.interest":
+        return `📈 Lãi vay +${fmt(p.interest)} — dư nợ ${fmt(p.outstanding)}`;
+      case "saving.interest":
+        return `🏦 Lãi tiết kiệm +${fmt(p.interest)} — sổ còn ${fmt(p.balance)}`;
+      default:
+        return n.type;
+    }
   } catch {
     return n.type;
   }

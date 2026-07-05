@@ -6,6 +6,7 @@ import TransactionHistory from "../components/TransactionHistory";
 import AuditLog from "../components/AuditLog";
 import AssetsPanel from "../components/AssetsPanel";
 import ConfigPanel from "../components/ConfigPanel";
+import FinanceAdminPanel from "../components/FinanceAdminPanel";
 import SessionResults from "../components/SessionResults";
 import { useSessionEvents } from "../hooks/useSessionEvents";
 import { formatMinor } from "../money";
@@ -274,6 +275,15 @@ export default function SessionPage() {
 
       {session.status !== "ended" && (
         <>
+          <FinanceAdminPanel
+            sessionId={id!}
+            players={players}
+            refreshKey={refreshKey}
+            onChanged={() => {
+              load().catch(() => {});
+              setRefreshKey((k) => k + 1);
+            }}
+          />
           <AssetsPanel
             sessionId={id!}
             assets={assets}

@@ -224,6 +224,8 @@ export function sessionRoutes(app: FastifyInstance): void {
               items: { type: "string", enum: ["transfer", "exchange"] },
               maxItems: 2,
             },
+            loanRate: { type: "integer", minimum: 0, maximum: 1000 },
+            savingsRate: { type: "integer", minimum: 0, maximum: 1000 },
           },
           additionalProperties: false,
         },

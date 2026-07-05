@@ -10,6 +10,8 @@ interface Props {
 export default function ConfigPanel({ sessionId, config, onChanged }: Props) {
   const [open, setOpen] = useState(false);
   const [limit, setLimit] = useState(config.transferLimit ? String(config.transferLimit) : "");
+  const [loanRate, setLoanRate] = useState(String((config as { loanRate?: number }).loanRate ?? 0));
+  const [savingsRate, setSavingsRate] = useState(String((config as { savingsRate?: number }).savingsRate ?? 0));
   const [error, setError] = useState<string | null>(null);
 
   async function patch(body: Record<string, unknown>) {
@@ -88,6 +90,39 @@ export default function ConfigPanel({ sessionId, config, onChanged }: Props) {
               Quy đổi
             </label>
           </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              void patch({ loanRate: Number(loanRate) || 0, savingsRate: Number(savingsRate) || 0 });
+            }}
+            className="flex flex-wrap items-center gap-2"
+          >
+            <span>Lãi suất mỗi kỳ (%):</span>
+            <label className="flex items-center gap-1">
+              vay
+              <input
+                type="number"
+                min={0}
+                max={1000}
+                value={loanRate}
+                onChange={(e) => setLoanRate(e.target.value)}
+                className="w-20 rounded-lg bg-slate-950 border border-slate-700 px-2 py-1.5 outline-none focus:border-emerald-500"
+              />
+            </label>
+            <label className="flex items-center gap-1">
+              tiết kiệm
+              <input
+                type="number"
+                min={0}
+                max={1000}
+                value={savingsRate}
+                onChange={(e) => setSavingsRate(e.target.value)}
+                className="w-20 rounded-lg bg-slate-950 border border-slate-700 px-2 py-1.5 outline-none focus:border-emerald-500"
+              />
+            </label>
+            <button className="rounded-lg bg-slate-700 px-3 py-1.5 font-semibold hover:bg-slate-600">Lưu lãi suất</button>
+            <span className="text-xs text-slate-500">(áp khi bấm "Tính lãi kỳ này")</span>
+          </form>
           {error && <p className="text-red-400">{error}</p>}
         </div>
       )}

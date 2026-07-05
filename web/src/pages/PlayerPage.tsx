@@ -15,6 +15,7 @@ import { playChime } from "../sound";
 import { speak, speechAvailable, speechTextFor } from "../speech";
 import { loadSettings, saveSettings, type AppSettings } from "../settings";
 import QuickSend, { type QuickData, type QuickPick } from "../components/QuickSend";
+import FinanceSection from "../components/FinanceSection";
 
 function fmt(n: number): string {
   return n.toLocaleString("vi-VN");
@@ -441,6 +442,21 @@ export default function PlayerPage() {
             setFlash("✅ Quy đổi thành công!");
             load().catch(() => {});
           }}
+        />
+      )}
+
+      {detail.session.status === "active" && (
+        <FinanceSection
+          sessionId={player.sessionId}
+          playerId={player.id}
+          players={others}
+          assetName={primaryAsset?.name}
+          refreshKey={notifKey}
+          onDone={(msg) => {
+            addToast(msg, "success");
+            load().catch(() => {});
+          }}
+          onError={(msg) => addToast(msg, "warn")}
         />
       )}
 

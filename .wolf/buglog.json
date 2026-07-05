@@ -833,6 +833,118 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-07-05T08:17:33.805Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-07-05T08:23:18.676Z",
+      "error_message": "Type error",
+      "file": "server/src/db.ts",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation | Also: // 007: nghiệp vụ tài chính Phase 11 — vay, tiết kiệm, hóa đ; // Các bảng này là TRẠNG THÁI HỢP ĐỒNG; tiền thật vẫn chỉ di",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:23:18.694Z"
+    },
+    {
+      "id": "bug-054",
+      "timestamp": "2026-07-05T08:25:32.288Z",
+      "error_message": "Wrong reference: eventRoutes should be financeRoutes",
+      "file": "server/src/app.ts",
+      "root_cause": "Used \"eventRoutes\" instead of \"financeRoutes\"",
+      "fix": "Changed eventRoutes → financeRoutes",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T08:25:32.307Z"
+    },
+    {
+      "id": "bug-055",
+      "timestamp": "2026-07-05T08:28:07.618Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/pages/PlayerPage.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-05T08:28:07.618Z"
+    },
+    {
+      "id": "bug-056",
+      "timestamp": "2026-07-05T16:21:19.785Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "web/src/pages/SessionPage.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: <FinanceAdminPanel; sessionId={id!}",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T16:21:19.800Z"
+    },
+    {
+      "id": "bug-057",
+      "timestamp": "2026-07-05T16:21:30.087Z",
+      "error_message": "Null/undefined access in ",
+      "file": "web/src/components/ConfigPanel.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: const [loanRate, setLoanRate] = useState(String((config as {; const [savingsRate, setSavingsRate] = useState(String((confi",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T16:21:30.109Z"
+    },
+    {
+      "id": "bug-058",
+      "timestamp": "2026-07-05T16:21:51.976Z",
+      "error_message": "Significant refactor of ",
+      "file": "web/src/components/NotificationBell.tsx",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 17→35 lines (3 removed) | Also: const amt = `${(p.amount ?? 0).toLocaleString(\"vi-; if (n.type === \"tx.received\") return `💰 Nhận ${am",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T16:21:52.018Z"
+    },
+    {
+      "id": "bug-059",
+      "timestamp": "2026-07-05T16:22:00.465Z",
+      "error_message": "Significant refactor of ",
+      "file": "web/src/speech.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 18→31 lines (2 removed) | Also: if (n.type === \"tx.received\") return `${p.counterp; if (n.type === \"tx.deducted\") return `Bạn bị trừ $",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-05T16:22:00.491Z"
     }
   ]
 }
