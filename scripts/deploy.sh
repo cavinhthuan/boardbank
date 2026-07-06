@@ -17,6 +17,12 @@ SSH_OPTS="-o StrictHostKeyChecking=accept-new"
 echo "==> [1/4] Build tại máy dev (typecheck server + build web)…"
 npm run build
 
+# Server pull từ origin — commit local chưa push thì server sẽ chạy code cũ (UI mới + API cũ = 404)
+if git status -sb | head -1 | grep -q "ahead"; then
+  echo "==> Phát hiện commit chưa push — đẩy lên origin trước…"
+  git push
+fi
+
 echo "==> [2/4] Cập nhật mã nguồn server (git pull) + cài prod deps…"
 # safe.directory: repo thuộc boardbank nhưng lệnh chạy dưới root → git cần được cho phép
 ssh $SSH_OPTS "$HOST" "set -e; git config --global --add safe.directory '$APP_DIR' 2>/dev/null || true; \

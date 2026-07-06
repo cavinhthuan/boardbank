@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-05T17:25:11.418Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-06T01:54:28.533Z
 > Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -27,7 +27,7 @@
 
 ## scripts/
 
-- `deploy.sh` — Deploy BoardBank lên VPS — BUILD Ở MÁY DEV, server chỉ nhận artifact. (~436 tok)
+- `deploy.sh` — Deploy BoardBank lên VPS — BUILD Ở MÁY DEV, server chỉ nhận artifact. (~498 tok)
 
 ## server/
 

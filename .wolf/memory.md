@@ -622,3 +622,28 @@
 | 00:18 | Session end: 49 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~23371 tok |
 | 00:25 | Edited scripts/deploy.sh | 5→7 lines | ~110 |
 | 00:25 | Edited scripts/deploy.sh | 5→7 lines | ~110 |
+| 09:35 | Fix bug-066: git dubious ownership khi pull duoi root (repo cua boardbank) -> deploy.sh tu add safe.directory | scripts/deploy.sh | ok | ~800 |
+| 00:25 | Session end: 50 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~23489 tok |
+| 00:25 | Session end: 50 writes across 17 files (SessionPage.tsx, ConfigPanel.tsx, NotificationBell.tsx, speech.ts, present.ts) | 0 reads | ~23489 tok |
+
+## Session: 2026-07-06 08:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-06 08:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-06 08:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-06 08:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:54 | Edited scripts/deploy.sh | expanded (+6 lines) | ~102 |
+| 08:54 | Edited scripts/deploy.sh | expanded (+6 lines) | ~102 |

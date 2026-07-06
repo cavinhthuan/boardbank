@@ -1119,6 +1119,27 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-07-05T17:25:32.115Z"
+    },
+    {
+      "id": "bug-067",
+      "timestamp": "2026-07-06T01:54:56.152Z",
+      "error_message": "Sau deploy, API moi (loans/present...) tra Route not found 404 nhung UI moi van hien — cac function moi khong chay",
+      "file": "scripts/deploy.sh",
+      "root_cause": "Local ahead 7 commits chua push len origin. deploy.sh upload web/dist truc tiep tu may dev (UI moi nhat) nhung ma server lay qua git pull tu origin (dung o Phase 8) -> lech version UI/API.",
+      "fix": "git push cac commit local roi deploy lai; deploy.sh gio tu phat hien ahead va git push truoc buoc pull.",
+      "tags": [
+        "deploy",
+        "git-push",
+        "version-mismatch",
+        "404",
+        "route-not-found"
+      ],
+      "related_bugs": [
+        "bug-064",
+        "bug-066"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-06T01:54:56.152Z"
     }
   ]
 }
